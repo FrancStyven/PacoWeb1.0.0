@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.Thymeleaf.org">
+
+<head>
+	<meta name="viewport" content="width=device-width,initial-scale=0.9" />
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<title>PACOweb</title>
+
+
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" th:href="@{css/diseStyle.css}">
+	<link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{css/fullScreen.css}">
+	<script type="text/javascript" th:src="@{js/jquery-3.6.4.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/AdminInterfazJS.js}"></script>
+
+	<script type="text/javascript" th:src="@{js/cobProEdit.js}"></script>
+	<script type="text/javascript" th:src="@{js/InfoTabImp.js}"></script>
+	<script type="text/javascript" th:src="@{js/CargoPedidosJS.js}"></script>
+	<script type="text/javascript" th:src="@{js/LectScannerAuto.js}"></script>
+
+	<script type="text/javascript" th:src="@{js/MonitoProduc.js}"></script>
+	<script type="text/javascript" th:src="@{js/swal2.js}"></script>
+	<script type="text/javascript" th:src="@{js/LecturaBalanzaJS.js}"></script>
+	<script type="text/javascript" th:src="@{js/SearchInteligiArtJS.js}"></script>
+	<script type="text/javascript" th:src="@{js/AdminRefreshJS.js}"></script>
+
+
+
+</head>
+
+<body onload="NoBack()" style="background-color: rgb(255,255,255);min-height:200px; max-height:100%; " id="scriptScren">
+	<div id="screen">
+
+		<div id="relojnumerico" class="reloj" onload="cargarReloj()">
+
+		</div>
+		<input type="hidden" id="machineId" name="machineId">
+		<input type="hidden" id="cant_cest_maxId" name="cant_cest_maxId">
+		<input type="hidden" id="peso_x_cest_minId" name="peso_x_cest_minId">
+		<input type="hidden" id="peso_tot_cesId" name="peso_tot_cesId">
+		<input type="hidden" id="tip_cest_1Id" name="tip_cest_1Id">
+		<input type="hidden" id="tip_cest_2Id" name="tip_cest_2Id">
+		<input type="hidden" id="tip_cest_3Id" name="tip_cest_3Id">
+		<input type="hidden" id="tip_cest_4Id" name="tip_cest_4Id">
+		<input type="hidden" id="tip_cest_5Id" name="tip_cest_5Id">
+		<input type="hidden" id="cajaEfectBs" name="cajaEfectBs">
+		<input type="hidden" id="cajaEfectUs" name="cajaEfectUs">
+		<input type="hidden" id="monedaBs" name="monedaBs">
+		<input type="hidden" id="monedaUs" name="monedaUs">
+
+		<div style="position:absolute;margin-top:-1000px;">
+			<p id="credencialesSup">.</p>
+			<p id="DeleReng">.</p>
+			<p id="Anufac">.</p>
+			<p id="esperafact">.</p>
+			<p id="AccessBtnGroupCont">.</p>
+
+			<form id="anulacion">
+				<input type="hidden" name="numeroSecuencia" id="numerosecuenciaID">
+				<input type="hidden" name="terminalVirtual" id="terminalVirtualID">
+				<button type="button" value="Anulacion" id="btnAnulacionCobELEC" name="btnAnulacionCobELEC"
+					onclick="conParametros('anulacion');"
+					style="background-color: transparent;border-style:none;"></button>
+			</form>
+			<div>
+				<input type="hidden" id="dataNumFact">
+				<input type="hidden" id="reng_cobRow">
+				<input type="hidden" id="cob_numRow">
+				<input type="hidden" id="mont">
+			</div>
+			<form action="/PACOCotizacion" method="POST" th:object="${postID}"><input type="hidden" name="co_venCO"
+					th:value="*{co_venCO}"><button type="submit" class="btn btn-danger " id="closePrin" name="closePrin"
+					style="background-color:transparent;border-style:none;"></button></form>
+
+			<button type="button" name="SearchInteliArttBtn" id="SearchInteliArttBtn"
+				style="background-color:transparent;border-style:none;"></button>
+		</div>
+		<div class="">
+
+			<div class="card-group" method="POST" th:object="${postID}">
+				<div class="card" style="background-color: rgb(253,253,253);">
+
+					<div class="">
+						<ul class="list-group" >
+
+							<img src="/images/empresa.png" min-height="60%" max-height="70%" height="150px"
+								width="80%" style="margin-left: 10%;margin-top:5%;" />
+
+							<div id="bgventanatwo">
+								<div di="ventanatwo">
+									<div class="">
+										<div class="">
+											<div class="">
+												<div class="">
+													<div class="" style="position:relative;margin-top:20%;">
+														<div class="text-center">
+															<p id="ForceExit">.</p>
+															<div class="spinner-border text-success"
+																style="width: 7rem; height: 7rem;" role="status">
+																<span class="sr-only">Loading...</span>
+															</div>
+														</div>
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</ul>
+
+					</div>
+
+				</div>
+				<div class="card">
+
+					<div class="">
+						<ul class="list-group">
+
+							<div class="btn-group" style="background-color:rgb(50,50, 50);">
+								<input class="form-control" value="N° PEDIDO:"
+									style="background-color:transparent; font-weight:bold;color:white;border-style:none;font-size: 12pt;"
+									disabled>
+								<input class="form-control" th:field="*{nfac}" th:value="*{nfac}"
+									style="background-color:transparent;border-style:none; font-weight:bold;color:white;font-size: 12pt;"
+									id="Nfactura" disabled></input>
+								<input type="hidden" id="idMoneUSD">
+								<input type="hidden" id="todayEUR">
+								<input th:field="*{co_venCO}" th:value="*{co_venCO}" id="co_venIDSS" type="hidden">
+
+								<input type="hidden" id="tipoExento" name="tipoExento">
+								<input type="hidden" id="porcExento" name="porcExento">
+
+								<input type="hidden" id="tipoGeneral" name="tipoGeneral">
+								<input type="hidden" id="porcGeneral" name="porcGeneral">
+
+
+								<input type="hidden" id="glob_descID" name="glob_descID">
+								<input type="hidden" id="porc_gdescID" name="porc_gdescID">
+								<input type="hidden" id="ipAddressPublic" name="ipAddressPublic">
+								<input type="hidden" id="idCob_numRengTip" name="idCob_numRengTip">
+
+
+							</div>
+
+
+
+
+							<div class="btn-group"
+								style="box-shadow: 0px 0px 2px grey;background-color: rgb(240,240,240);">
+
+								<img src="/images/bs.png" height="25px" width="30px" />
+								<input class="form-control"
+									style="background-color: transparent;font-weight:bold;color:black;border-style:none;width: 60px;"
+									value="Precio:" disabled>
+								<div class="input-group input-group-lg">
+									<input type="text" class="form-control" value="0.00"
+										style="color:blue;font-weight:bold;font-size:12pt;background-color:transparent;border-style: none;"
+										name="preciobru" id="precioBru" disabled>
+								</div>
+
+							</div>
+							<div class="btn-group"
+								style="box-shadow: 0px 0px 2px grey;background-color: rgb(240,240,240);">
+
+								<img src="/images/bs.png" height="25px" width="30px" />
+
+								<input class="form-control"
+									style="background-color: transparent;font-weight:bold;color:black;border-style:none;width: 60px;"
+									value="IVA:" disabled>
+								<div class="input-group input-group-lg">
+									<input type="text" class="form-control" value="0.00"
+										style="color:blue;font-weight:bold;font-size:12pt;background-color:transparent; border-style:none;"
+										name="ivaBS" id="ivaALLBS" disabled>
+								</div>
+
+							</div>
+
+
+							<div class="btn-group"
+								style="box-shadow: 0px 0px 2px grey;background-color: rgb(240,240,240);">
+								<img src="/images/bs.png" height="25px" width="30px" />
+								<input class="form-control"
+									style="background-color: transparent;font-weight:bold;color:black;border-style:none;width: 60px;"
+									value="Total: Bs" disabled>
+
+								<div class="input-group input-group-lg">
+
+									<input type="hidden" class="form-control" value="0.00"
+										style="color:blue;font-weight:bold;font-size:22pt;background-color: transparent; border-style:none;"
+										name="montoALLBS" id="MontoALLBS" disabled>
+
+									<input type="text" class="form-control" value="0.00"
+										style="color:blue;font-weight:bold;font-size:30pt;background-color: transparent; border-style:none;"
+										name="MontoALLBSFormat" id="MontoALLBSFormat" disabled>
+								</div>
+							</div>
+
+						</ul>
+					</div>
+
+				</div>
+
+				<div class="card">
+					<div class="">
+						<ul class="list-group">
+
+							<div class="btn-group" style="background-color:rgb(50,50, 50);">
+								<input class="form-control" value="USD :"
+									style="background-color:transparent; font-weight:bold;color:white;border-style:none;font-size: 12pt;"
+									disabled>
+								<input class="form-control"
+									style="background-color:transparent; font-weight:bold;color:white;border-style:none;font-size: 12pt;"
+									id="TasaTODAY" disabled></input>
+							</div>
+
+
+
+
+							<div class="btn-group"
+								style="box-shadow: 0px 0px 2px grey;background-color: rgb(240,240,240);">
+
+
+								<img src="/images/dolar.png" height="25px" width="30px" />
+								<input class="form-control"
+									style="background-color: transparent;font-weight:bold;color:black;border-style:none;width: 60px;"
+									value="Precio:" disabled>
+
+								<div class="input-group input-group-lg">
+									<input type="text" class="form-control" value="0.00"
+										style="color:green;font-weight:bold;font-size:12pt;background-color:transparent;border-style:none;"
+										name="PrecioALL" id="PrecioALL" disabled>
+								</div>
+							</div>
+							<div class="btn-group"
+								style="box-shadow: 0px 0px 2px grey;background-color: rgb(240,240,240);">
+
+								<img src="/images/dolar.png" height="25px" width="30px" />
+								<input class="form-control"
+									style="background-color: transparent;font-weight:bold;color:black;border-style:none;width: 60px;"
+									value="IVA:" disabled>
+								<div class="input-group input-group-lg">
+									<input type="text" class="form-control" value="0.00"
+										style="color:green;font-weight:bold;font-size:12pt;background-color:transparent;border-style:none;"
+										name="ivaALL" id="ivaALL" disabled>
+								</div>
+							</div>
+
+
+
+							<div class="btn-group"
+								style="box-shadow: 0px 0px 2px grey;background-color: rgb(240,240,240);">
+
+								<img src="/images/dolar.png" height="25px" width="30px" />
+								<input class="form-control"
+									style="background-color: transparent;font-weight:bold;color:black;border-style:none;width: 60px;"
+									value="Total: $" disabled>
+
+								<div class="input-group input-group-lg">
+									<input type="hidden" class="form-control" value="0.00"
+										style="color:green;font-weight:bold;font-size:22pt;background-color:transparent;border-style:none;"
+										name="montoALL" id="MontoALL" disabled>
+
+									<input type="text" class="form-control" value="0.00"
+										style="color:green;font-weight:bold;font-size:30pt;background-color:transparent;border-style:none;"
+										name="montoALLFormat" id="MontoALLFormat" disabled>
+
+								</div>
+							</div>
+
+						</ul>
+					</div>
+
+				</div>
+
+				<div class="alert alert-success" id="alertcheck"
+					style="position:absolute;z-index:1;margin-left:95%;margin-top:0%;" role="alert">
+					<strong>Listo</strong>
+				</div>
+				<div class="card">
+					<ul class="list-group">
+
+						<div class="btn-group"
+							style="font-weight:bold;font-size:12pt;background-color: rgb(50,50, 50);">
+
+							<button class="form-control" data-toggle="modal" data-target="#UpdateCliData"
+								style="background-color: transparent;cursor:pointer;font-weight:bold;color: white;border-style:none;">Nro
+								Pedido Cli:</button>
+							<input class="form-control"
+								style="background-color:transparent;border-style:none; font-weight:bold;color:white;font-size: 12pt;"
+								th:value="*{nfaccli}" id="nfaccli" disabled>
+						</div>
+						<div class="">
+
+							<div class="btn-group">
+								<input class="form-control" value="RIF/C.I:"
+									style="background-color:transparent;border-style: none; font-weight:bold;color:black;font-size: 9pt;"
+									disabled>
+								<input type="text" class="form-control"
+									style="background-color: transparent;font-weight:bold;color:rgb(26, 95, 180);border-style:none;font-size: 11pt;"
+									name="ced" th:value="*{ced}" id="cedcli" disabled>
+							</div>
+
+
+							<div class="btn-group" style="background-color: rgb(240,240,240);">
+								<input class="form-control" value="RAZON SOCIAL:"
+									style="background-color:transparent;border-style: none; font-weight:bold;color:black;font-size: 9pt;"
+									disabled>
+								<input type="text" class="form-control"
+									style="background-color: transparent;font-weight:bold;color:rgb(26, 95, 180);border-style:none;font-size: 11pt;"
+									name="desc" id="OnDOC" th:value="*{desc}" disabled></input>
+							</div>
+
+
+							<div class="btn-group">
+								<input class="form-control" value="DIRECCION:"
+									style="background-color:transparent;border-style: none; font-weight:bold;color:black;font-size: 9pt;"
+									disabled>
+								<input th:field="*{direc}" th:value="*{direc}" type="text" class="form-control"
+									style="background-color: transparent;font-weight:bold;color:rgb(26, 95, 180);border-style:none;font-size: 11pt;"
+									name="direc" id="OnDirec" disabled></input>
+							</div>
+
+
+
+							<div class="btn-group" style="background-color: rgb(240,240,240);">
+								<input class="form-control" value="TELEFONO:"
+									style="background-color:transparent;border-style: none; font-weight:bold;color:black;font-size: 9pt;"
+									disabled>
+								<input th:field="*{telef}" th:value="*{telef}" type="text" class="form-control"
+									style="background-color: transparent;font-weight:bold;color:rgb(26, 95, 180);border-style:none;font-size: 11pt;"
+									name="tlf" id="OnTel" disabled></input>
+							</div>
+
+						</div>
+					</ul>
+				</div>
+
+			</div>
+
+			<div class="card-group w-30 ">
+				<div class="card" style="background-color: rgb(240,240,240);">
+					<div class="col-10 mb-4">
+
+						<div class="input-group input-group-lg">
+
+							<input type="text" id="selectEvidencia" class="selectEvidencia form-control"
+								name="selectEvidencia" placeholder="INGRESE ARTICULOS"
+								style="background-color:rgb(250,250,250); font-weight:bold;color:black;font-size: 12pt;"
+								autocomplete="off" oninput="searchProducRapPedi();">
+
+
+
+
+							<button type="button" class="btn btn-info" id="inicioScanner" title="" aria-hidden="true"
+								data-toggle="modal" data-target="#Scanner">
+								<img src="/images/agregarProducto.png" height="20px" width="20px" />Scanner
+							</button>
+
+							<button id="btnScannerSub" name="btnScannerSub"
+								style="background-color:transparent;border-style:none;"></button>
+
+							<button type="button" class="btn  btn-lg" id="updatePagIDpri" name="updatePagIDpri"><img
+									src="/images/UpdateInfor.png" height="25px" width="25px" />
+							</button>
+
+							<button type="button" id="conSQLRapArt" name="conSQLRapArt"
+								style="background-color: transparent;border-style:none;"></button>
+
+						</div>
+
+						<div class="table-responsive-xl"
+							style="max-height:55vh;overflow-y:auto;position:absolute;width:115%;">
+
+							<table class="table table-hover" id="">
+								<thead style="background-color:rgb(200,200,200);">
+									<tr>
+										<th scope="col" style="width:2%" data-field=""></th>
+										<th scope="col" style="width:20%" data-field=""></th>
+										<th scope="col" style="width:50%" data-field=""></th>
+										<th scope="col" style="width:20%" data-field=""></th>
+										<th scope="col" style="width:20%" data-field=""></th>
+
+									</tr>
+								</thead>
+								<tbody role="tr" id="resultSearchRapArt" style="background-color: rgb(90,90,90);">
+
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="card" style="background-color: rgb(240,240,240);">
+					<nav class="navbar navbar-expand-lg navbar-light bg-light">
+						<button class="navbar-toggler" type="button" data-toggle="collapse"
+							data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+							aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+
+						<div class="collapse navbar-collapse" id="navbarSupportedContent">
+							<ul class="navbar-nav mr-auto">
+
+
+
+								<p></p>
+								<input type="hidden" id="cod_ctaME">
+								<input type="hidden" id="co_bancME">
+								<input type="hidden" id="num_ctaME">
+								<input type="hidden" id="cod_ctaBN">
+								<input type="hidden" id="co_bancBN">
+								<input type="hidden" id="num_ctaBN">
+								<label>&nbsp;</label>
+
+
+								<button type="button" class="btn btn-info" data-toggle="modal"
+									data-target="#ProductosRegDB" id="LisProduc" name="LisProduc"
+									style="cursor:pointer;">
+									<img src="/images/productolis.png" width="30px" />
+									<p>Productos </p>
+								</button><label>&nbsp;</label>
+
+
+								<button type="button" class="btn btn-warning" id="facesperadata" name="facesperadata"
+									data-toggle="modal" data-target="#Factsperadata" style="cursor:pointer;">
+									<img src="/images/factespera.png" width="30px" />
+									<p>Fac Espera</p>
+								</button><label>&nbsp;</label>
+
+
+								<button type="button" class="btn btn-danger" id="anularFacR" name="anularFacR"
+									data-toggle="modal" data-target="#AnufacMo" style="cursor:pointer;">
+									<img src="/images/anular.png" width="30px" />
+									<p>Anular Fac</p>
+								</button><label>&nbsp;</label>
+
+								<button style="cursor:pointer;" type="button" class="btn btn-primary"
+									id="printPedidoTicket" name="printPedidoTicket">
+									<img src="/images/print.png" width="30px" />
+									<p>Imprimir P.</p>
+								</button><label>&nbsp;</label>
+								
+								<button style="cursor:pointer;background-color:rgb(107,35,150);color:rgb(255,255,255);" type="button" class="btn"
+									id="getPesoTaraLog" name="getPesoTaraLog" >
+									<img src="/images/AbalanzaICO.png" width="30px" />
+									<p>Balanza P.</p>
+								</button><label>&nbsp;</label>
+								
+							</ul>
+						</div>
+					</nav>
+
+				</div>
+
+			</div>
+
+			<div>
+				<div>
+					<input type="text" value="BALANZA :"
+						style="background-color:transparent;border-style: none;font-weight:bold;width:100px;" disabled>
+					<input type="text" name="lecBalanzaData" id="lecBalanzaData" 
+						style="background-color:rgb(100,100,100);color:rgb(255,250,23);font-weight:bold;width:120px;"
+						oninput="CestConfigBalanza()">
+						
+					<!-- <button type="button" class="btn btn-success" id="inicioLectBalanza" name="inicioLectBalanza" >Balanza</button> -->
+
+					<input type="text" value="N°CESTAS :"
+						style="background-color:transparent;border-style: none;font-weight:bold;width:100px;" disabled>
+					<input type="text" name="cantidadCestasID" id="cantidadCestasID"
+						onkeypress="return isNumberKey(event, this);"
+						style="background-color:rgb(100,100,100);color:rgb(255,250,23);font-weight:bold;width:50px;"
+						maxlength="" oninput="CestConfigBalanza()">
+
+					<input type="text" value="P.CESTA :"
+						style="background-color:transparent;border-style: none;font-weight:bold;width:90px;" disabled>
+					<input type="text" name="pesoCestasID" id="pesoCestasID" onkeypress="return NumCheck(event, this);"
+						style="background-color:rgb(100,100,100);color:rgb(255,250,23);font-weight:bold;width:90px;"
+						maxlength="" oninput="CestConfigBalanza()">
+						
+						<input type="text" id="SumPesoBalanza" name="SumPesoBalanza"
+						style="background-color:rgb(100,100,100);color:rgb(25,250,20);font-weight:bold;width:100px;" disabled>
+						<input type="text" id="PesoBalanzaService" name="PesoBalanzaService"
+						style="background-color:rgb(100,100,100);color:rgb(255,250,23);font-weight:bold;width:100px;" disabled>
+						
+						<input type="checkbox"  id="dataRestTara" name="dataRestTara" style="width:35px;height:25px;">
+						<input type="hidden" id="datainfoUlt" name="datainfoUlt">
+						<input type="hidden" id="datainfoUlt2" name="datainfoUlt2">
+						
+						<input type="hidden" id="datainfoUlt3" name="datainfoUlt3">
+						<input type="hidden" id="datainfoUlt4" name="datainfoUlt4" value="0">
+					<label>&nbsp;</label><label>&nbsp;</label><label>&nbsp;</label><label>&nbsp;</label>
+					
+
+					<input type="text" value="CARGA PESADAS :"
+						style="background-color:transparent;border-style: none;font-weight:bold;width:150px;" disabled>
+					<input type="text" name="cargaPesadasID" id="cargaPesadasID" value="0"
+						style="background-color:rgb(100,100,100);color:rgb(255,250,23);font-weight:bold;width:120px;"
+						maxlength="" disabled>
+					<button class="" type="button" id="capturaPeso" name="capturaPeso"
+						style="background-color: rgb(20,215,20);font-weight:bold;">GET </button>
+
+
+
+				</div>
+			</div>
+
+			<div id="contentAccess">
+
+			</div>
+
+			<div class="modal fade bd-example-modal-xl" id="Scanner" tabindex="-1" role="dialog"
+				aria-labelledby="ScannerTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="ScannerTitle">Scanner</h5>
+							<button type="button" name="closeKey" id="closeKey" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="container">
+
+								<div class="">
+									<div class="col-12 mt-5">
+
+										<p id="resultado">Aquí aparecerá el código</p>
+										<input type="hidden" id="codigoProd">
+										<input type="hidden" id="cantidadPeso">
+
+										<div class="card" style="width:50%; margin-left: 5px;">
+										</div>
+										<div>
+											<p id="resul2"></p>
+										</div>
+										<div id="contenedorScanner"></div>
+										<!-- Cargamos Quagga y luego nuestro script -->
+										<script th:src="@{js/quaggaS.min.js}"></script>
+
+										<script>
+
+										</script>
+										<script>
+
+											var sound = new Audio("js/sounds.wav");
+											document.addEventListener("DOMContentLoaded", () => {
+
+												const $resultados = document.querySelector("#resultado");
+
+												Quagga.init({
+													inputStream: {
+														constraints: {
+															width: 1920,
+															height: 1080,
+															mirror: false
+
+														},
+														name: "Live",
+														type: "LiveStream",
+														mirror: false,
+														target: document.querySelector('#contenedorScanner'), // Pasar el elemento del DOM  
+													},
+													decoder: {
+														readers: [{
+															format: "ean_reader",
+															config: {
+																numOfWorkers: 1,
+																locate: false,
+																frequency: 1,
+																debug: false,
+
+															}
+														}]
+														/*
+														readers: ["code_128_reader"],
+														readers: ["code_39_reader"],
+														readers: ["code_39_vin_reader"],
+														readers: ["ean_extended_reader"],
+														readers: ["ean_8_reader"],
+														readers: ["upc_reader"],
+														readers: ["upc_e_reader"],
+														readers: ["codabar_reader"],
+														readers: ["i2of5_reader"],
+														readers: ["2of5_reader"],
+														readers: ["code_93_reader"],
+														readers: ["ean_reader"]*/
+
+													}
+
+
+												}, function (err) {
+
+													if (err) {
+														console.log(err);
+														return
+													}
+													console.log("Iniciado correctamente");
+													Quagga.start();
+
+												});
+
+
+
+												Quagga.onDetected((data) => {
+
+													sound.play();
+													$resultados.textContent = data.codeResult.code;
+													var nest = data.codeResult.code;
+
+													var ScannerVal = data.codeResult.code;
+													var codPro = ScannerVal.substring(7, -1);
+													var rest = 7;
+													var srtced = ScannerVal.substring(rest);
+													var enCan = srtced.substring(2, -1);
+													var desCan = srtced.substring(2);
+													var peso = enCan + "." + desCan;
+
+													$("#codigoProd").val(codPro);
+													$("#cantidadPeso").val(peso);
+
+
+													$("#selectEvidencia").val(data.codeResult.code);
+													$("#selectEvidencia").focus();
+
+													document.querySelector('button[name=btnScannerSub]').addEventListener('click', function (e) {
+														e.preventDefault(e);
+													})
+													document.querySelector('button[name=btnScannerSub]').click();
+
+
+													document.querySelector('button[name=closeKey]').addEventListener('click', function (e) {
+														e.preventDefault(e);
+													})
+													document.querySelector('button[name=closeKey]').click();
+
+													Quagga.stop(1000);
+
+													// Imprimimos todo el data para que puedas depurar
+													console.log(data);
+
+												});
+
+												Quagga.onProcessed(function (result) {
+													var drawingCtx = Quagga.canvas.ctx.overlay,
+														drawingCanvas = Quagga.canvas.dom.overlay;
+
+													if (result) {
+														if (result.boxes) {
+															drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute("width")), parseInt(drawingCanvas.getAttribute("height")));
+															result.boxes.filter(function (box) {
+																return box !== result.box;
+															}).forEach(function (box) {
+																Quagga.ImageDebug.drawPath(box, {x: 0, y: 1}, drawingCtx, {color: "green", lineWidth: 2});
+															});
+														}
+
+														if (result.box) {
+															Quagga.ImageDebug.drawPath(result.box, {x: 0, y: 1}, drawingCtx, {color: "#00F", lineWidth: 2});
+														}
+
+														if (result.codeResult && result.codeResult.code) {
+															Quagga.ImageDebug.drawPath(result.line, {x: 'x', y: 'y'}, drawingCtx, {color: 'red', lineWidth: 3});
+														}
+													}
+												});
+
+
+											});
+
+										</script>
+										<br>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="">
+				<div class="">
+
+					<div class="">
+
+					</div>
+
+					<div class="table-responsive-xl" style="height:49vh;overflow-y:auto;" id="scrollBUSPed">
+
+						<table class="table table-hover" id="studentsInfo">
+							<thead class="" style="font-weight:bold;font-size:10pt;background-color: rgb(240,240,240);">
+								<tr>
+									<th scope="col" style="width:5%">N°</th>
+									<th scope="col" style="width:10%">CO</th>
+									<th scope="col" style="width:25%">Descripción</th>
+									<th scope="col" style="width:5%">Cantidad</th>
+									<th scope="col" style="width:7%">Unid</th>
+									<th scope="col" style="width:10%">Precio</th>
+									<th scope="col" style="width:10%">IVA</th>
+									<th scope="col" style="width:10%">Total</th>
+									<th scope="col" style="width:10%">$</th>
+
+									<th scope="col">Opciones</th>
+
+								</tr>
+							</thead>
+							<div class="">
+								<tbody role="tr" id="NewEvidencia" style="background-color: rgb(255,255,255);">
+
+
+								</tbody>
+							</div>
+						</table>
+
+					</div>
+					<div class=" text-center text-white ">
+						<img src="/images/PACOwlogo.png" height="40px" width="80px" style="margin-left: 5pt;" />
+						<label style="font-size: 12pt;color:rgb(0,0,0);">®</label>
+					</div>
+				</div>
+
+			</div>
+
+
+			<div class="modal fade bd-example-modal-xl" id="UpdateCliData" tabindex="-1" role="dialog"
+				aria-labelledby="UpdateCliDataTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="UpdateCliDataTitle">Editar Datos</h5>
+							<button type="button" name="closeEdclib" id="closeEdCli" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="container" method="POST" th:object="${postID}">
+								<div class="">
+
+									<div class="col-12 ">
+										<strong>CAJA : <label id="co_venData"
+												style="color:rgb(0,200,0);">.</label></strong>
+										<h1>Grebca ©</h1>
+										<br>
+									</div>
+
+									<div class="needs-validation" validate>
+										<div class="form-row">
+											<div class="col-md-8 mb-4">
+												<label for="validationTooltip01">RIF/C.I</label>
+												<div class="input-group input-group-lg">
+													<input th:value="*{ced}" minlength="7" maxlength="10" name="ced"
+														type="text" class="form-control" placeholder="RIF/C.I "
+														onkeyup="javascript:this.value=this.value.toUpperCase();"
+														disabled id="ced"
+														style="font-weight:bold;color:black;font-size: 17pt;"></input>
+													<input th:value="*{ced}" minlength="7" maxlength="15" name="ced"
+														type="hidden" class="form-control" placeholder="RIF/C.I "
+														onkeyup="javascript:this.value=this.value.toUpperCase();"></input>
+												</div>
+												<div class="valid-tooltip">
+													<p></p>
+												</div>
+											</div>
+											<div class="col-md-8 mb-4">
+												<label for="validationTooltip02">Razon Social</label>
+												<div class="input-group input-group-lg">
+
+													<input th:value="*{desc}" name="desc" type="text"
+														class="form-control" placeholder="Descripción"
+														onkeyup="javascript:this.value=this.value.toUpperCase();"
+														required id="desc"
+														style="font-weight:bold;color:black;font-size: 17pt;">
+												</div>
+												<div class="valid-tooltip">
+
+												</div>
+											</div>
+											<div class="col-md-4 mb-3">
+												<label for="validationTooltipUsername">Telefono</label>
+												<div class="input-group input-group-lg">
+													<div class="input-group-prepend ">
+														<span class="input-group-text"
+															id="validationTooltipUsernamePrepend">#</span>
+													</div>
+													<input th:value="*{telef}" name="telef" type="number"
+														class="form-control" id="telef" placeholder="Telefono"
+														aria-describedby="validationTooltipUsernamePrepend" required
+														style="font-weight:bold;color:black;font-size: 17pt;"
+														maxlength="12">
+													<div class="invalid-tooltip">
+
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="col-md-8 mb-4">
+												<label for="validationTooltip03">Dirección</label>
+												<div class="input-group input-group-lg">
+													<input th:value="*{direc}" name="direc" type="text"
+														class="form-control" id="direc" placeholder="Dirección"
+														style="font-weight:bold;color:black;font-size: 17pt;"
+														onkeyup="javascript:this.value=this.value.toUpperCase();"
+														required>
+												</div>
+												<div class="invalid-tooltip">
+												</div>
+											</div>
+										</div>
+										<input class="btn btn-primary btn-lg btn-block" type="button"
+											value="Guardar Registros" id="guardarCli" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade bd-example-modal-xl" id="Factspera" tabindex="-1" role="dialog"
+				aria-labelledby="FactsperaTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="FactsperaTitle">Factura en espera #<input
+									style="background-color:transparent;border-style:none; font-weight:bold;color:black;font-size: 12pt;"
+									id="NfacturaCobespera" disabled></input></h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"
+								id="btnCloseFactspera" name="btnCloseFactspera">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="container">
+
+								<div class="">
+									<div class="col-12 mt-0">
+										<h5>Grebca ©</h5>
+										<br>
+									</div>
+									<form action="@{/PACOCotizacion}" method="POST" th:object="${postID}">
+										<input type="hidden" name="co_venCO" th:value="*{co_venCO}" id="co_venIDs">
+										<button type="submit" class="btn btn-danger " id="" name="">Confirmar</button>
+									</form>
+
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="modal fade bd-example-modal-xl" id="ProductosRegDB" style="max-width: 100%;" tabindex="-1"
+				role="dialog" aria-labelledby="ProductosRegDBTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-xl" role="document" style="width:100%;">
+					<div class="modal-content modal-xl">
+						<div class="modal-header" style="background-color:rgb(170,170,170);">
+							<h5 class="modal-title" id="ProductosRegDBTitle">Lista de productos</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"
+								id="btnCloseListPro" name="btnCloseListPro">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="">
+								<div class="">
+									<div class="col-18">
+										<h5>Grebca ©</h5>
+
+									</div>
+									<input class="form-control" type="text" id="searchFilter" name="searchFilter"
+										autocomplete="off" placeholder="Buscar" style='color:black;font-weight:bold;'>
+
+									<div class="table-responsive-xl" style="overflow-y:auto;">
+										<table class="table table-hover" id="">
+											<thead style="background-color:rgb(180,180,180);">
+												<tr>
+
+
+												</tr>
+											</thead>
+
+										</table>
+									</div>
+
+
+									<div class="table-responsive-xl" style="height:50vh;overflow-y:auto;">
+
+
+										<table class="table table-hover" id="">
+											<thead style="top:0;background-color:rgb(180,180,180);">
+												<tr>
+													<th scope=" col" style="width:5%" data-field="contNarc">N°</th>
+													<th scope=" col" style="width:10%" data-field="contNarc">CO</th>
+													<th scope="col" style="width:25%" data-field="art_des">Descripción
+													</th>
+													<th scope="col" style="width:5%" data-field="uni_venta">Unid</th>
+													<th scope="col" style="width:15%" data-field="prec_vta1">Precio</th>
+													<th scope="col" style="width:10%" data-field="">Cantidad</th>
+													<th scope="col" style="width:15%" data-field="">Iva</th>
+													<th scope="col" style="width:15%" data-field="">Total</th>
+													<th scope="col" style="width:15%" data-field="">$</th>
+													<th scope="col" style="width:10%" data-field="">cant3</th>
+													<th scope="col" style="width:15%" data-field="">$M3</th>
+
+
+													<th scope="col" data-field="action" data-formatter="actionFormatter"
+														data-events="actionEvents">Opciones</th>
+
+												</tr>
+											</thead>
+											<tbody role="tr" id="ListArtProfit">
+
+											</tbody>
+										</table>
+									</div>
+
+								</div>
+							</div>
+							<div class="modal-footer">
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+
+			<div id="bgventana">
+				<div di="ventana">
+					<div class="container ">
+						<div class="">
+							<div class="modal-content">
+
+								<div class="modal-header">
+									<h4 class="modal-title">Registrar Cliente</h4>
+
+									<form th:action="@{/PACOCotizacion}" method="POST" th:object="${postID}">
+										<input type="hidden" name="co_venCO" th:field="*{co_venCO}"
+											th:value="*{co_venCO}" id="co_venIDs">
+
+										<button type="submit" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</form>
+
+
+								</div>
+								<div class="modal-body">
+
+									<div class="container">
+
+										<div class="">
+											<div class="col-12 mt-5">
+												<h1>Grebca ©</h1>
+												<br>
+											</div>
+
+											<form th:action="@{/addNewPostPed2}" method="POST" th:object="${postID}"
+												class="needs-validation" validate>
+												<div class="form-row">
+													<div class="col-md-8 mb-4">
+														<label for="validationTooltip01">RIF/C.I</label>
+														<div class="input-group input-group-lg">
+															<input th:field="*{ced}" th:value="*{ced}" minlength="7"
+																maxlength="10" name="ced" type="text"
+																class="form-control" placeholder="RIF/C.I "
+																id="cedDatacli"
+																onkeyup="javascript:this.value=this.value.toUpperCase();"
+																disabled
+																style="font-weight:bold;color:black;font-size: 17pt;"></input>
+															<input th:field="*{ced}" th:value="*{ced}" minlength="7"
+																maxlength="15" name="ced" type="hidden"
+																class="form-control" placeholder="RIF/C.I "
+																onkeyup="javascript:this.value=this.value.toUpperCase();"></input>
+														</div>
+														<div class="valid-tooltip">
+															<p></p>
+														</div>
+
+														<input type="hidden" name="co_venCO" th:field="*{co_venCO}"
+															th:value="*{co_venCO}">
+													</div>
+													<div class="col-md-8 mb-4">
+														<label for="validationTooltip02">Razon Social</label>
+														<div class="input-group input-group-lg">
+
+															<input th:field="*{desc}" th:value="*{desc}" name="desc"
+																type="text" class="form-control"
+																placeholder="Descripción" id="razonsodata"
+																onkeyup="javascript:this.value=this.value.toUpperCase();"
+																required
+																style=" font-weight:bold;color:black;font-size: 17pt;"
+																autocomplete="off">
+														</div>
+														<div class="valid-tooltip">
+
+														</div>
+													</div>
+													<div class="col-md-4 mb-3">
+														<label for="validationTooltipUsername">Telefono</label>
+														<div class="input-group input-group-lg">
+															<div class="input-group-prepend ">
+																<span class="input-group-text"
+																	id="validationTooltipUsernamePrepend">#</span>
+															</div>
+															<input th:field="*{telef}" th:value="*{telef}" name="telef"
+																type="number" class="form-control"
+																placeholder="Telefono" required autocomplete="off"
+																aria-describedby="validationTooltipUsernamePrepend"
+																style=" font-weight:bold;color:black;font-size: 17pt;">
+															<div class="invalid-tooltip">
+
+															</div>
+														</div>
+													</div>
+
+												</div>
+												<div class="form-row">
+													<div class="col-md-8 mb-4">
+														<label for="validationTooltip03">Dirección</label>
+														<div class="input-group input-group-lg">
+															<input th:field="*{direc}" th:value="*{direc}" name="direc"
+																type="text" class="form-control" placeholder="Dirección"
+																required autocomplete="off"
+																onkeyup="javascript:this.value=this.value.toUpperCase();"
+																style="font-weight:bold;color:black;font-size: 17pt;">
+														</div>
+														<div class="invalid-tooltip">
+
+														</div>
+													</div>
+
+
+												</div>
+												<input class="btn btn-primary btn-lg btn-block" type="submit"
+													value="Registrar cliente" style=" font-weight:bold;font-size: 17pt;"
+													onclick="registrodatacli()" />
+											</form>
+
+										</div>
+
+									</div>
+								</div>
+								<div class="modal-footer">
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+			<script type="text/javascript" th:src="@{js/FuncReloj.js}"></script>
+
+
+			<script>
+				var elemc = document.getElementById("scriptScren");
+
+				/*	function openFullscreen() {
+						if (elemc.requestFullscreen == true) {
+							elemc.requestFullscreen();
+						}
+						if (elemc.webkitRequestFullscreen != true) {
+							elemc.webkitRequestFullscreen();
+						}
+						if (elemc.msRequestFullscreen == true) {
+							elemc.msRequestFullscreen();
+						}
+					}*/
+			</script>
+
+
+			<script>
+				function NoBack() {
+
+					window.location.hash = 'no-back-button';
+					window.location.hash = 'Again-No-back-button'
+					window.onhashchange = function () {
+						window.location.hash = "";
+						history.forward();
+					}
+
+					if ($('#Nfactura').val() == 0) {
+						$('#selectEvidencia').hide();
+						history.forward();
+
+					}
+					if ($('#nfaccli').val() == 0) {
+
+						var co_ven = $("#co_venIDSS").val();
+						$("#co_venIDs").val(co_ven);
+						history.forward();
+						document.getElementById('bgventana').style.visibility = ('visible');
+
+					}
+
+
+				}
+
+			</script>
+			<script>
+
+				$(document).ready(function () {
+					$("#searchFilter").on("keyup", function () {
+						var value = $(this).val().toLowerCase();
+						$("#ListArtProfit tr").filter(function () {
+							$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+						});
+					});
+				});
+
+
+				$(document).ready(function () {
+					$("#searchFilterPRODUC").on("keyup", function () {
+						var value = $(this).val().toLowerCase();
+						$("#NewEvidencia tr").filter(function () {
+							$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+						});
+					});
+				});
+
+			</script>
+
+		</div>
+	</div>
+</body>
+
+</html>

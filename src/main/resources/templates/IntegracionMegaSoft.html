@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwww.Thymeleaf.org">
+
+<head>
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>MegaSoft & PACO</title>
+	<link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+
+	<script type="text/javascript" th:src="@{js/jquery-3.6.4.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/MegaSoftJS.js}"></script>
+	<script type="text/javascript" th:src="@{js/swal2.js}"></script>
+
+
+</head>
+
+<body>
+	<div class="container">
+		<input class="form-control" type="text" id="ipAddressPublic" disabled>
+		<button class="btn btn-primary" type="button" id="buttonIP">IP</button>
+		<h2>Test PACO & MegaSoft</h2>
+		<form id="pagos">
+			<input class="form-control" type="text" name="monto" placeholder="Monto" id="montoTarje">
+			<input class="form-control" type="text" name="cedula" placeholder="Cedula" id="cedulaTarje">
+			<input class="form-control" type="text" name="montoDonativo" placeholder="MontoDonativo"
+				id="montoDinativoTarje">
+			<select class="form-control" id="tipoMneda">
+				<option value=""> Seleccione moneda</option>
+				<option value="VES">Bolivares</option>
+				<option value="USD">Dolares</option>
+				<option value="EUR">EURO</option>
+			</select></br>
+			<button class="btn btn-primary" type="button" value="Tarjetas" id="btntarje" name="btntarje"
+				onclick="conParametros('tarjeta');">Pago Electronicos</button>
+
+			<button class="btn btn-primary" type="button" value="C@mbio"
+				onclick="conParametros('cambio');">C@mbio</button>
+
+		</form>
+
+
+
+		<form id="anulacion">
+			</br>
+			<input class="form-control" type="text" name="numeroSecuencia" placeholder="numero secuencia">
+			<input class="form-control" type="text" name="terminalVirtual" placeholder="VTerminal"><br>
+			<input class="btn btn-danger" type="button" value="Anulacion" onclick="conParametros('anulacion');">
+		</form>
+
+		<!-- Vouchers -->
+		<br>
+		<fieldset>
+			<legend>Vouchers:</legend>
+			<form id="vouchers">
+				<button class="btn btn-primary" type="button" value="Ultimo Voucher Aprobado" onclick="sinParametros('imprimeUltimoVoucher');">Ultimo Voucher Aprobado</button>
+				<button class="btn btn-primary" type="button" value="Ultimo Voucher Procesado" onclick="sinParametros('imprimeUltimoVoucherP');">Ultimo Voucher Procesado</button>
+			</form>
+		</fieldset>
+
+		<!-- Procesos de Cierre -->
+		<br>
+		<fieldset>
+			<legend>Procesos de Cierre:</legend>
+			<form id="cierre">
+				<button class="btn btn-primary" type="button" value="Precierre" onclick="cierreParametros('precierre');">Precierre</button>
+				<button class="btn btn-primary" type="button" value="Cierre" onclick="cierreParametros('cierre');">Cierre</button>
+				<button class="btn btn-primary" type="button" value="Ultimo Cierre" onclick="cierreParametros('ultimoCierre');">Ultimo Cierre</button>
+			</form>
+		</fieldset>
+
+	</div>
+
+</body>
+
+</html>

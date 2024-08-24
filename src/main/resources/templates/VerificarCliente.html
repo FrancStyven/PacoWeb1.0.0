@@ -1,0 +1,2427 @@
+<!DOCTYPE html>
+<htmt xmlns:th="http://www.Thymeleaf.org" id="screenAll">
+
+	<head>
+		<title>PACOweb</title>
+		<meta name="viewport" content="width=device-width, initial-scale=0.8">
+		<meta charset="utf-8">
+		<link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+		<link rel="stylesheet" th:href="@{css/fullScreen.css}">
+
+		<script type="text/javascript" th:src="@{js/jquery-3.6.4.min.js}"></script>
+		<script type="text/javascript" th:src="@{js/AdminInterfazJS.js}"></script>
+		<script type="text/javascript" th:src="@{js/OnAccess.js}"></script>
+		<script type="text/javascript" th:src="@{js/cobProEdit.js}"></script>
+		<script type="text/javascript" th:src="@{js/InputDocument.js}"></script>
+		<script type="text/javascript" th:src="@{js/MegaSoftJS.js}"></script>
+		<script type="text/javascript" th:src="@{js/swal2.js}"></script>
+		<script type="text/javascript" th:src="@{js/MonitorProductVISTAJS.js}"></script>
+		<script type="text/javascript" th:src="@{js/FuncionesReportJS.js}"></script>
+
+		<script type="text/javascript" th:src="@{js/ReporPACOPlusPreciosJS.js}"></script>
+
+
+
+	</head>
+
+	<body onload="Focus()" style="background-color: rgb(255,255,255);min-height:200px; max-height:100%;"
+		id="scriptScren">
+
+		<div id="screen">
+			<input type="hidden" id="IDagregar" name="IDagregar">
+			<input type="hidden" id="IDmodificar" name="IDmodificar">
+			<input type="hidden" id="IDregistrar" name="IDregistrar">
+			<input type="hidden" id="IDeliminar" name="IDeliminar">
+
+			<input type="hidden" id="cajaEfectBs" name="cajaEfectBs">
+			<input type="hidden" id="cajaEfectUs" name="cajaEfectUs">
+			<input type="hidden" id="monedaBs" name="monedaBs">
+			<input type="hidden" id="monedaUs" name="monedaUs">
+
+			<input type="hidden" id="IDscanner" name="IDscanner">
+			<input type="hidden" id="lect_qr" name="lect_qr">
+			<input type="hidden" id="dire_insta" name="dire_insta">
+			<input type="hidden" id="valid_stock" name="valid_stock">
+
+
+			<header th:fragment="header">
+
+				<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+					<a class="navbar-brand" href="#"></a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse"
+						data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false"
+						aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+
+					<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+						<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+							<li class="nav-item active">
+								<a class="nav-link" href=""> <span class="sr-only">(current)</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link"><button class="btn btn-info btn-block" type="button"
+										title="Reimprimir factura" style="font-weight:bold;font-size:9pt;"
+										data-toggle="modal" data-target="#ReimprimirFact" id="Reimprefactid">Reimprimir
+										<img src="/images/print.png" height="35px" width="50px" /></button></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link"><button class="btn btn-info btn-block" type="button"
+										title="Imprimir reportes" style="font-weight:bold;font-size:9pt;"
+										data-toggle="modal" data-target="#Reportex" id="Reportexid">Reportes <img
+											src="/images/reporxX.png" height="35px" width="50px" /></button></a>
+							</li>
+
+
+							</li>
+
+
+							<li class="nav-item">
+								<a class="nav-link"><button class="btn btn-info btn-block" type="button"
+										title="Retomar factura es espera" style="font-weight:bold;font-size:9pt;"
+										data-toggle="modal" data-target="#facEspera" id="facEsperaID"> Fac Espera <img
+											src="/images/factespera.png" height="35px" width="50px" /> </button></a>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link"><button class="btn btn-info btn-block" type="button"
+										title="Importar Cotizaciones" style="font-weight:bold;font-size:9pt;"
+										data-toggle="modal" data-target="#facCotiz" id="facCotizc" name="facCotizc">
+										Import
+										Fac <img src="/images/agregarpro.png" height="35px" width="50px" />
+									</button></a>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link"><button class="btn btn-info btn-block" type="button"
+										title="Devoluciones de clientes" style="font-weight:bold;font-size:9pt;"
+										data-toggle="modal" data-target="#devoluCli" id="devCli" name="devCli">
+										Devolución
+										<img src="/images/devolucion.png" height="35px" width="50px" /> </button></a>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link"><button class="btn btn-info btn-block" type="button"
+										title="Operaciones de Caja" style="font-weight:bold;font-size:9pt;"
+										data-toggle="modal" data-target="#OperacionesCajas" id="OperacionesCajasID"
+										name="OperacionesCajasID"> Operaciones <img src="/images/tasa.png" height="35px"
+											width="50px" /> </button></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link"><button class="btn btn-info btn-block" type="button"
+										title="Herramientas de sistemas" style="font-weight:bold;font-size:9pt;"
+										data-toggle="modal" data-target="#systemPACO" id="systemPACOID"
+										name="systemPACOID">
+										Sys PACO <img src="/images/engranaje.png" height="35px" width="50px" />
+									</button></a>
+							</li>
+
+
+
+						</ul>
+
+						<form th:action="@{/PACOweb#}" method="GET">
+							<input type="hidden" name="co_ven" value="0">
+							<button class="btn btn-danger btn-block" type="submit" id="btnExit" name="btnExit"
+								style="font-weight:bold;font-size:9pt;">Salir <img src="/images/closesesion.png"
+									height="35px" width="40px" title="Salir"></button>
+						</form>
+					</div>
+				</nav>
+				<div class="jumbotron" style="background-color: rgb(255,255,255);margin-top: -30px;">
+					<h1 class="display"
+						title="Aplicación web Desarrollada por especialistas GREBCA © J-402830414-9. Garantizando tus registros"
+						style="font-family: impact;">
+
+						<img src="/images/empresa.png" height="155px" width="400px" max-width="100%"
+							style="margin-left: 0pt;" />
+
+						<div style="position: absolute;right:0px;">
+							<div class="d-grid d-md-flex justify-content-md-end">
+
+							</div>
+						</div>
+
+
+					</h1>
+					<label>
+						<input class="" value="" id="nameEmpresa" disabled
+							style="background-color: transparent;border-style:none;font-weight:bold;width:350px;">
+					</label>
+
+					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#ProductosRegDBListVer"
+						id="LisProducLIST" name="LisProducLIST">
+						<img src="/images/productolis.png" width="30px" />
+
+					</button>
+					<h5 class="display"
+						style="background-color: transparent;border-style:none;font-weight:bold;font-size:14pt;">
+						</h6>
+						<h5 class="display"></h5>
+
+
+						<div method="POST" th:object="${post}">
+							<label> CAJA :
+								<input class="" th:field="*{co_ven}" th:value="*{co_ven}" id="co_venID" disabled
+									style="background-color: transparent;border-style:none;font-weight:bold;font-size:29pt;width:170px;">
+							</label>
+
+						</div>
+
+
+
+						<button type="button" class="btn  btn-lg" id="updatePagID" name="updatePagID"><img
+								src="/images/UpdateInfor.png" height="25px" width="25px" /></button>
+
+						<label>&nbsp;</label>
+
+						<div class="container">
+							<hr class="my-1">
+							<div class="" style="margin:0 auto;">
+
+							</div>
+
+							<form th:action="@{/FacturaCargoCliente}" method="POST" id="clientesform"
+								th:object="${post}">
+								<div class="form-group">
+									<label for="exampleInputEmail1"></label>
+
+									<p id="InfoDatosCli"></p>
+									<div class="input-group input-group-lg">
+
+										<button class="btn btn-info" type="button" style="border-style:none;width:50px;"
+											data-toggle="modal" data-target="#busClientAccess" id="busClientAccessID"
+											name="busClientAccessID"><img src="/images/cliente.png"
+												style="width:30px;height:31px;"></button>
+
+										<input class="form-control form-control-lg use-keyboard-input" type="text"
+											style="font-weight:bold;font-size:20pt;text-transform:uppercase;"
+											onkeyup="javascript:this.value=this.value.toUpperCase();" name="ced"
+											placeholder="RIF/C.I/N#" maxlength="10" oninput=" onlyK(value)" id="txtK"
+											autocomplete="off" required>
+									</div>
+
+									<input type="hidden" name="co_venCO" id="co_venIDss" th:field="*{co_venCO}"
+										th:value="*{co_venCO}">
+
+
+								</div>
+
+								<button class="btn btn-info btn-block " type="submit" id="subButton"
+									name="subButton">Generar Factura <img src="/images/nfactura.png" width="35px"
+										height="35px" /></button>
+
+							</form>
+
+						</div>
+						<br>
+						<button type="button" id="clickscreen" name="clickscreen"
+							style="background-color: transparent;border-style:none;"></button>
+						<div class=" text-center text-white ">
+							<img src="/images/PACOwlogo.png" height="50px" width="90px" style="margin-left: 5pt;" />
+							<label style="font-size: 12pt;color:rgb(0,0,0);">®</label>
+						</div>
+
+				</div>
+
+			</header>
+
+			<div style="position:absolute;margin-left:-2000px;">
+				<button type="button" id="conCliID" name="conCliID"
+					style="background-color: transparent;border-style:none;"></button>
+			</div>
+
+			<div class="modal fade bd-example-modal-xl" id="busClientAccess" tabindex="-1" role="dialog"
+				aria-labelledby="busClientAccessTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+					<div class="modal-content">
+						<div class="modal-header " style="font-weight:bold;font-size:9pt;color:midnightblue;">
+							<h5 class="modal-title " id="busClientAccessTitle" style="font-weight:bold;font-size:9pt;">
+								<img src="/images/cliente.png" height="20px" width="25px" /> Lista de Clientes
+							</h5>
+							<div class="col-md-0 ml-auto">
+
+							</div>
+							<button type="button" class="close" id="closebusClientAccess" name="closebusClientAccess"
+								data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="">
+								<div class="">
+									<input class="form-control" type="text" id="searchFiltercocli" placeholder="Buscar"
+										autocomplete="off"
+										style="font-weight:bold;font-size:20pt;text-transform:uppercase;"
+										onkeyup="javascript:this.value=this.value.toUpperCase();"
+										oninput="searInteval()">
+
+									<div class="table-responsive-xl" style="height:50vh;overflow-y:scroll;">
+										<br>
+										<table class="table table-hover" id="">
+											<thead style="background-color:rgb(200,200,200);">
+												<tr>
+													<th scope="col" style="width:5%" data-field="">N°</th>
+
+													<th scope="col" style="width:20%" data-field="">C.I/RIF</th>
+													<th scope="col" style="width:30%" data-field="">Razon_social</th>
+													<th scope="col" style="width:25%" data-field="">Dirección</th>
+													<th scope="col" style="width:20%" data-field="">Telefono</th>
+
+													<th scope="col" data-field="action" data-formatter="actionFormatter"
+														data-events="actionEvents">Opciones</th>
+
+												</tr>
+											</thead>
+											<tbody role="tr" id="listClientetr">
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="card">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="modal fade bd-example-modal-xl" id="ReimprimirFact" tabindex="-1" role="dialog"
+				aria-labelledby="ReimprimirFactTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+					<div class="modal-content">
+						<div class="modal-header " style="font-weight:bold;font-size:9pt;color:midnightblue;">
+							<h5 class="modal-title " id="ReimprimirFactTitle" style="font-weight:bold;font-size:9pt;">
+								<img src="/images/print.png" height="20px" width="25px" /> Reimprimir
+							</h5>
+							<div class="col-md-0 ml-auto">
+
+							</div>
+							<button type="button" class="close" id="closeReimprimirFact" name="closeReimprimirFact"
+								data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="">
+								<div class="card">
+									<button type="button" class="btn btn-info" style="font-weight:bold;font-size:11pt;"
+										id="ReimpfacUlt" name="ReimpfacUlt" data-toggle="modal"
+										data-target="#ReimpfacUlti">Ultima factura (FISCAL)</button>
+								</div>
+								<br>
+								<div class="card">
+									<h5 style="font-weight:bold;font-size:11pt;">Imprimir factura por numero</h5>
+									<input type="number" class="form-control" id="numfact" name="numfac">
+									<button type="button" class="btn btn-info" style="font-weight:bold;font-size:11pt;"
+										id="ReimpriXnum" name="ReimpriXnum" data-toggle="modal"
+										data-target="#ReimpriXnumi">Imprimir (FISCAL)</button>
+								</div>
+								<br>
+								<div class="card">
+									<button type="button" class="btn btn-secondary"
+										style="font-weight:bold;font-size:11pt;" id="ReimpfacUltTicket"
+										name="ReimpfacUltTicket" data-toggle="modal"
+										data-target="#ReimpfacUltiTicket">Ultima factura (TICKET)</button>
+								</div>
+								<br>
+								<div class="card">
+									<h5 style="font-weight:bold;font-size:11pt;">Imprimir factura por numero</h5>
+									<input type="number" class="form-control" id="numfactTicket" name="numfacTicket">
+									<button type="button" class="btn btn-secondary"
+										style="font-weight:bold;font-size:11pt;" id="ReimpriXnumTicket"
+										name="ReimpriXnumTicket" data-toggle="modal"
+										data-target="#ReimpriXnumiTicket">Imprimir (TICKET)</button>
+								</div>
+								</br>
+								<div class="card">
+									<h5 style="font-weight:bold;font-size:11pt;">Imprimir factura por cliente</h5>
+
+									<button type="button" class="btn btn-secondary"
+										style="font-weight:bold;font-size:11pt;" id="vistClienteID" name="vistClienteID"
+										data-toggle="modal" data-target="#VistCliente">Fact Clientes (TICKET)</button>
+								</div>
+								<div class="card">
+
+								</div>
+
+								<div class="btn-group">
+									<h5 style="font-weight:bold;font-size:11pt;">FISCAL</h5>
+									<input type="number" class="form-control" id="CORRECFICALFACT"
+										name="CORRECFICALFACT">
+									<button type="button" class="btn btn-secondary"
+										style="font-weight:bold;font-size:11pt;width:40%;" id="btnCORRECFICALFACT"
+										name="btnCORRECFICALFACT" data-toggle="modal"
+										data-target="#modelbtnCORRECFICALFACT">(.F.)</button>
+
+									<h5 style="font-weight:bold;font-size:11pt;">TICKET</h5>
+									<input type="number" class="form-control" id="CORRECTICKETFACT"
+										name="CORRECTICKETFACT">
+									<button type="button" class="btn btn-secondary"
+										style="font-weight:bold;font-size:11pt;width:40%;" id="btnCORRECTICKETFACT"
+										name="btnCORRECTICKETFACT" data-toggle="modal"
+										data-target="#modelbtnCORRECTICKETFACT">(.T.)</button>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade bd-example-modal-xl" id="VistCliente" tabindex="-1" role="dialog"
+				aria-labelledby="VistClienteTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+					<div class="modal-content">
+						<div class="modal-header " style="font-weight:bold;font-size:9pt;color:midnightblue;">
+							<h5 class="modal-title " id="VistClienteTitle" style="font-weight:bold;font-size:9pt;">
+								<img src="/images/electro.png" height="20px" width="25px" /> Factura de Clientes
+							</h5>
+							<div class="col-md-0 ml-auto">
+
+							</div>
+							<button type="button" class="close" id="closeVistCliente" name="closeVistCliente"
+								data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="">
+								<input class="form-control" type="text" id="searchFilterFact" placeholder="Buscar"
+									autocomplete="off" style='color:black;font-weight:bold;'>
+								<div class="table-responsive-xl" style="height:50vh;overflow-y:auto;">
+
+									<table class="table table-hover" id="">
+										<thead style="background-color:rgb(200,200,200);">
+											<tr>
+												<th scope="col" style="width:5%" data-field="">N°</th>
+												<th scope="col" style="width:10%" data-field="">N°Factura</th>
+												<th scope="col" style="width:15%" data-field="">C.I/RIF</th>
+												<th scope="col" style="width:20%" data-field="">Descrip</th>
+												<th scope="col" style="width:25%" data-field="">FechaEmis</th>
+												<th scope="col" style="width:15%" data-field="">Total</th>
+
+												<th scope="col" data-field="action" data-formatter="actionFormatter"
+													data-events="actionEvents">Opciones</th>
+
+											</tr>
+										</thead>
+										<tbody role="tr" id="ListProfitFactura">
+
+										</tbody>
+									</table>
+								</div>
+								<div class="card">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade bd-example-modal-xl" id="Reportex" tabindex="-1" role="dialog"
+				aria-labelledby="ReportexTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+					<div class="modal-content">
+						<div class="modal-header " style="font-weight:bold;font-size:9pt;color:midnightblue;">
+							<h5 class="modal-title " id="ReportexTitle" style="font-weight:bold;font-size:9pt;"><img
+									src="/images/reporxX.png" height="20px" width="25px" /> Reporte X</h5>
+							<div class="col-md-0 ml-auto">
+
+							</div>
+							<button type="button" class="close" id="closeReportex" name="closeReportex"
+								data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="">
+
+								<div class="card">
+									<button type="button" class="btn btn-info" id="funcionesReportID"
+										name="funcionesReportID" data-toggle="modal" data-target="#funcionesReport"
+										style="font-weight:bold;font-size:9pt;">Funciones <img
+											src="/images/engranaje.png" height="35px" width="50px" /></button>
+								</div>
+
+								<div class="card">
+									<button type="button" class="btn btn-info" id="ReporteXx" name="ReporteXx"
+										data-toggle="modal" data-target="#ReporteXxi"
+										style="font-weight:bold;font-size:9pt;">Reporte X <img src="/images/reporxX.png"
+											height="35px" width="50px" /></button>
+								</div>
+								<div class="card">
+									<button class="btn btn-info btn-block" type="button" title="Imprimir reporte Z"
+										style="font-weight:bold;font-size:9pt;" data-toggle="modal"
+										data-target="#Reportez" id="Reportezid">Reporte Z <img src="/images/reporzZ.png"
+											height="35px" width="50px" /></button>
+								</div>
+								<div class="card">
+									<button class="btn btn-info btn-block" type="button" title="Imprimir cierre de caja"
+										style="font-weight:bold;font-size:9pt;" data-toggle="modal"
+										data-target="#Cierrecaja" id="Cierrecajaid"> Reporte C <img
+											src="/images/cierreCa.png" height="35px" width="50px" /> </button>
+								</div>
+
+								<div class="card">
+									<button class="btn btn-info btn-lg" type="button"
+										title="Imprimir reportes de PINPAD" style="font-weight:bold;font-size:10pt;"
+										data-toggle="modal" data-target="#reportesPagoElec" id="reportesPagoElecID">
+										ELECTRONIC
+										<img src="/images/electro.png" height="35px" width="50px" />
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="modal fade bd-example-modal-xl" id="Reportez" tabindex="-1" role="dialog"
+				aria-labelledby="ReportezTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+					<div class="modal-content">
+						<div class="modal-header " style="font-weight:bold;font-size:9pt;color:midnightblue;">
+							<h5 class="modal-title " id="ReportezTitle" style="font-weight:bold;font-size:9pt;"><img
+									src="/images/reporzZ.png" height="20px" width="25px" /> Reporte Z</h5>
+							<div class="col-md-0 ml-auto">
+
+							</div>
+							<button type="button" class="close" id="closeReportez" name="closeReportez"
+								data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="">
+								<div class="card">
+									<button type="button" class="btn btn-info" id="btn-ReportZ" name="btn-ReportZ"
+										data-toggle="modal" data-target="#btn-ReportZi">Imprimir reporte Z</button>
+								</div>
+								<div class="card">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade bd-example-modal-xl" id="Cierrecaja" tabindex="-1" role="dialog"
+				aria-labelledby="CierrecajaTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+					<div class="modal-content">
+						<div class="modal-header " style="font-weight:bold;font-size:9pt;color:midnightblue;">
+							<h5 class="modal-title " id="CierrecajaTitle" style="font-weight:bold;font-size:9pt;"><img
+									src="/images/cierreCa.png" height="20px" width="25px" /> Cierre de caja</h5>
+							<div class="col-md-0 ml-auto">
+
+							</div>
+							<button type="button" class="close" id="closeCierrecaja" name="closeCierrecaja"
+								data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="">
+								<div class="card">
+									<button type="button" class="btn btn-info" id="Cajaclose" name="Cajaclose"
+										data-toggle="modal" data-target="#Cajaclosei">Imprimir cierre (EN
+										FISCAL)</button>
+
+
+
+								</div>
+								<strong>RECOMENDADO </strong>
+								<div class="card">
+									<button type="button" class="btn btn-info" id="CajacloseTick" name="CajacloseTick"
+										data-toggle="modal" data-target="#CajacloseiTick"
+										style="font-weight:bold;">Imprimir
+										cierre (EN TICKET)</button>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade bd-example-modal-xl" id="reportesPagoElec" tabindex="-1" role="dialog"
+				aria-labelledby="reportesPagoElecTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+					<div class="modal-content">
+						<div class="modal-header " style="font-weight:bold;font-size:9pt;color:midnightblue;">
+							<h5 class="modal-title " id="reportesPagoElecTitle" style="font-weight:bold;font-size:9pt;">
+								<img src="/images/electro.png" height="20px" width="25px" /> Reportes de Pagos
+								Electronicos
+							</h5>
+							<div class="col-md-0 ml-auto">
+
+							</div>
+							<button type="button" class="close" id="closereportesPagoElec" name="closereportesPagoElec"
+								data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="">
+								<div class="card">
+									<fieldset>
+										<legend>Procesos de Cierre de Pagos Electronicos:</legend>
+										<form id="cierre">
+											<input type="hidden" id="respuesta">
+											<button class="btn btn-primary btn-block" type="button" value="Precierre"
+												onclick="cierreParametros('precierre');">Precierre</button>
+
+											<button class="btn btn-primary btn-block" type="button" value="Cierre"
+												onclick="cierreParametros('cierre');">Cierre</button>
+
+											<button class="btn btn-primary btn-block" type="button"
+												value="Ultimo Cierre" onclick="cierreParametros('ultimoCierre');">Ultimo
+												Cierre</button>
+										</form>
+
+									</fieldset>
+								</div>
+								<div class="card">
+								</div>
+							</div>
+						</div>
+						<input type="hidden" id="nombreVaucherMegaSoft">
+						<button type="button" id="btnReporteElectronic" name="btnReporteElectronic"
+							style="background-color: transparent;border-style:none;"></button>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="modal fade bd-example-modal-xl" id="facEspera" tabindex="-1" role="dialog"
+				aria-labelledby="facEsperaTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+					<div class="modal-content">
+						<div class="modal-header " style="font-weight:bold;font-size:9pt;color:midnightblue;">
+							<h5 class="modal-title " id="facEsperaTitle" style="font-weight:bold;font-size:9pt;"><img
+									src="/images/factespera.png" height="20px" width="25px" /> Retomar Factura</h5>
+							<div class="col-md-0 ml-auto">
+
+							</div>
+							<button type="button" class="close" id="closefacEspera" name="closefacEspera"
+								data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="">
+								<div class="">
+									<input class="form-control" type="text" id="searchFilter" placeholder="Buscar"
+										autocomplete="off" style='color:black;font-weight:bold;'>
+									<div class="table-responsive-xl" style="height:50vh;overflow-y:scroll;">
+
+										<table class="table table-hover" id="">
+											<thead style="background-color:rgb(200,200,200);">
+												<tr>
+													<th scope="col" style="width:5%" data-field="">N°</th>
+													<th scope="col" style="width:10%" data-field="">N° Factura</th>
+													<th scope="col" style="width:15%" data-field="">C.I/RIF</th>
+													<th scope="col" style="width:20%" data-field="">Nombre</th>
+													<th scope="col" style="width:25%" data-field="">Fecha Emis</th>
+													<th scope="col" style="width:15%" data-field="">Saldo</th>
+
+													<th scope="col" data-field="action" data-formatter="actionFormatter"
+														data-events="actionEvents">Opciones</th>
+
+												</tr>
+											</thead>
+											<tbody role="tr" id="ListArtProfit">
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="card">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade bd-example-modal-xl" id="facCotiz" tabindex="-1" role="dialog"
+				aria-labelledby="facCotizTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+					<div class="modal-content">
+						<div class="modal-header " style="font-weight:bold;font-size:9pt;color:midnightblue;">
+							<h5 class="modal-title " id="facCotizTitle" style="font-weight:bold;font-size:9pt;"><img
+									src="/images/agregarpro.png" height="20px" width="25px" /> Importar Factura</h5>
+							<div class="col-md-0 ml-auto">
+
+							</div>
+							<button type="button" class="close" id="closefacCotiz" name="closefacCotiz"
+								data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="">
+								<div class="">
+									<div class="container">
+										<strong>N° De Pedidos</strong>
+										<input class="form-control" type="number" id="cotiz_c" name="cotiz_c"
+											maxlength="18" placeholder="0"
+											style="padding: 50px ;color:rgb(0,0,0);font-weight:bold;font-size:30pt;background-color: rgb(255,255,255);">
+										</br>
+										<button class="btn btn-primary btn-block" type="button" id="btnCotiz"><img
+												src="/images/agregarpro.png" height="45px" width="50px" /> Import
+											Cotiz</button>
+										</br>
+									</div>
+								</div>
+								<div class="card">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="modal fade bd-example-modal-xl" id="devoluCli" tabindex="-1" role="dialog"
+				aria-labelledby="devoluCliTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+					<div class="modal-content">
+						<div class="modal-header " style="font-weight:bold;font-size:9pt;color:midnightblue;">
+							<h5 class="modal-title " id="devoluCliTitle" style="font-weight:bold;font-size:9pt;"><img
+									src="/images/devolucion.png" height="20px" width="25px" />Devoluciones de clientes
+							</h5>
+							<div class="col-md-0 ml-auto">
+								<div class="card-group d-grid d-md-flex justify-content-md-end">
+
+									<div class="btn-group">
+										<input type="text" name="tasaDaysUser" id="tasaDaysUser" value="TASA : "
+											style="border-style:none;font-weight:bold;width:30%;" disabled>
+										<input class="form-control" type="number" name="tasaDays" id="tasaDays"
+											style="background-color: black;color:rgb(0,255,255);font-weight:bold;"
+											disabled value="0.00">
+
+									</div>
+
+								</div>
+							</div>
+							<button type="button" class="close" id="closedevoluCli" name="closedevoluCli"
+								data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="card" style="background-color: rgb(200,200,200);">
+								<input class="form-control" type="number" name="numFactImport" id="numFactImport"
+									placeholder="INGRESE EL NUMERO DE FACTURA PARA DEVOLUCIÓN">
+
+								<button class="btn btn-info btn-block" id="btnImporFactDev"
+									name="btnImporFactDev">Importar
+									Factura <img src="/images/nfactura.png" height="30px" width="30px" /></button>
+
+							</div>
+							<div class="card">
+
+								<div class="card-group d-grid d-md-flex justify-content-md-end">
+									<div class="btn-group">
+										<strong>N°DEVO:</strong>
+										<input class="form-control" type="text" name="NumDevCli" id="NumDevCli" disabled
+											style="font-weight:bold;width:40%;color:rgb(0,0,170);">
+									</div>
+									<div class="btn-group">
+										<input type="text" name="rifCliUser" id="rifCliUser" value="RIF/C.I. : "
+											style="border-style:none;font-weight:bold;width:30%;" disabled>
+										<input class="form-control" type="text" name="rifCli" id="rifCli" disabled
+											style="font-weight:bold;">
+										<input class="form-control" type="text" name="co_venFAC" id="co_venFAC" disabled
+											style="font-weight:bold;width:40%;color:rgb(0,230,0);">
+
+									</div>
+									<div class="btn-group">
+										<input type="hidden" name="valorALLCheck" id="valorALLCheck">
+										<button style="border-style:none;" id="btn-checkALL" name="btn-checkALL"
+											onclick="return checkAll();"><img src="images/bajarALL.png" width="20px"
+												height="20px"></button>
+									</div>
+
+								</div>
+							</div>
+
+							<div class="card">
+								<input class="form-control" type="text" id="searchFilterNCRF" name="searchFilterNCRF"
+									placeholder="Buscardor..." autocomplete="off" style='color:black;font-weight:bold;'>
+
+								<div class="table-responsive-xl" style="height:40vh;overflow-y:scroll;">
+									<table class="table  table-hover" id="studentsInfo">
+										<thead class=""
+											style="font-weight:bold;font-size:10pt;background-color: rgb(210,210,210);">
+											<tr>
+												<th scope="col" style="width:5%">N°</th>
+												<th scope="col" style="width:10%">CO</th>
+												<th scope="col" style="width:25%">Descripción</th>
+												<th scope="col" style="width:5%">Cantidad</th>
+												<th scope="col" style="width:7%">Unid</th>
+												<th scope="col" style="width:10%">Precio</th>
+												<th scope="col" style="width:10%">IVA</th>
+												<th scope="col" style="width:10%">Total</th>
+												<th scope="col" style="width:10%">$</th>
+
+												<th scope="col">Opciones</th>
+
+											</tr>
+										</thead>
+										<div class="">
+											<tbody role="tr" id="NewEvidenciaCCX">
+
+
+											</tbody>
+										</div>
+									</table>
+
+								</div>
+
+							</div>
+							<div class="card-group  ">
+								<div class="btn-group">
+									<button class="btn btn-primary btn-block" type="button" title="Generar N/CR"
+										style="font-weight:bold;font-size:9pt;" data-toggle="modal"
+										data-target="#ReimpfacUltiTicket2" id="btnGenNCR" name="btnGenNCR"> Generar
+										N/CR<img src="/images/devolucion.png" height="35px" width="50px" /> </button>
+
+
+								</div><label>&nbsp;</label>
+								<div class="btn-group">
+
+
+									<button class="btn btn-danger btn-block" type="button"
+										title="Devolver Dinero a cliente" style="font-weight:bold;font-size:9pt;"
+										id="DevDineClieNR" name="DevDineClieNR">
+										Devolver Dinero <img src="/images/tasa.png" height="35px" width="50px" />
+									</button>
+
+
+								</div>
+								<label>&nbsp;</label>
+								<div class="btn-group">
+									<strong>COB:</strong>
+									<input class="form-control" type="text" name="CobDevMoney" id="CobDevMoney" disabled
+										style="font-weight:bold;width:40%;color:rgb(0,0,170);">
+								</div>
+								<label>&nbsp;</label>
+								<div class="btn-group">
+									<strong>N/CR:</strong>
+									<input class="form-control" type="text" name="NCRDevDOC" id="NCRDevDOC" disabled
+										style="font-weight:bold;width:40%;color:rgb(0,0,170);">
+								</div>
+
+								<div class="btn-group">
+									<p id="COBFACT">.</p>
+								</div>
+
+
+							</div>
+							<div class="card ">
+
+								<div class="card-group d-grid d-md-flex justify-content-md-end ">
+									<div class="btn-group ">
+										<input type="text" name="subtotalBS" id="subtotalBS" value="SUBTTL : "
+											style="border-style:none;font-weight:bold;width:30%;" disabled>
+										<input class="form-control" type="number" name="SubtotalID" id="SubtotalID"
+											disabled
+											style="background-color: black;color:rgb(0,255,255);font-weight:bold;"
+											value="0.00">
+										<input class="form-control" type="number" name="SubtotalUSDID"
+											id="SubtotalUSDID" disabled
+											style="background-color: black;color:rgb(0,255,0);font-weight:bold;"
+											value="0.00">
+									</div>
+
+
+								</div>
+								<div class="card-group d-grid d-md-flex justify-content-md-end">
+
+									<div class="btn-group">
+										<input type="text" name="ivaBS" id="ivaBS" value="I.V.A : "
+											style="border-style:none;font-weight:bold;width:30%;" disabled>
+										<input class="form-control" type="number" name="ivaBSID" id="ivaBSID" disabled
+											style="background-color: black;color:rgb(0,255,255);font-weight:bold;"
+											value="0.00">
+										<input class="form-control" type="number" name="ivaUSDID" id="ivaUSDID"
+											style="background-color: black;color:rgb(0,255,0);font-weight:bold;"
+											value="0.00" disabled>
+									</div>
+
+								</div>
+								<div class="card-group d-grid d-md-flex justify-content-md-end">
+
+									<div class="btn-group">
+										<input type="text" name="totalBS" id="totalBS" value="TOTAL : "
+											style="border-style:none;font-weight:bold;width:30%;" disabled>
+										<input class="form-control" type="number" name="totalBSID" id="totalBSID"
+											style="background-color: black;color:rgb(0,255,255);font-weight:bold;"
+											value="0.00" disabled>
+										<input class="form-control" type="number" name="totalUSDID" id="totalUSDID"
+											style="background-color: black;color:rgb(0,255,0);font-weight:bold;"
+											value="0.00" disabled>
+
+
+									</div>
+
+								</div>
+
+							</div>
+
+						</div>
+						<button type="button" id="ventaDevMoney" name="ventaDevMoney" data-toggle="modal"
+							data-target="#DevDineClie" style="background-color:transparent;border-style:none;"></button>
+					</div>
+
+				</div>
+
+			</div>
+
+			<div style="position: absolute;margin-left:-2000px;">
+				<p id="DeleRengDEV"></p>
+			</div>
+
+			<div class="modal fade bd-example-modal-xl" id="DevDineClie" tabindex="-1" role="dialog"
+				aria-labelledby="DevDineClieTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+					<div class="modal-content">
+						<div class="modal-header "
+							style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: rgb(210,210,210);">
+							<h5 class="modal-title " id="DevDineClieTitle" style="font-weight:bold;font-size:9pt;"><img
+									src="/images/tasa.png" height="20px" width="30px" /> Generar Devolución de Dinero
+							</h5>
+							<div class="col-md-0 ml-auto">
+
+							</div>
+							<button type="button" class="close" id="closeDevDineClie" name="closeDevDineClie"
+								data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="">
+								<div class="">
+									<div class="container">
+										<strong></strong>
+										<div class="card-group">
+
+											<div class="card">
+												<div class="btn-group">
+													<input type="text" value="Cliente:"
+														style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:30% ;"
+														disabled>
+													<input class="form-control" type="text" name="co_cliInfodata"
+														id="co_cliInfodata" style="font-weight:bold;" disabled>
+
+													<input class="form-control" type="text" name="cli_desInfofata"
+														id="cli_desInfofata" style="font-weight:bold;" disabled>
+												</div>
+
+											</div>
+
+											<div class="card">
+												<div class="btn-group">
+													<input type="text" value="Saldo Actual:"
+														style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:30% ;"
+														disabled>
+													<input class="form-control" type="text" name="saldoActualCli"
+														id="saldoActualCli" style="font-weight:bold;" disabled>
+												</div>
+												<div class="btn-group">
+													<input type="text" value="Mov. de Caja:"
+														style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:30% ;"
+														disabled>
+													<input class="form-control" type="text" name="movdecajaDev"
+														id="movdecajaDev" style="font-weight:bold;" disabled>
+												</div>
+											</div>
+										</div>
+										</br>
+										<strong>Nota de Credito</strong>
+										<div class="card-group">
+
+											<div class="card">
+												<p style="font-weight:bold;font-size:9pt;color:midnightblue;">NUMERO</p>
+												<input class="form-control" type="text" name="numCredit" id="numCredit"
+													style="font-weight:bold;" disabled>
+											</div>
+											<div class="card">
+												<p style="font-weight:bold;font-size:9pt;color:midnightblue;">MONTO</p>
+												<input class="form-control" type="text" name="montoCredit"
+													id="montoCredit" style="font-weight:bold;" disabled>
+											</div>
+											<div class="card">
+												<p style="font-weight:bold;font-size:9pt;color:midnightblue;">SALDO</p>
+												<input class="form-control" type="text" name="saldoNotCredit"
+													id="saldoNotCredit" style="font-weight:bold;" disabled>
+											</div>
+											<div class="card">
+												<div class="btn-group">
+													<input type="text" value="Moneda:"
+														style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:25%;"
+														disabled>
+													<input class="form-control" type="text" name="monedaDev"
+														id="monedaDev" style="font-weight:bold;" disabled>
+												</div>
+												<div class="btn-group">
+													<input type="text" value="Tasa:"
+														style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:25%;"
+														disabled>
+													<input class="form-control" type="text" name="tasaDev" id="tasaDev"
+														style="font-weight:bold;" disabled>
+												</div>
+
+												<input type="hidden" name="monedaDevhideBS" id="monedaDevhideBS">
+												<input type="hidden" name="tasaDevhideBS" id="tasaDevhideBS">
+
+												<input type="hidden" name="monedaDevhideUSD" id="monedaDevhideUSD">
+												<input type="hidden" name="tasaDevhideUSD" id="tasaDevhideUSD">
+												<input type="hidden" name="montoCredithide" id="montoCredithide">
+											</div>
+
+
+										</div>
+										<div class="card-group">
+											<div class="card">
+
+												<input type="text" value="Generar devolución de dinero por:"
+													style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:50% ;"
+													disabled>
+												<input class="form-control" type="number" name="montoDevCLiPag"
+													id="montoDevCLiPag" style="font-weight:bold;"
+													onkeypress="return isNumberKey(event, this);"
+													oninput="DevDineCliINT(),this.value = Math.round(this.value);">
+
+											</div>
+											<div class="card">
+
+												<input type="text" value="Forma de pago:"
+													style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:50% ;"
+													disabled>
+												<input class="form-control" type="text" name="formaPagSelec"
+													id="formaPagSelec" style="font-weight:bold;" disabled>
+												<input type="hidden" name="codCajSelecPag" id="codCajSelecPag">
+
+											</div>
+										</div>
+										<strong>Forma De Devolución </strong>
+										<div class="card-group">
+											<div class="card">
+
+												<input type="text" value="Fecha de pago:"
+													style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:50% ;"
+													disabled>
+												<input class="form-control" type="text" name="fechaPagoDev"
+													id="fechaPagoDev" style="font-weight:bold;" disabled>
+
+											</div>
+											<div class="card">
+												<button type="button" name="efecCajaBS" id="efecCajaBS"
+													style="background:rgb(50,50,235);border-style:none;color:white;font-weight: bold;">EFEC
+													BS <img src="/images/efepago.png" height="52px"
+														width="50px" /></button>
+											</div>
+											<div class="card">
+
+												<button type="button" name="efecCajaUSD" id="efecCajaUSD"
+													style="background-color:rgb(50,175,50);border-style:none;color:white;font-weight: bold;">EFEC
+													USD <img src="/images/efepago.png" height="52px"
+														width="50px" /></button>
+											</div>
+
+										</div>
+										</br>
+										<button class="btn btn-block" type="button" id="ConfirmarDevolCli"
+											name="ConfirmarDevolCli"
+											style="background-color: rgb(175,50,50);border-style:none;color:white;font-weight: bold;">Aceptar
+											<img src="/images/tasa.png" height="35px" width="40px" /></button>
+										</br>
+
+										</br>
+									</div>
+								</div>
+								<div class="card">
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+					<button type="button" data-toggle="modal" data-target="#comfirDevPagoCliModal" id="comfirDataClav"
+						name="comfirDataClav"></button>
+				</div>
+			</div>
+
+			<div class="modal fade bd-example-modal-xl" id="OperacionesCajas" tabindex="-1" role="dialog"
+				aria-labelledby="OperacionesCajasTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+					<div class="modal-content">
+						<div class="modal-header "
+							style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: rgb(210,210,210);">
+							<h5 class="modal-title " id="OperacionesCajasTitle" style="font-weight:bold;font-size:9pt;">
+								<img src="/images/tasa.png" height="20px" width="30px" /> Operaciones de Caja
+							</h5>
+							<div class="col-md-0 ml-auto">
+
+							</div>
+							<button type="button" class="close" id="closeOperacionesCajas" name="closeOperacionesCajas"
+								data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="">
+								<div class="">
+
+									<div class="card">
+										<button class="btn btn-info btn-block" type="button" title="Ordenes de pagos"
+											style="font-weight:bold;font-size:9pt;" data-toggle="modal"
+											data-target="#OrdenPagBenef" id="ordenPagIdBenefic"
+											name="ordenPagIdBenefic"> Ord pago <img src="/images/tasa.png" height="35px"
+												width="50px" /> </button>
+									</div>
+
+									<div class="card">
+										<button class="btn btn-info btn-block" type="button" title="Movimiento de caja"
+											style="font-weight:bold;font-size:9pt;" data-toggle="modal"
+											data-target="#movimientoCaja" id="movimientoCajaID" name="movimientoCajaID">
+											Movi caja <img src="/images/mov_caj.png" height="35px" width="50px" />
+										</button>
+									</div>
+
+								</div>
+							</div>
+							<div class="card">
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+
+		<div class="modal fade bd-example-modal-xl" id="movimientoCaja" tabindex="-1" role="dialog"
+			aria-labelledby="movimientoCajaTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header "
+						style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: rgb(210,210,210);">
+						<h5 class="modal-title " id="movimientoCajaTitle" style="font-weight:bold;font-size:9pt;">
+							<img src="/images/mov_caj.png" height="20px" width="30px" /> Movimientos de cajas
+						</h5>
+						<div class="col-md-0 ml-auto">
+
+						</div>
+						<button type="button" class="close" id="closeMOVCaj" name="closeMOVCaj" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<div class="">
+							<div class="">
+								<div class="container">
+									<strong></strong>
+									<div class="card-group">
+
+										<div class="card">
+											<div class="btn-group">
+											</div>
+
+										</div>
+
+
+									</div>
+
+									</br>
+									<button type="button" class="btn  btn-lg" id="NewMovCajaID" name="NewMovCajaID"><img
+											src="/images/UpdateInfor.png" height="25px" width="25px" /></button>
+									<strong>Movimiento de caja</strong><strong id="infoMOV"></strong>
+									<div class="card-group">
+
+										<div class="card">
+											<p style="font-weight:bold;font-size:9pt;color:midnightblue;">
+												Descripción:
+											</p>
+											<input class="form-control" type="text" name="descripMOV" id="descripMOV"
+												style="font-weight:bold;max-height:70px;min-height:70px;font-size: 18pt;"
+												onkeyup="javascript:this.value=this.value.toUpperCase();"
+												autocomplete="off" disabled>
+
+										</div>
+
+									</div>
+									<strong>Información</strong>
+									<div class="card-group">
+
+										<div class="card">
+											<input type="text" value="Moneda:"
+												style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:50% ;"
+												disabled>
+											<input class="form-control" type="text" name="monedaMOV" id="monedaMOV"
+												style="font-weight:bold;background-color: rgb(70,70,70);font-size:18pt;"
+												disabled>
+										</div>
+										<div class="card">
+											<input type="text" value="Tasa:"
+												style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:50% ;"
+												disabled>
+											<input class="form-control" type="text" name="tasaMOV" id="tasaMOV"
+												style="font-weight:bold;background-color: rgb(70,70,70);font-size:18pt;"
+												disabled>
+										</div>
+										<iv class="card">
+
+											<input type="text" value="Mov. de Caja:"
+												style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:30% ;"
+												disabled>
+											<input class="form-control" type="text" name="movdecajaMOV"
+												id="movdecajaMOV"
+												style="font-weight:bold;background-color: rgb(70,70,70);font-size:18pt;color:rgb(240,70,70);"
+												disabled>
+									</div>
+
+
+								</div>
+								<div class="card-group">
+
+									<div class="card">
+
+										<input type="text" value="Monto:"
+											style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:50% ;"
+											disabled>
+										<input class="form-control" onkeypress="return isNumberKey(event, this);"
+											type="number" name="montoMOV" id="montoMOV" oninput="montoMOVedit()"
+											style="font-weight:bold;background-color: rgb(70,70,70);font-size:18pt;"
+											placeholder="0.00">
+									</div>
+									<div class="card">
+
+										<input type="text" value="Descripción caja:"
+											style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:50% ;"
+											disabled>
+										<input class="form-control" type="text" name="formaPagSelecMOV"
+											id="formaPagSelecMOV"
+											style="font-weight:bold;background-color: rgb(70,70,70);font-size:18pt;"
+											disabled>
+										<input type="hidden" name="" id="">
+
+									</div>
+									<div class="card">
+
+										<input type="text" value="Caja:"
+											style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:50% ;"
+											disabled>
+										<input class="form-control" type="text" name="cajaMOV" id="cajaMOV"
+											style="font-weight:bold;background-color: rgb(70,70,70);font-size:18pt;"
+											disabled>
+
+
+									</div>
+								</div></br>
+								<div class="card-group">
+									<div class="card">
+
+										<input type="text" value="Fecha de Movimiento:"
+											style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:50% ;"
+											disabled>
+										<input class="form-control" type="text" name="fechaPagoMOV" id="fechaPagoMOV"
+											style="font-weight:bold;" disabled>
+
+									</div>
+									<div class="card">
+										<button type="button" name="efecCajaBSMOV" id="efecCajaBSMOV"
+											style="background:rgb(50,50,235);border-style:none;color:white;font-weight: bold;">EFEC
+											BS <img src="/images/efepago.png" height="52px" width="50px" /></button>
+
+									</div>
+									<div class="card">
+
+										<button type="button" name="efecCajaUSDMOV" id="efecCajaUSDMOV"
+											style="background-color:rgb(50,175,50);border-style:none;color:white;font-weight: bold;">EFEC
+											USD <img src="/images/efepago.png" height="52px" width="50px" /></button>
+
+									</div>
+
+								</div>
+
+								<input type="hidden" id="SelectmonedaMOVBS">
+								<input type="hidden" id="SelectmonedaMOVUSD">
+								<input type="hidden" id="SelectDefinit">
+								<input type="hidden" id="co_monedaBSMOV">
+								<input type="hidden" id="tasaBSMOV">
+								<input type="hidden" id="formapagBSMOV">
+								<input type="hidden" id="cajaBSMOV">
+
+								<input type="hidden" id="co_monedaUSDMOV">
+								<input type="hidden" id="tasaUSDMOV">
+								<input type="hidden" id="formapagUSDMOV">
+								<input type="hidden" id="cajaUSDMOV">
+
+								</br>
+								<button class="btn btn-danger btn-block" type="button" id="ConfirmarMovCaja"
+									name="ConfirmarMovCaja"
+									style="border-style:none;color:white;font-weight: bold;">Procesar <img
+										src="/images/tasa.png" height="40px" width="40px" /></button>
+								</br>
+
+								</br>
+							</div>
+						</div>
+						<div class="card">
+
+						</div>
+					</div>
+				</div>
+
+				<button type="button" data-toggle="modal" data-target="#campoMovCaj" id="campoMovCajID"
+					name="campoMovCajID" style="background-color: transparent;border-style:none;"></button>
+			</div>
+		</div>
+
+		<div class="modal fade bd-example-modal-xl" id="campoMovCaj" tabindex="-1" role="dialog"
+			aria-labelledby="campoMovCajTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered " role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="campoMovCajTitle">
+							<img src="/images/bloqueardo.png" height="25px" width="25px" /> Llave Asignada
+						</h5>
+						<button type="button" class="close" id="closecampoMovCaj" name="closecampoMovCaj"
+							data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span></button>
+					</div>
+					<div class="modal-body">
+						<div class="container">
+							<div class="">
+								<div class="col-12 mt-5">
+									<h5>Grebca ©\nProcesar Movimiento Caja</h5><br>
+									<p>!Clave de supervisor : </p>
+								</div>
+								<div>
+									<input type="password" class="form-control" name="inputcampoMovCaj"
+										id="inputcampoMovCaj">
+									<button class="btn btn-danger btn-block" type="button" id="btn-campoMovCaj"
+										name="btn-campoMovCaj">Confirmar</button>
+								</div>
+							</div>
+						</div></br>
+						<div class="modal-footer"><button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<div class="modal fade bd-example-modal-xl" id="OrdenPagBenef" tabindex="-1" role="dialog"
+			aria-labelledby="OrdenPagBenefTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header "
+						style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: rgb(210,210,210);">
+						<h5 class="modal-title " id="OrdenPagBenefTitle" style="font-weight:bold;font-size:9pt;">
+							<img src="/images/tasa.png" height="20px" width="30px" /> Órdenes de Pago
+						</h5>
+						<div class="col-md-0 ml-auto">
+
+						</div>
+						<button type="button" class="close" id="closeOrdenPagBenef" name="closeOrdenPagBenef"
+							data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<div class="">
+							<div class="">
+								<div class="container">
+									<strong></strong>
+									<div class="card-group">
+
+										<div class="card">
+											<div class="btn-group">
+												<input type="text" value="Beneficiario:"
+													style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:40% ;"
+													disabled>
+												<select class="form-control" name="cod_benSelect" id="cod_benSelect"
+													style="font-weight:bold;">
+
+												</select>
+
+											</div>
+
+										</div>
+
+
+									</div>
+
+									</br>
+									<strong>Orden de pago</strong>
+									<div class="card-group">
+
+										<div class="card">
+											<p style="font-weight:bold;font-size:9pt;color:midnightblue;">
+												Descripción:
+											</p>
+											<input class="form-control" type="text" name="descripOrdPag"
+												id="descripOrdPag"
+												style="font-weight:bold;max-height:70px;min-height:70px;"
+												onkeyup="javascript:this.value=this.value.toUpperCase();"
+												autocomplete="off">
+
+										</div>
+
+									</div>
+									<strong>Pago </strong>
+									<div class="card-group">
+
+										<div class="card">
+											<input type="text" value="Moneda:"
+												style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:50% ;"
+												disabled>
+											<input class="form-control" type="text" name="monedaOrdPago"
+												id="monedaOrdPago" style="font-weight:bold;" disabled>
+										</div>
+										<div class="card">
+											<input type="text" value="Tasa:"
+												style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:50% ;"
+												disabled>
+											<input class="form-control" type="text" name="tasaOrdPago" id="tasaOrdPago"
+												style="font-weight:bold;" disabled>
+										</div>
+										<iv class="card">
+
+											<input type="text" value="Mov. de Caja:"
+												style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:30% ;"
+												disabled>
+											<input class="form-control" type="text" name="movdecajaOrdPag"
+												id="movdecajaOrdPag" style="font-weight:bold;" disabled>
+									</div>
+
+
+								</div>
+								<div class="card-group">
+
+									<div class="card">
+
+										<input type="text" value="Monto:"
+											style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:50% ;"
+											disabled>
+										<input class="form-control" onkeypress="return isNumberKey(event, this);"
+											type="number" name="montoOrdPags" id="montoOrdPags"
+											style="font-weight:bold;" placeholder="0.00">
+									</div>
+									<div class="card">
+
+										<input type="text" value="Forma de pago:"
+											style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:50% ;"
+											disabled>
+										<input class="form-control" type="text" name="formaPagSelecOrd"
+											id="formaPagSelecOrd" style="font-weight:bold;" disabled>
+										<input type="hidden" name="" id="">
+
+									</div>
+									<div class="card">
+
+										<input type="text" value="Caja:"
+											style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:50% ;"
+											disabled>
+										<input class="form-control" type="text" name="cajaOrdPag" id="cajaOrdPag"
+											style="font-weight:bold;" disabled>
+										<input type="hidden" name="cajaSelectOrdPag" id="cajaSelectOrdPag">
+
+
+									</div>
+								</div></br>
+								<div class="card-group">
+									<div class="card">
+
+										<input type="text" value="Fecha de pago:"
+											style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:50% ;"
+											disabled>
+										<input class="form-control" type="text" name="fechaPagoOrd" id="fechaPagoOrd"
+											style="font-weight:bold;" disabled>
+
+									</div>
+									<div class="card">
+										<button type="button" name="efecCajaBSOrd" id="efecCajaBSOrd"
+											style="background:rgb(50,50,235);border-style:none;color:white;font-weight: bold;">EFEC
+											BS <img src="/images/efepago.png" height="52px" width="50px" /></button>
+
+									</div>
+									<div class="card">
+
+										<button type="button" name="efecCajaUSDOrd" id="efecCajaUSDOrd"
+											style="background-color:rgb(50,175,50);border-style:none;color:white;font-weight: bold;">EFEC
+											USD <img src="/images/efepago.png" height="52px" width="50px" /></button>
+
+									</div>
+
+								</div>
+								<input type="hidden" id="co_moneBSinput">
+								<input type="hidden" id="mone_desBSinput">
+								<input type="hidden" id="cambioBSinput">
+
+								<input type="hidden" id="co_moneUSDinput">
+								<input type="hidden" id="mone_desUSDinput">
+								<input type="hidden" id="cambioUSDinput">
+
+								</br>
+								<button class="btn btn-danger btn-block" type="button" id="ConfirmarOrdPag"
+									name="ConfirmarOrdPag"
+									style="border-style:none;color:white;font-weight: bold;">Procesar <img
+										src="/images/tasa.png" height="35px" width="40px" /></button>
+								</br>
+
+								</br>
+							</div>
+						</div>
+						<div class="card">
+						</div>
+					</div>
+				</div>
+
+				<button type="button" data-toggle="modal" data-target="#OrdPagGenerar" id="OrdPagBenefic"
+					name="OrdPagBenefic" style="background-color: transparent;border-style:none;"></button>
+			</div>
+
+		</div>
+
+
+		<div style="position:absolute;margin-left:-20000px;">
+			<button type="button" data-toggle="modal" data-target="#herramientSystemPACO" id="herramientSystemPACOID"
+				name="herramientSystemPACOID"
+				style="background-color: transparent;border-style:none;outline-style:none;"></button>
+		</div>
+
+
+		<div class="modal fade bd-example-modal-xl" id="herramientSystemPACO" tabindex="-1" role="dialog"
+			aria-labelledby="herramientSystemPACOTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header " style="font-weight:bold;font-size:9pt;color:midnightblue;">
+						<h5 class="modal-title " id="herramientSystemPACOTitle" style="font-weight:bold;font-size:9pt;">
+							<img src="/images/engranaje.png" height="20px" width="25px" />Herramientas de systema PACO
+						</h5>
+						<div class="col-md-0 ml-auto">
+							<div class="card-group d-grid d-md-flex justify-content-md-end">
+							</div>
+						</div>
+						<button type="button" class="close" id="closeherramientSystemPACO"
+							name="closeherramientSystemPACO" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<div class="card">
+							<div>
+							</div>
+						</div>
+						<div class="card">
+
+							<div class="card-group d-grid d-md-flex justify-content-md-end">
+								<div class="btn-group">
+
+								</div>
+								<div class="btn-group">
+								</div>
+
+							</div>
+						</div>
+						</br>
+						<div class="card">
+							<div>
+								<div class="table-responsive-xl" style="height:30vh;overflow-y:scroll;">
+									<table class="table table-bordered table-hover" id="studentsInfo">
+										<thead class=""
+											style="font-weight:bold;font-size:10pt;background-color: rgb(210,210,210);">
+											<tr>
+												<th scope="col" style="width:5%">N°</th>
+												<th scope="col" style="width:10%">FACT</th>
+												<th scope="col" style="width:20%">C.I/RIF</th>
+												<th scope="col" style="width:25%">RAZON SOCIAL</th>
+												<th scope="col" style="width:25%">FEC_EMIS</th>
+
+												<th scope="col">Opciones</th>
+
+											</tr>
+										</thead>
+										<div class="">
+											<tbody role="tr" id="ListPrintFactNull">
+
+
+											</tbody>
+										</div>
+									</table>
+
+								</div>
+							</div>
+						</div>
+						<div class="card-group  ">
+							<div class="btn-group">
+								<input type="number" class="form-control" id="infoCobAjusPACO" name="infoCobAjusPACO">
+
+							</div><label>&nbsp;</label>
+
+							<div class="btn-group">
+								<button type="button" class="btn btn-info" id="btn-ajusCobFac" name="btn-ajusCobFac"
+									style="font-weight:bold;"><img src="/images/engranaje.png" height="20px"
+										width="25px" /> Ajustar Cobros</button>
+
+
+
+							</div>
+
+							<label>&nbsp;</label>
+							<div class="btn-group">
+
+							</div>
+							<label>&nbsp;</label>
+							<div class="btn-group">
+
+							</div>
+
+
+						</div>
+						<div class="card ">
+
+							<div class="card-group d-grid d-md-flex justify-content-md-end ">
+
+								<div class="btn-group ">
+
+									<button type="button" class="btn btn-info" id="btn-vistaInventario"
+										name="btn-vistaInventario" style="font-weight:bold;"
+										onclick="return btnvistaInventario();"><img src="/images/invetario.png"
+											height="20px" width="25px" /> Stock Articulos</button>
+
+									<label>&nbsp;</label><label>&nbsp;</label>
+
+									<button class="btn btn-info " type="button" id="btnConfigMetodosElectronicosID"
+										name="btnConfigMetodosElectronicosID" style="font-weight:bold;"
+										data-toggle="modal" data-target="#btnConfigMetodosElectronicos"><img
+											src="/images/dinerofac.png" width="25px" height="25px">Config
+										Cobros</button>
+
+								</div>
+
+							</div>
+							<div class="card-group d-grid d-md-flex justify-content-md-end">
+
+								<div class="btn-group">
+
+								</div>
+
+							</div>
+							<div class="card-group d-grid d-md-flex justify-content-md-end">
+
+								<div class="btn-group">
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div style="position:absolute;margin-left:-20000px;">
+
+			<button type="button" data-toggle="modal" data-target="#ajusCobEdit" id="ajusCobEditSystemPACOID"
+				name="ajusCobEditSystemPACOID"
+				style="background-color: transparent;border-style:none;outline-style:none;"></button>
+
+			<button type="button" data-toggle="modal" data-target="#btnInventStock" id="btnInventStockSystemPACOID"
+				name="btnInventStockSystemPACOID"
+				style="background-color: transparent;border-style:none;outline-style:none;"></button>
+
+		</div>
+
+		<div class="modal fade bd-example-modal-xl" id="btnInventStock" tabindex="-1" role="dialog"
+			aria-labelledby="btnInventStockTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header " style="font-weight:bold;font-size:9pt;color:midnightblue;">
+						<h5 class="modal-title " id="btnInventStockTitle" style="font-weight:bold;font-size:9pt;"><img
+								src="/images/engranaje.png" height="20px" width="25px" />Stock de Articulos</h5>
+						<div class="col-md-0 ml-auto">
+							<div class="card-group d-grid d-md-flex justify-content-md-end">
+
+								<strong>: </strong><strong Style="font-size: 11pt;" id="">
+									.</strong>
+								<input type="hidden" id="">
+
+							</div>
+						</div>
+						<button type="button" class="close" id="closebtnInventStock" name="closebtnInventStock"
+							data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<div class="card">
+
+						</div>
+						<div class="card">
+							<div>
+								<input class="form-control" type="text" id="searchListRengbtnInventStock"
+									name="searchListRengbtnInventStock" placeholder="Buscador ...">
+								<div class="table-responsive-xl" style="height:30vh;overflow-y:auto;">
+									<table class="table  table-hover " id="studentsInfo">
+										<thead class=""
+											style="font-weight:bold;font-size:10pt;background-color: rgb(210,210,210);">
+											<tr>
+
+												<th scope="col" style="width:2%">#</th>
+												<th scope="col" style="width:5%">#codigo</th>
+												<th scope="col" style="width:15%">Descrip</th>
+												<th scope="col" style="width:5%">Unidad</th>
+												<th scope="col" style="width:5%">Precio$</th>
+												<th scope="col" style="width:5%">I.V.A</th>
+												<th scope="col" style="width:5%">Stock GLOBAL</th>
+											</tr>
+										</thead>
+										<div class="">
+											<tbody role="tr" id="ListRengbtnInventStock">
+
+
+											</tbody>
+										</div>
+									</table>
+
+								</div>
+								<input class="form-control" type="text" id="descArtc"
+									name="descArtc" style="font-weight:bold;color:rgb(0,0,100);" disabled>
+								<div class="table-responsive-xl" style="height:30vh;overflow-y:auto;">
+									<table class="table  table-hover " id="studentsInfo">
+										<thead class=""
+											style="font-weight:bold;font-size:10pt;background-color: rgb(210,210,210);">
+											<tr>
+
+												<th scope="col" style="width:2%">#</th>
+												<th scope="col" style="width:5%">Almacen</th>
+												<th scope="col" style="width:5%">codigo</th>
+												<th scope="col" style="width:5%">STOCK_x_Alm</th>
+												<th scope="col" style="width:5%">VENTAS</th>
+												<th scope="col" style="width:5%">DEVOLUCIÓN</th>
+												
+											</tr>
+										</thead>
+										<div class="">
+											<tbody role="tr" id="contentDesAlmacen">
+
+
+											</tbody>
+										</div>
+									</table>
+
+								</div>
+							
+							</div>
+						</div>
+
+					
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade bd-example-modal-xl" id="ajusCobEdit" tabindex="-1" role="dialog"
+			aria-labelledby="ajusCobEditTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header " style="font-weight:bold;font-size:9pt;color:midnightblue;">
+						<h5 class="modal-title " id="ajusCobEditTitle" style="font-weight:bold;font-size:9pt;"><img
+								src="/images/engranaje.png" height="20px" width="25px" />Ajuste de Cobros</h5>
+						<div class="col-md-0 ml-auto">
+							<div class="card-group d-grid d-md-flex justify-content-md-end">
+
+								<strong>N° FACTURA : </strong><strong Style="font-size: 11pt;" id="NfactAnuCob">
+									.</strong>
+								<input type="hidden" id="nfacturaCobAjusnu">
+
+							</div>
+						</div>
+						<button type="button" class="close" id="closeajusCobEdit" name="closeajusCobEdit"
+							data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+
+						<div class="card">
+							<div class="card-group d-grid d-md-flex justify-content-md-end">
+								<div class="btn-group">
+									<div class="card">
+										<div class="card-group">
+											<div class="card">
+												<p style="font-weight:bold;font-size:9pt;color:midnightblue;">Numero Cob
+												</p>
+												<input class="form-control" type="text" name="numCobAnular"
+													id="numCobAnular" style="font-weight:bold;" disabled>
+
+											</div>
+
+											<div class="card">
+												<p style="font-weight:bold;font-size:9pt;color:midnightblue;">Cliente
+												</p>
+												<input class="form-control" type="text" name="co_cliClientCob"
+													id="co_cliClientCob" style="font-weight:bold;" disabled>
+											</div>
+
+											<div class="card">
+												<p style="font-weight:bold;font-size:9pt;color:midnightblue;">Moneda</p>
+												<input class="form-control" type="text" name="monedaClientCob"
+													id="monedaClientCob" style="font-weight:bold;" disabled>
+											</div>
+
+											<div class="card">
+												<p style="font-weight:bold;font-size:9pt;color:midnightblue;">Cobrador
+												</p>
+												<input class="form-control" type="text" name="cobradorCajAnularCob"
+													id="cobradorCajAnularCob" style="font-weight:bold;" disabled>
+											</div>
+
+											<div class="card">
+												<p style="font-weight:bold;font-size:9pt;color:midnightblue;">Fecha</p>
+												<input class="form-control" type="text" name="fechAnularCob"
+													id="fechAnularCob" style="font-weight:bold;" disabled>
+											</div>
+
+											<div class="card">
+												<p style="font-weight:bold;font-size:9pt;color:midnightblue;">Status Cob
+												</p>
+												<input class="form-control" type="text" name="statusCobAnularCob"
+													id="statusCobAnularCob" style="font-weight:bold;" disabled>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<div class="card">
+							<div>
+								<div class="table-responsive-xl" style="height:25vh;overflow-y:scroll;">
+									<table class="table table-bordered " id="studentsInfo">
+										<thead class=""
+											style="font-weight:bold;font-size:10pt;background-color: rgb(210,210,210);">
+											<tr>
+												<th scope="col" style="width:2%">Rg</th>
+												<th scope="col" style="width:3%">Tipo</th>
+												<th scope="col" style="width:5%">#Docum</th>
+												<th scope="col" style="width:2%">Moneda</th>
+												<th scope="col" style="width:5%">Mont Docum</th>
+												<th scope="col" style="width:5%">Saldo Pend</th>
+												<th scope="col" style="width:5%">Mont Abon</th>
+												<th scope="col" style="width:5%">Emisión</th>
+											</tr>
+										</thead>
+										<div class="">
+											<tbody role="tr" id="ListRengCobAnular">
+
+
+											</tbody>
+										</div>
+									</table>
+
+								</div>
+							</div>
+						</div>
+						<strong>Forma de Pago</strong>
+						<div class="card">
+							<div>
+								<div class="table-responsive-xl" style="height:25vh;overflow-y:scroll;">
+									<table class="table table-bordered table-hover" id="studentsInfo">
+										<thead class=""
+											style="font-weight:bold;font-size:10pt;background-color: rgb(210,210,210);">
+											<tr>
+												<th scope="col" style="width:3%">Rg</th>
+												<th scope="col" style="width:5%">Tipo</th>
+												<th scope="col" style="width:5%">Nro. Docum</th>
+												<th scope="col" style="width:1%">Ban/Tar</th>
+												<th scope="col" style="width:5%">Fecha Cheque</th>
+												<th scope="col" style="width:5%">Mov CyB</th>
+												<th scope="col" style="width:5%">Caja/Cuenta</th>
+												<th scope="col" style="width:5%">Moneda</th>
+												<th scope="col" style="width:5%">Mont Docum</th>
+												<th scope="col" style="width:5%">US$</th>
+
+											</tr>
+										</thead>
+										<div class="">
+											<tbody role="tr" id="ListRengTipAnular">
+
+
+											</tbody>
+										</div>
+									</table>
+
+								</div>
+							</div>
+						</div>
+						<div class="card ">
+							<div class="card-group d-grid d-md-flex justify-content-md-end ">
+								<div class="btn-group ">
+									<button class="btn btn-danger" type="button" id="btn-anularCob" name="btn-anularCob"
+										style="font-weight:bold;"><img src="/images/anular.png" height="30px"
+											width="35px" />Anular Cobro</button>
+								</div>
+							</div>
+							<div class="card-group d-grid d-md-flex justify-content-md-end">
+								<div class="btn-group">
+
+								</div>
+							</div>
+							<div class="card-group d-grid d-md-flex justify-content-md-end">
+								<div class="btn-group">
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="modal fade bd-example-modal-xl" id="btnConfigMetodosElectronicos" tabindex="-1" role="dialog"
+			aria-labelledby="btnConfigMetodosElectronicosTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header " style="font-weight:bold;font-size:9pt;color:midnightblue;">
+						<h5 class="modal-title " id="btnConfigMetodosElectronicosTitle"
+							style="font-weight:bold;font-size:9pt;"><img src="/images/engranaje.png" height="20px"
+								width="25px" />Configuracion del sistema</h5>
+						<div class="col-md-0 ml-auto">
+							<div class="card-group d-grid d-md-flex justify-content-md-end">
+
+
+
+							</div>
+						</div>
+						<button type="button" class="close" id="closebtnConfigMetodosElectronicos"
+							name="closebtnConfigMetodosElectronicos" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<strong>Metodos de Cobros : </strong>
+						<div class="card">
+							<div class="container">
+								<div class="card-group">
+									<input type="text" id="" value="EFECTIVO BS"
+										style="border-style:none;background-color: rgb(210,210,225);font-weight: bold;"
+										disabled>
+									<input type="text" id="metodoEfectivoBS" name="metodoEfectivoBS"
+										style="border-style:none;background-color: rgb(210,210,225);" disabled>
+									<p id="idenColorStatusEB">.</p>
+									<button class="btn btn-primary" type="button" id="cobEfecBSHABILITADO">HABILITAR
+										</buttonclas><label>&nbsp;</label>
+										<button class="btn btn-danger" type="button"
+											id="cobEfecBSDESHABILITADO">DESHABILITAR</button>
+
+								</div>
+								<br />
+								<div class="card-group">
+									<input type="text" id="" value="EFECTIVO US$"
+										style="border-style:none;background-color: rgb(210,210,225);font-weight: bold;"
+										disabled>
+									<input type="text" id="metodoEfectivoUS" name="metodoEfectivoUS$"
+										style="border-style:none;background-color: rgb(210,210,225);" disabled>
+									<p id="idenColorStatusEU">.</p>
+									<button class="btn btn-primary" type="button" id="cobEfecUSHABILITADO">HABILITAR
+										</buttonclas><label>&nbsp;</label>
+										<button class="btn btn-danger" type="button"
+											id="cobEfecUSDESHABILITADO">DESHABILITAR</button>
+								</div>
+								<br />
+								<div class="card-group">
+									<input type="text" id="" value="PAGO MOVIL"
+										style="border-style:none;background-color: rgb(210,210,225);font-weight: bold;"
+										disabled>
+									<input type="text" id="metodoPagoMovil" name="metodoPagoMovil"
+										style="border-style:none;background-color: rgb(210,210,225);" disabled>
+									<p id="idenColorStatusPM">.</p>
+									<button class="btn btn-primary" type="button" id="cobPagoMovilHABILITADO">HABILITAR
+										</buttonclas><label>&nbsp;</label>
+										<button class="btn btn-danger" type="button"
+											id="cobPagoMovilDESHABILITADO">DESHABILITAR</button>
+								</div>
+								<br />
+								<div class="card-group">
+									<input type="text" id="" value="PUNTO DE VENTA"
+										style="border-style:none;background-color: rgb(210,210,225);font-weight: bold;"
+										disabled>
+									<input type="text" id="metodoPuntoDeVenta" name="metodoPuntoDeVenta"
+										style="border-style:none;background-color: rgb(210,210,225);" disabled>
+									<p id="idenColorStatusPV">.</p>
+									<button class="btn btn-primary" type="button" id="cobPuntoVentaHABILITADO">HABILITAR
+										</buttonclas><label>&nbsp;</label>
+										<button class="btn btn-danger" type="button"
+											id="cobPuntoVentaDESHABILITADO">DESHABILITAR</button>
+								</div>
+								<br />
+
+								<div class="card-group">
+									<input type="text" id="" value="ZELLE"
+										style="border-style:none;background-color: rgb(210,210,225);font-weight: bold;"
+										disabled>
+									<input type="text" id="metodoZelle" name="metodoZelle"
+										style="border-style:none;background-color: rgb(210,210,225);" disabled>
+									<p id="idenColorStatusZE">.</p>
+									<button class="btn btn-primary" type="button"
+										id="cobmetodoZelleHABILITADO">HABILITAR
+										</buttonclas><label>&nbsp;</label>
+										<button class="btn btn-danger" type="button"
+											id="cobmetodoZelleDESHABILITADO">DESHABILITAR</button>
+								</div>
+								<br />
+								<div class="card-group">
+									<input text="text" id="" value="COBROS ELECTRONICOS"
+										style="border-style:none;background-color: rgb(210,210,225);height:50px;font-weight: bold;"
+										disabled>
+									<input type="text" id="metodoCobElectronicos" name="metodoCobElectronicos"
+										style="border-style:none;background-color: rgb(210,210,225);" disabled>
+									<p id="idenColorStatusPE">.</p>
+								</div>
+								<br />
+
+								<div class="card-footer text-muted">
+									<strong>Ultima Configuración : </strong>
+									<input type="text" id="configFechRistro" style="border-style:none;" disabled>
+								</div>
+
+							</div>
+
+						</div>
+
+						<div class="card ">
+							<div class="card-group d-grid d-md-flex justify-content-md-end">
+								<div class="btn-group">
+									<div style="height:40vh;">
+									</div>
+
+								</div>
+							</div>
+							<div class="card-group d-grid d-md-flex justify-content-md-end">
+								<div class="btn-group">
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="modal fade bd-example-modal-xl" id="funcionesReport" tabindex="-1" role="dialog"
+			aria-labelledby="funcionesReportTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header " style="font-weight:bold;font-size:9pt;color:midnightblue;">
+						<h5 class="modal-title " id="funcionesReportTitle" style="font-weight:bold;font-size:9pt;"><img
+								src="/images/engranaje.png" height="20px" width="25px" /> Funciones </h5>
+						<div class="col-md-0 ml-auto">
+
+						</div>
+						<button type="button" class="close" id="closefuncionesReport" name="closefuncionesReport"
+							data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<div class="">
+							<button type="button" class="btn btn-primary" id="ReporteArtPressID"
+								name="ReporteArtPressID" data-toggle="modal"
+								data-target="#ReporteArtPress">Cartel</button>
+
+							<button type="button" class="btn btn-primary" id="precioListArtCatalogID"
+								name="precioListArtCatalogID" data-toggle="modal"
+								data-target="#precioListArtCatalog">Precios</button>
+
+							<button type="button" class="btn btn-primary" id="cobrosCOvendID" name="cobrosCOvendID"
+								data-toggle="modal" data-target="#cobrosCOvend">Cobros</button>
+
+							<button type="button" class="btn btn-primary" id="ventasCOvendGenID"
+								name="ventasCOvendGenID" data-toggle="modal"
+								data-target="#ReporteArtPress">Ventas</button>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<div class="modal fade bd-example-modal-xl" id="ReporteArtPress" tabindex="-1" role="dialog"
+			aria-labelledby="ReporteArtPressTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header " style="font-weight:bold;font-size:9pt;color:midnightblue;">
+						<h5 class="modal-title " id="ReporteArtPressTitle" style="font-weight:bold;font-size:9pt;"><img
+								src="/images/produc.png" height="20px" width="25px" /> Reporte de Articulos </h5>
+						<div class="col-md-0 ml-auto">
+
+						</div>
+						<button type="button" class="close" id="closeReporteArtPress" name="closeReporteArtPress"
+							data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<div class="">
+							<div class="btn-group">
+								<input type="text" name="tasaDaysUser2" id="tasaDaysUser2" value="TASA : "
+									style="border-style:none;font-weight:bold;width:30%;" disabled>
+								<input class="form-control" type="number" name="tasaDays2" id="tasaDays2"
+									style="background-color: black;color:rgb(0,255,255);font-weight:bold;" disabled
+									value="0.00">
+
+							</div>
+							<div class="">
+								<div class="col-24">
+									<h5>Grebca ©</h5>
+
+								</div>
+								<input class="form-control" type="text" id="searchFilter2" placeholder="Buscar"
+									autocomplete="off" style='color:black;font-weight:bold;'>
+
+								<div class="table-responsive-xl" style="overflow-y:scroll;">
+									<table class="table table-hover" id="">
+										<thead style="background-color:rgb(180,180,180);">
+											<tr>
+
+
+											</tr>
+										</thead>
+
+									</table>
+								</div>
+
+
+								<div class="table-responsive-xl" style="height:50vh;overflow-y:scroll;">
+
+
+									<table class="table table-hover" id="">
+										<thead style="top:0;background-color:rgb(180,180,180);">
+											<tr>
+												<th scope=" col" style="width:5%" data-field="contNarc">N°</th>
+												<th scope=" col" style="width:10%" data-field="contNarc">CO</th>
+												<th scope="col" style="width:25%" data-field="art_des">Descripción</th>
+												<th scope="col" style="width:5%" data-field="uni_venta">Unid</th>
+												<th scope="col" style="width:10%" data-field="prec_vta1">Prec_1</th>
+												<th scope="col" style="width:7%" data-field="">Cant_1</th>
+												<th scope="col" style="width:10%" data-field="">Prec_2</th>
+												<th scope="col" style="width:7%" data-field="">Cant_2</th>
+												<th scope="col" style="width:10%" data-field="">Prec_3</th>
+												<th scope="col" style="width:7%" data-field="">Cant_3</th>
+
+
+												<th scope="col" style="width:10%" data-field="">Iva</th>
+
+
+												<th scope="col" data-field="action" data-formatter="actionFormatter"
+													data-events="actionEvents">Opción</th>
+
+											</tr>
+										</thead>
+										<tbody role="tr" id="ListArtProfit2">
+
+										</tbody>
+									</table>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="modal fade bd-example-modal-xl" id="ProductosRegDBListVer" style="max-width: 100%;" tabindex="-1"
+			role="dialog" aria-labelledby="ProductosRegDBListVerTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-xl" role="document" style="width:100%;">
+				<div class="modal-content modal-xl">
+					<div class="modal-header">
+						<h5 class="modal-title" id="ProductosRegDBListVerTitle">Lista de productos</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCloseListPro"
+							name="btnCloseListPro">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<div class="">
+							<div class="btn-group">
+								<input type="text" name="tasaDaysUserProducInf" id="tasaDaysUserProducInf"
+									value="TASA : " style="border-style:none;font-weight:bold;width:30%;" disabled>
+								<input class="form-control" type="number" name="tasaDaysUserProduc"
+									id="tasaDaysUserProduc"
+									style="background-color: black;color:rgb(0,255,255);font-weight:bold;" disabled
+									value="0.00">
+
+							</div>
+
+							<div class="">
+								<div class="col-24">
+									<h5>Grebca ©</h5>
+
+								</div>
+								<input class="form-control" type="text" id="searchFilterXY" placeholder="Buscar"
+									autocomplete="off" style='color:black;font-weight:bold;'>
+
+								<div class="table-responsive-xl" style="overflow-y:scroll;">
+									<table class="table table-hover" id="">
+										<thead style="background-color:rgb(180,180,180);">
+											<tr>
+
+
+											</tr>
+										</thead>
+
+									</table>
+								</div>
+
+								<div class="table-responsive-xl" style="height:50vh;overflow-y:scroll;">
+
+									<table class="table table-hover" id="">
+										<thead style="top:0;background-color:rgb(180,180,180);">
+											<tr>
+												<th scope=" col" style="width:5%" data-field="contNarc">N°</th>
+												<th scope=" col" style="width:10%" data-field="contNarc">CO</th>
+												<th scope="col" style="width:25%" data-field="art_des">Descripción
+												</th>
+												<th scope="col" style="width:5%" data-field="uni_venta">Unid</th>
+												<th scope="col" style="width:15%" data-field="prec_vta1">Precio</th>
+												<th scope="col" style="width:10%" data-field="">Cantidad</th>
+												<th scope="col" style="width:15%" data-field="">Iva</th>
+												<th scope="col" style="width:15%" data-field="">Total</th>
+												<th scope="col" style="width:15%" data-field="">$</th>
+												<th scope="col" style="width:10%" data-field="">cantM</th>
+												<th scope="col" style="width:15%" data-field="">$M</th>
+
+												<th scope="col" data-field="action" data-formatter="actionFormatter"
+													data-events="actionEvents">Opciones</th>
+											</tr>
+										</thead>
+										<tbody role="tr" id="ListArtProfitXY">
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div style="position:absolute;margin-top:-10000px;">
+			<p id="reimpulti">.</p>
+			<p id="reimpriXnumi">.</p>
+			<p id="reporteXxi">.</p>
+			<p id="btn-reportZi">.</p>
+			<p id="cajaclosei">.</p>
+			<p id="cajacloseiTicket">.</p>
+			<p id="ReimpfacUltiTicketVis">.</p>
+			<p id="ReimpfacUltiTicketVis2">.</p>
+			<p id="comfirDevPagoCli">.</p>
+			<p id="ordPagBenefici">.</p>
+			<p id="systemPACOIDConfig">.</p>
+			<p id="interfpassAccess">.</p>
+			<p id="interfpassAccessTicket">.</p>
+
+		</div>
+
+		<footer th:fragment="footer" class="bg-dark  text-center text-white fixed-bottom">
+
+			<div class="container">
+				<p
+					title="Aplicación web Desarrollada por especialistas GREBCA © J-402830414-9. Garantizando tus registros">
+					Grebca &copy; 2024 </p>
+			</div>
+
+
+			<script type="text/javascript" th:src="@{js/popper.min.js}"></script>
+			<script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+
+			<script type="text/javascript" th:src="@{js/ImprintReporte.js}"></script>
+			<script type="text/javascript" th:src="@{js/BotTelegramJS.js}"></script>
+
+
+
+		</footer>
+		<div style="position:absolute;margin-top:-1000px;">
+			<button type="button" data-toggle="modal" data-target="#FprinterFactAUX" id="condifacAcreditAUX"
+				name="condifacAcreditAUX" style="background-color: transparent;border-style: none;"></button>
+		</div>
+
+		<div class="modal fade bd-example-modal-xl" id="FprinterFactAUX" tabindex="-1" role="dialog"
+			aria-labelledby="FprinterFactAUXTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered " role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="FprinterFactAUXTitle">
+							<img src="/images/bloqueardo.png" height="25px" width="25px" /> Llave Asignada
+						</h5>
+						<button type="button" class="close" id="closeFprinterFactAUX" name="closeFprinterFactAUX"
+							data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="container">
+							<div class="">
+								<div class="col-12 mt-5">
+									<h5>Grebca ©</h5>
+									<br>
+									<p>!Clave de Directivo : </p>
+								</div>
+								<div><input type="password" class="form-control" name="idsuperxxAUX" id="idsuperxxAUX">
+									<input class="btn btn-danger btn-block" type="button" value="Confirmar"
+										id="btnanufacxxAUX" name="btnanufacxxAUX">
+
+								</div>
+							</div>
+						</div></br>
+						<div class="modal-footer"><button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+
+		</script>
+		<script>
+			var elemc = document.getElementById("scriptScren");
+
+			/*function openFullscreen() {
+
+				if (elemc.requestFullscreen == true) {
+
+					elemc.requestFullscreen();
+				}
+
+				if (elemc.webkitRequestFullscreen != true) {
+
+					elemc.webkitRequestFullscreen();
+				}
+
+				if (elemc.msRequestFullscreen == true) {
+
+					elemc.msRequestFullscreen();
+				}
+			}*/
+		</script>
+		<script>
+			function Focus() {
+				$('#txtK').focus();
+				history.forward();
+				window.location.hash = 'no-back-button';
+				window.location.hash = 'Again-No-back-button'
+
+				window.onhashchange = function () {
+					window.location.hash = "";
+					history.forward();
+
+				}
+
+			}
+
+
+		</script>
+		<script>
+
+			$(document).ready(function () {
+				$("#searchFilter").on("keyup", function () {
+					var value = $(this).val().toLowerCase();
+					$("#ListArtProfit tr").filter(function () {
+						$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+					});
+				});
+			});
+
+			$(document).ready(function () {
+				$("#searchFilter2").on("keyup", function () {
+					var value = $(this).val().toLowerCase();
+					$("#ListArtProfit2 tr").filter(function () {
+						$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+					});
+				});
+			});
+
+
+			$(document).ready(function () {
+				$("#searchFilterXY").on("keyup", function () {
+					var value = $(this).val().toLowerCase();
+					$("#ListArtProfitXY tr").filter(function () {
+						$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+					});
+				});
+			});
+
+
+			$(document).ready(function () {
+				$("#searchFilterNCRF").on("keyup", function () {
+					var value = $(this).val().toLowerCase();
+					$("#NewEvidenciaCCX tr").filter(function () {
+						$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+					});
+				});
+			});
+
+
+			$(document).ready(function () {
+				$("#searchListRengbtnInventStock").on("keyup", function () {
+					var value = $(this).val().toLowerCase();
+					$("#ListRengbtnInventStock tr").filter(function () {
+						$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+					});
+				});
+			});
+
+
+
+		</script>
+		</div>
+	</body>
+</htmt>

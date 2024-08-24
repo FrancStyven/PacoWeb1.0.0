@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.Thymeleaf.org">
+
+<head h:fragment="head">
+	<title>Grebca</title>
+	<link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+	<script type="text/javascript" th:src="@{js/InputDocument.js}"></script>
+</head>
+
+<body>
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="#">Grebca</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		
+			</div>
+		</nav>
+	</header>
+	<div class="container">
+		
+		<div class="row">
+			<div class="col-12 mt-5">
+				<h1>Grebca ©</h1>
+			</div>
+
+			<form th:action="@{/addNewPost2}" method="POST" th:object="${post}" class="needs-validation" novalidate>
+				<div class="form-row">
+					<div class="col-md-8 mb-4">
+						<label for="validationTooltip01">RIF/C.I</label>
+						<div class="input-group input-group-lg">
+							<input th:field="*{ced}" th:value="*{ced}"  minlength="7" maxlength="15" oninput=" onlyK(value)" id="txtK" name="ced" type="text" class="form-control"
+								 placeholder="RIF/C.I " onkeyup="javascript:this.value=this.value.toUpperCase();" required>
+						</div>
+						<div class="valid-tooltip">
+							<p></p>
+						</div>
+					</div>
+					<div class="col-md-8 mb-4">
+						<label for="validationTooltip02">Descripción</label>
+						<div class="input-group input-group-lg">
+							<input th:field="*{desc}" th:value="*{desc}" name="desc" type="text" class="form-control"
+								id="validationTooltip02" placeholder="Descripción" required>
+						</div>
+						<div class="valid-tooltip">
+
+						</div>
+					</div>
+					<div class="col-md-4 mb-3">
+						<label for="validationTooltipUsername">Telefono</label>
+						<div class="input-group input-group-lg">
+							<div class="input-group-prepend ">
+								<span class="input-group-text" id="validationTooltipUsernamePrepend">#</span>
+							</div>
+							<input th:field="*{telef}" th:value="*{telef}" name="direc" type="text" class="form-control"
+								id="validationTooltipUsername" placeholder="Telefono"
+								aria-describedby="validationTooltipUsernamePrepend" required>
+							<div class="invalid-tooltip">
+
+							</div>
+						</div>
+					</div>
+				
+				</div>
+				<div class="form-row">
+					<div class="col-md-8 mb-4">
+						<label for="validationTooltip03">Dirección</label>
+						<div class="input-group input-group-lg">
+							<input th:field="*{direc}" th:value="*{direc}" name="telef" type="text" class="form-control"
+								id="validationTooltip03" placeholder="Dirección" required>
+						</div>
+						<div class="invalid-tooltip">
+
+						</div>
+					</div>
+
+
+				</div>
+				<button class="btn btn-primary btn-lg btn-block" type="submit">Registrar</button>
+			</form>
+
+		</div>
+		
+	</div>
+
+
+	<footer th:fragment="footer" class="bg-dark  text-center text-white fixed-bottom">
+		<div class="container">
+			<p>Copyright Grebca &copy; -2023 </p>
+		</div>
+		<script type="text/javascript" th:src="@{js/jquery-3.3.1.min.js}"></script>
+
+		<script type="text/javascript" th:src="@{js/popper.min.js}"></script>
+
+		<script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+
+	</footer>
+</body>
+
+</html>

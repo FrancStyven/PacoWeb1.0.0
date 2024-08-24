@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.Thymeleaf.org">
+	<head>
+		<title>DecimalLib</title>
+		<script type="text/javascript" th:src="@{js/Decimal.js}"></script>
+		<script type="text/javascript" th:src="@{js/cobProEdit.js}"></script>
+	</head>
+	<body>
+		<input type="number" name="txt1" id="text1" oninput="textData();" onkeypress="return NumCheck(event, this);">
+		<input type="number" name="txt2" id="text2" oninput="textData();" onkeypress="return NumCheck(event, this);">
+		<input type="number" name="txt3" id="text3" oninput="textData();" onkeypress="return NumCheck(event, this);">
+		<script>
+			function textData(){
+				var  a = document.getElementById("text1").value || 0,
+					 b = document.getElementById("text2").value || 0,
+					 c = document.getElementById("text3").value || 0;
+					   
+					 document.getElementById("text3").value = parseFloat(Number(a) * Number(b) );			
+			}
+		</script>
+	</body>
+</html>

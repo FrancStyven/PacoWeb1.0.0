@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.Thymeleaf.org">
+
+<head>
+	<title></title>
+	<link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{css/DiseScroll.css}">
+	<script type="text/javascript" th:src="@{js/jquery-3.6.4.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+
+</head>
+ <style type="text/css">
+     .lin{
+          border: hsl(201,50%,40%) solid;
+                  padding:5px 7px;
+               }
+     </style>
+     <style type='text/css'>
+#rotator {
+border:0;
+padding:0;
+margin-left: 10px auto;
+overflow: hidden;
+position: relative;
+width: 100%; 
+height: 550px;
+max-height:100%;
+}
+#rotator img {
+border: 0;
+padding: 0;
+width: 100%;
+}
+</style>
+
+<script type='text/javascript'>
+//<![CDATA[
+/* CREDITOS: http://slayeroffice.com/code/imageCrossFade/index.html */
+
+window.addEventListener?window.addEventListener('load',so_init,false):window.attachEvent('onload',so_init);
+var d=document, imgs = new Array(), zInterval = null, current=0, pause=false;
+
+function so_init() {
+if(!d.getElementById || !d.createElement)return;
+css = d.createElement('link');
+css.setAttribute('href','slideshow2.css');
+css.setAttribute('rel','stylesheet');
+css.setAttribute('type','text/css');
+d.getElementsByTagName('head')[0].appendChild(css);
+imgs = d.getElementById('rotator').getElementsByTagName('img');
+
+var data =imgs.length;
+
+for(var i=1;i<imgs.length;i++) {
+imgs[i].xOpacity = 0;
+imgs[0].style.display = 'block';
+imgs[0].xOpacity = .99;
+
+		
+}
+setTimeout(so_xfade ,3000);
+document.getElementById("precioPRUE").value =  data+"";
+}
+
+
+function so_xfade() {
+	
+cOpacity = imgs[current].xOpacity;
+nIndex = imgs[current+1]?current+1:0;
+
+nOpacity = imgs[nIndex].xOpacity;
+cOpacity-=.05;
+nOpacity+=.05;
+imgs[nIndex].style.display = 'block';
+imgs[current].xOpacity = cOpacity;
+imgs[nIndex].xOpacity = nOpacity;
+setOpacity(imgs[current]);
+setOpacity(imgs[nIndex]);
+if(cOpacity<=0) {
+imgs[current].style.display = 'none';
+current = nIndex;
+setTimeout(so_xfade,3000);
+}
+else {
+setTimeout(so_xfade,50);
+}
+
+function setOpacity(obj) {
+if(obj.xOpacity>.99) {
+obj.xOpacity = .99;
+return;
+}
+obj.style.opacity = obj.xOpacity;
+obj.style.MozOpacity = obj.xOpacity;
+obj.style.filter = 'alpha(opacity=' + (obj.xOpacity*100) + ')';
+}
+}
+//]]>
+</script>
+
+<body>
+	
+	
+	<div class="todo">
+<div id="maqueta">
+<div id="rotator">
+
+<a ><img alt="" src="/images/"+id+"bloqueardo.png" id="relleno"><input id="precioPRUE"></a>
+<a ><img alt="" src="/images/biopago.png"id="relleno" ><input id="precioPRUE"></a>
+<a ><img alt="" src="/images/closesesion.png"id="relleno"><input id="precioPRUE"></a>
+<a ><img alt="" src="/images/devolucion.png"id="relleno"><input id="precioPRUE"></a>
+<a ><img alt="" src="/images/PACOwlogo.png"id="relleno"><input id="precioPRUE"></a>
+<a ><img alt="" src="/images/empresa.jpg"id="relleno"><input id="precioPRUE"></a>
+<a ><img alt="" src="/images/print.png"id="relleno"><input id="precioPRUE"></a>
+</div>
+
+</div>
+<!--<div id="ima">
+<a href="http://www.guardia.mil.ve"><img id="logo" src="/images/puntoventa.png"></a>
+</div>-->
+
+</div>
+	
+	<!-- <table id="cuentas" >
+
+		<tr>
+
+			<td><strong>Fecha</strong></td>
+
+			<td><strong>Cliente</strong></td>
+
+			<td><strong>Deuda</strong></td>
+
+			<td><strong>Pago</strong></td>
+
+		</tr>
+
+
+
+
+
+		<tr>
+
+			<td>12/08/2016</td>
+
+			<td>Cliente1</td>
+
+			<td><span id="deuda" class="deuda">130.66</span></td>
+
+			<td><input  value="99.77"><span class="pago">99.77</span></td>
+
+		</tr>
+
+
+
+		<tr>
+
+			<td>12/08/2016</td>
+
+			<td>Cliente1</td>
+
+			<td><span id="deuda" class="deuda">200.00</span></td>
+
+			<td><input  value="85.99"><span class="pago" >85.99</span></td>
+
+		</tr>
+
+
+
+		<tr>
+
+			<td>12/08/2016</td>
+
+			<td>Cliente1</td>
+
+			<td><span id="deuda" class="deuda">98.50</span></td>
+
+			<td><input  value=" 45.00"><span class="pago">45.00</span></td>
+
+		</tr>
+
+
+
+		<tr>
+
+			<td>12/08/2016</td>
+
+			<td>Cliente1</td>
+
+			<td><span id="deuda" class="deuda">130.00</span></td>
+
+			<td><input value="24.66"><span class="pago"> 24.66</span></td>
+
+		</tr>
+
+
+
+	</table>
+
+	<p>Total Deuda: $<span id="totaldeuda" class="totaldeuda">Aqui el total de la deuda</span></p>
+
+	<p>Total Deuda: $<span id="totaldeuda" class="totaldeuda">Aqui el total del pago</span></p>
+
+	<p>Saldo: $<span id="saldo" class="saldo">Aqui el total deuda - el totalpago</span></p>
+	<p id="dell"> aqui</p>
+
+	<script type="text/javascript" th:src="@{js/jquery-3.6.4.min.js}"></script>
+	<script>
+
+		var totalDeuda = 0;
+
+		$(".pago").each(function () {
+
+			totalDeuda += parseFloat($(this).text()) || 0;
+				
+		});
+
+		alert(totalDeuda);
+		$("#dell").append(totalDeuda);
+
+	</script>
+	<script>
+	function cal() {
+  try {
+    var a = parseInt(document.getElementById("Cuota").value) || 0,
+      b = parseInt(document.getElementById("Saldo").value) || 0,
+      c = parseInt(document.getElementById("Areas").value) || 0,
+      d = parseInt(document.getElementById("CuotaExtra").value) || 0;
+
+    document.getElementById("nuevoSaldo").value = a + b + c + d;
+  } catch (e) {}
+}
+</script>
+<input type="text" class="form-control" id="Cuota" name="Cuota" value="95000" oninput="cal()">
+<input type="text" class="form-control" id="Saldo" name="Saldo" oninput="cal()">
+<input type="text" class="form-control" id="Areas" name="Areas" placeholder="Vehiculo, Moto, Salon Comunal" oninput="cal()">
+<input type="text" class="form-control" id="CuotaExtra" name="CuotaExtra" oninput="cal()">
+<input id="nuevoSaldo" placeholder="Total" /> -->
+</body>
+
+</html>

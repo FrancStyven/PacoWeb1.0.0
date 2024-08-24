@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.Thymeleaf.org">
+
+<head>
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<title>CodeMayor</title>
+	<link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{css/diseStyle.css}">
+	<script type="text/javascript" th:src="@{js/jquery-3.6.4.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/CargoRenglonBRJS.js}"></script>
+</head>
+
+<body style="background-color: rgb(235,235,240);">
+
+	<div class="card">
+
+		<div method="POST" th:object="${postQR}" style="background-color: rgb(255,255,255);">
+			<input th:field="*{fact_num}" th:value="*{fact_num}"
+				style="background-color:transparent;border-style:none; font-weight:bold;color:black;font-size: 12pt;"
+				id="NfacturaQR" disabled></input>
+			<input th:field="*{co_ven}" th:value="*{co_ven}"
+				style="background-color:transparent;border-style:none; font-weight:bold;color:black;font-size: 12pt;"
+				id="co_venQR" disabled></input>
+
+
+			<input type="text" id="tasaDay" disabled
+				style="background-color:transparent;border-style:none; font-weight:bold;color:black;font-size: 12pt;">
+		</div>
+		<div>
+			<form action="/FacturaCargoCliente" method="POST">
+				<input type="hidden" name="ced" id="nfacQRdata">
+				<input type="hidden" name="co_venCO" id="co_venCOs">
+				<button class="btn btn-primary btn-block" type="submit" id="btnBackFact"
+					name="btnBackFact">Atras</button>
+
+			</form><br>
+		</div>
+		<div>
+			<textarea type="text" name="rengQR" id="rengQR"
+				style="max-width: 100%;min-width: 100%; max-height:30%;min-height:30%;"></textarea>
+
+			<button type="button" id="btnRenglon" name="btnRenglon"
+				style="background-color: transparent;border-style: none;"></button>
+
+			<button type="button" class="btn btn-info" id="inicioScanner" name="inicioScanner" title=""
+				aria-hidden="true" data-toggle="modal" data-target="#Scanner">
+				<img src="/images/agregarProducto.png" height="20px" width="25px" />Scanner
+			</button>
+
+			<button type="button" class="btn btn-info" id="" name="" title="" aria-hidden="true" data-toggle="modal"
+				data-target="#SelectCesta">
+				<img src="/images/cestapeso.png" height="20px" width="25px" />Cestas
+			</button>
+			
+			<button type="button" class="btn btn-info" id="cleanCam" name="cleanCam" title="" >
+				<img src="/images/cestapeso.png" height="20px" width="25px" />Limpiar
+			</button>
+
+		</div>
+		<div class="container">
+			<strong>Tipo de cestas</strong>
+			<input class="form-control" type="text" id="TipoCesFin"
+			 placeholder="Tipo de Cesta" disabled 
+			 style="background-color:rgb(50,50,50) ;color:rgb(0,255,0);font-weight:bold;font-size:11pt;">
+
+			<strong>Peso cesta</strong>
+			<input class="form-control" type="number" id="colorCesta" placeholder="Color Cesta" disabled
+			style="background-color:rgb(50,50,50) ;color:rgb(0,255,0);font-weight:bold;font-size:11pt;">
+
+			<strong>Cantidad de Cestas</strong>
+			<input class="form-control" type="number" id="cantidadCesta" placeholder="Cantidad Cesta" disabled
+			style="background-color:rgb(50,50,50) ;color:rgb(0,255,0);font-weight:bold;font-size:11pt;">
+
+			<strong>Peso total</strong>
+			<input class="form-control" type="number" id="pesoCestaAll" placeholder="Peso Total" disabled
+			style="background-color:rgb(50,50,50) ;color:rgb(0,255,0);font-weight:bold;font-size:11pt;">
+
+		</div>
+		<div class="modal fade bd-example-modal-xl" id="Scanner" tabindex="-1" role="dialog"
+			aria-labelledby="ScannerTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="ScannerTitle">Scanner</h5>
+						<button type="button" name="closeKey" id="closeKey" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<div class="container">
+
+							<div class="">
+								<div class="col-12">
+
+									<p id="resultado">Aquí aparecerá el código</p>
+									<input type="hidden" id="codigoProd">
+									<input type="hidden" id="cantidadPeso">
+
+									<div class="card" style="width:50%; margin-left: 5px;">
+									</div>
+									<div>
+										<p id="resul2"></p>
+									</div>
+									<div id="contenedorScanner"></div>
+									<!-- Cargamos Quagga y luego nuestro script -->
+									<script th:src="@{js/quaggaS.min.js}"></script>
+
+									<script>
+
+									</script>
+									<script>
+
+										var sound = new Audio("js/sounds.wav");
+										document.addEventListener("DOMContentLoaded", () => {
+
+											const $resultados = document.querySelector("#resultado");
+
+											Quagga.init({
+												inputStream: {
+													constraints: {
+														width: 1920,
+														height: 1080,
+														mirror: false
+
+													},
+													name: "Live",
+													type: "LiveStream",
+													mirror: false,
+													target: document.querySelector('#contenedorScanner'), // Pasar el elemento del DOM  
+												},
+												decoder: {
+													readers: [{
+														format: "code_128_reader",
+														config: {
+															numOfWorkers: 1,
+															locate: false,
+															frequency: 1,
+															debug: false,
+
+														}
+													}]
+													/*
+													readers: ["ean_reader,"],
+													readers: ["code_39_reader"],
+													readers: ["code_39_vin_reader"],
+													readers: ["ean_extended_reader"],
+													readers: ["ean_8_reader"],
+													readers: ["upc_reader"],
+													readers: ["upc_e_reader"],
+													readers: ["codabar_reader"],
+													readers: ["i2of5_reader"],
+													readers: ["2of5_reader"],
+													readers: ["code_93_reader"],
+													readers: ["ean_reader"]*/
+
+												}
+
+
+											}, function (err) {
+
+												if (err) {
+													console.log(err);
+													return
+												}
+												console.log("Iniciado correctamente");
+												Quagga.start();
+
+											});
+
+
+
+											Quagga.onDetected((data) => {
+
+												sound.play();
+												$resultados.textContent = data.codeResult.code;
+												var nest = data.codeResult.code;
+
+												var ScannerVal = data.codeResult.code;
+												var codPro = ScannerVal.substring(7, -1);
+												var rest = 7;
+												var srtced = ScannerVal.substring(rest);
+												var enCan = srtced.substring(4, -1);
+												var desCan = srtced.substring(3);
+												var peso = enCan + "." + desCan;
+
+												$("#codigoProd").val(codPro);
+												$("#cantidadPeso").val(peso);
+
+
+												$("#rengQR").val(data.codeResult.code);
+												$("#rengQR").focus();
+
+												document.querySelector('button[name=btnRenglon]').addEventListener('click', function (e) {
+													e.preventDefault(e);
+												})
+												document.querySelector('button[name=btnRenglon]').click();
+
+
+
+												Quagga.stop(1000);
+
+												// Imprimimos todo el data para que puedas depurar
+												console.log(data);
+
+											});
+
+											Quagga.onProcessed(function (result) {
+												var drawingCtx = Quagga.canvas.ctx.overlay,
+													drawingCanvas = Quagga.canvas.dom.overlay;
+
+												if (result) {
+													if (result.boxes) {
+														drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute("width")), parseInt(drawingCanvas.getAttribute("height")));
+														result.boxes.filter(function (box) {
+															return box !== result.box;
+														}).forEach(function (box) {
+															Quagga.ImageDebug.drawPath(box, {x: 0, y: 1}, drawingCtx, {color: "green", lineWidth: 2});
+														});
+													}
+
+													if (result.box) {
+														Quagga.ImageDebug.drawPath(result.box, {x: 0, y: 1}, drawingCtx, {color: "#00F", lineWidth: 2});
+													}
+
+													if (result.codeResult && result.codeResult.code) {
+														Quagga.ImageDebug.drawPath(result.line, {x: 'x', y: 'y'}, drawingCtx, {color: 'red', lineWidth: 3});
+													}
+												}
+											});
+
+
+										});
+
+									</script>
+									<br>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade bd-example-modal-xl" id="SelectCesta" tabindex="-1" role="dialog"
+			aria-labelledby="SelectCestaTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="SelectCestaTitle">Select Cestas</h5>
+						<button type="button" name="closeSelectCesta" id="closeSelectCesta" class="close"
+							data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<div class="container">
+
+							<div class="">
+								<div class="col-12">
+									<strong>Tipo : </strong>
+									<select class="form-control" id="tipoCesta" oninput="tipoCestaLis();">
+										<option></option>
+										<option value="GRANDE">GRANDE</option>
+										<option value="MEDIANA">MEDIANA</option>
+										<option value="PEQUEÑA">PEQUEÑA</option>
+									</select>
+
+									<strong>Color :</strong>
+									<select class="form-control" id="ColorCestaLis">
+
+									</select>
+
+									<strong>Cantidad : </strong>
+									<select class="form-control" id="cantidadCestaLis">
+
+									</select>
+									</br>
+									<button class="btn btn-primary btn-block" type="button"
+										id="aplicarCal">Aplicar</button>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
+
+
+
+</body>
+<script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+
+</html>

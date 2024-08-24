@@ -1,0 +1,2965 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.Thymeleaf.org">
+
+<head>
+	<meta name="viewport" content="width=device-width,initial-scale=0.8" />
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<title>PACOweb</title>
+	
+
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" th:href="@{css/diseStyle.css}">
+	<link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{css/fullScreen.css}">
+	<script type="text/javascript" th:src="@{js/jquery-3.6.4.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/AdminInterfazJS.js}"></script>
+	<script type="text/javascript" th:src="@{js/swal2.js}"></script>
+	<script type="text/javascript" th:src="@{js/cobProEdit.js}"></script>
+	<script type="text/javascript" th:src="@{js/InfoTabImp.js}"></script>
+	<script type="text/javascript" th:src="@{js/cargoCliente.js}"></script>
+	<script type="text/javascript" th:src="@{js/LectScannerAuto.js}"></script>
+	<script type="text/javascript" th:src="@{js/CotipPag.js}"></script>
+	<script type="text/javascript" th:src="@{js/AutoLoad.js}"></script>
+	<script type="text/javascript" th:src="@{js/MonitoProduc.js}"></script>
+	<script type="text/javascript" th:src="@{js/UpdateLisPag.js}"></script>
+	<script type="text/javascript" th:src="@{js/PrintFactTicket.js}"></script>
+	<script type="text/javascript" th:src="@{js/InfoNotaCredit.js}"></script>
+	<script type="text/javascript" th:src="@{js/MegaSoftJS.js}"></script>
+
+	<script type="text/javascript" th:src="@{js/BotTelegramJS.js}"></script>
+	<script type="text/javascript" th:src="@{js/SearchInteligiArtFactJS.js}"></script>
+	<script type="text/javascript" th:src="@{js/AdminRefreshJS.js}"></script>
+
+</head>
+
+<body onload="NoBack()" style="background-color: rgb(255,255,255);" id="scriptScren">
+	<div id="screen">
+		<!--<div id="relojnumerico" class="reloj" onload="cargarReloj()">
+		</div>-->
+
+
+		<div style="position:absolute;margin-top:-1000px;">
+			
+			<p id="credencialesSup">.</p>
+			<p id="DeleReng">.</p>
+			<p id="Anufac">.</p>
+			<p id="esperafact">.</p>
+			<p id="esperafact">.</p>
+			<p id="vistaModalCreden">.</p>
+			
+		
+			
+
+			<form id="anulacion">
+				<input type="hidden" name="numeroSecuencia" id="numerosecuenciaID">
+				<input type="hidden" name="terminalVirtual" id="terminalVirtualID">
+				<button type="button" value="Anulacion" id="btnAnulacionCobELEC" name="btnAnulacionCobELEC"
+					onclick="conParametros('anulacion');"
+					style="background-color: transparent;border-style:none;"></button>
+			</form>
+			<div>
+				<input type="hidden" id="dataNumFact">
+				<input type="hidden" id="reng_cobRow">
+				<input type="hidden" id="cob_numRow">
+				<input type="hidden" id="mont">
+			</div>
+			<form action="/LectorQRCodeFact" method="POST">
+				<input type="hidden" id="fact_numQR" name="fact_num">
+				<button class="btn btn-info " type="submit" id="btnLectQR" name="btnLectQR"
+					style="background-color:transparent;border-style:none ;"></button>
+			</form>
+
+			<button type="button" name="SearchInteliArttBtn" id="SearchInteliArttBtn"
+				style="background-color:transparent;border-style:none;"></button>
+				
+				
+		</div>
+
+		
+		
+		<input type="hidden" id="IDagregar" name="IDagregar">
+		<input type="hidden" id="IDmodificar" name="IDmodificar">
+		<input type="hidden" id="IDregistrar" name="IDregistrar">
+		<input type="hidden" id="IDeliminar" name="IDeliminar">
+
+		<input type="hidden" id="cajaEfectBs" name="cajaEfectBs">
+		<input type="hidden" id="cajaEfectUs" name="cajaEfectUs">
+		<input type="hidden" id="monedaBs" name="monedaBs">
+		<input type="hidden" id="monedaUs" name="monedaUs">
+
+		<input type="hidden" id="IDscanner" name="IDscanner">
+		<input type="hidden" id="lect_qr" name="lect_qr">
+		<input type="hidden" id="dire_insta" name="dire_insta">
+		<input type="hidden" id="valid_stock" name="valid_stock">
+		<input type="hidden" id="print_fiscal_auto" name="print_fiscal_auto">
+		<input type="hidden" id="usoFiscal" name="usoFiscal">
+		<input type="hidden" id="usoNoFiscal" name="usoNoFiscal">
+
+
+		<div class="card-group" method="POST" th:object="${post}">
+			<div class="card" style="background-color: rgb(253,253,253);">
+
+				<div class="">
+					<ul class="list-group">
+
+						<img src="/images/empresa.png" min-height="60%" max-height="70%" height="150px"
+								width="80%" style="margin-left: 10%;margin-top:5%;" />
+
+					</ul>
+				</div>
+
+			</div>
+			<div class="card">
+
+				<div class="">
+					<ul class="list-group">
+
+						<div class="btn-group" style="background-color:rgb(50,50, 50);">
+							<input class="form-control" value="N° FACTURA:"
+								style="background-color:transparent; font-weight:bold;color:white;border-style:none;font-size: 12pt;"
+								disabled>
+							<input class="form-control" th:field="*{nfac}" th:value="*{nfac}"
+								style="background-color:transparent;border-style:none; font-weight:bold;color:white;font-size: 12pt;"
+								id="Nfactura" disabled></input>
+							<input type="hidden" id="idMoneUSD">
+							<input type="hidden" id="todayEUR">
+							<input th:field="*{co_venCO}" th:value="*{co_venCO}" id="co_venID" type="hidden">
+
+							<input type="hidden" id="tipoExento" name="tipoExento">
+							<input type="hidden" id="porcExento" name="porcExento">
+
+							<input type="hidden" id="tipoGeneral" name="tipoGeneral">
+							<input type="hidden" id="porcGeneral" name="porcGeneral">
+
+
+							<input type="hidden" id="glob_descID" name="glob_descID">
+							<input type="hidden" id="porc_gdescID" name="porc_gdescID">
+							<input type="hidden" id="ipAddressPublic" name="ipAddressPublic">
+
+						</div>
+
+						<div class="btn-group" style="box-shadow: 0px 0px 2px grey;background-color: rgb(240,240,240);">
+
+							<img src="/images/bs.png" height="25px" width="30px" />
+							<input class="form-control"
+								style="background-color: transparent;font-weight:bold;color:black;border-style:none;width: 60px;"
+								value="Precio:" disabled>
+							<div class="input-group input-group-lg">
+								<input type="text" class="form-control" value="0.00"
+									style="color:blue;font-weight:bold;font-size:12pt;background-color:transparent;border-style: none;"
+									name="preciobru" id="precioBru" disabled>
+							</div>
+
+						</div>
+						<div class="btn-group" style="box-shadow: 0px 0px 2px grey;background-color: rgb(240,240,240);">
+
+							<img src="/images/bs.png" height="25px" width="30px" />
+
+							<input class="form-control"
+								style="background-color: transparent;font-weight:bold;color:black;border-style:none;width: 60px;"
+								value="IVA:" disabled>
+							<div class="input-group input-group-lg">
+								<input type="text" class="form-control" value="0.00"
+									style="color:blue;font-weight:bold;font-size:12pt;background-color:transparent; border-style:none;"
+									name="ivaBS" id="ivaALLBS" disabled>
+							</div>
+
+						</div>
+
+
+						<div class="btn-group" style="box-shadow: 0px 0px 2px grey;background-color: rgb(240,240,240);">
+							<img src="/images/bs.png" height="25px" width="30px" />
+							<input class="form-control"
+								style="background-color: transparent;font-weight:bold;color:black;border-style:none;width: 60px;"
+								value="Total:" disabled>
+
+							<div class="input-group input-group-lg">
+
+								<input type="hidden" class="form-control" value="0.00"
+									style="color:blue;font-weight:bold;font-size:21pt;background-color: transparent; border-style:none;"
+									name="montoALLBS" id="MontoALLBS" disabled>
+
+								<input type="text" class="form-control" value="0.00"
+									style="color:blue;font-weight:bold;font-size:30pt;background-color: transparent; border-style:none;"
+									name="MontoALLBSFormat" id="MontoALLBSFormat" disabled>
+							</div>
+						</div>
+
+					</ul>
+				</div>
+
+			</div>
+
+			<div class="card" onload="">
+				<div class="">
+					<ul class="list-group">
+
+						<div class="btn-group" style="background-color:rgb(50,50, 50);">
+							<input class="form-control" value="USD :"
+								style="background-color:transparent; font-weight:bold;color:white;border-style:none;font-size: 12pt;"
+								disabled>
+							<input class="form-control"
+								style="background-color:transparent; font-weight:bold;color:white;border-style:none;font-size: 12pt;"
+								id="TasaTODAY" disabled></input>
+						</div>
+
+						<div class="btn-group" style="box-shadow: 0px 0px 2px grey;background-color: rgb(240,240,240);">
+
+
+							<img src="/images/dolar.png" height="25px" width="30px" />
+							<input class="form-control"
+								style="background-color: transparent;font-weight:bold;color:black;border-style:none;width: 60px;"
+								value="Precio:" disabled>
+
+							<div class="input-group input-group-lg">
+								<input type="text" class="form-control" value="0.00"
+									style="color:green;font-weight:bold;font-size:12pt;background-color:transparent;border-style:none;"
+									name="PrecioALL" id="PrecioALL" disabled>
+							</div>
+						</div>
+						<div class="btn-group" style="box-shadow: 0px 0px 2px grey;background-color: rgb(240,240,240);">
+
+							<img src="/images/dolar.png" height="25px" width="30px" />
+							<input class="form-control"
+								style="background-color: transparent;font-weight:bold;color:black;border-style:none;width: 60px;"
+								value="IVA:" disabled>
+							<div class="input-group input-group-lg">
+								<input type="text" class="form-control" value="0.00"
+									style="color:green;font-weight:bold;font-size:12pt;background-color:transparent;border-style:none;"
+									name="ivaALL" id="ivaALL" disabled>
+							</div>
+						</div>
+
+
+
+						<div class="btn-group" style="box-shadow: 0px 0px 2px grey;background-color: rgb(240,240,240);">
+
+							<img src="/images/dolar.png" height="25px" width="30px" />
+							<input class="form-control"
+								style="background-color: transparent;font-weight:bold;color:black;border-style:none;width: 60px;"
+								value="Total:" disabled>
+
+							<div class="input-group input-group-lg">
+								<input type="hidden" class="form-control" value="0.00"
+									style="color:green;font-weight:bold;font-size:21pt;background-color:transparent;border-style:none;"
+									name="montoALL" id="MontoALL" disabled>
+
+								<input type="text" class="form-control" value="0.00"
+									style="color:green;font-weight:bold;font-size:30pt;background-color:transparent;border-style:none;"
+									name="montoALLFormat" id="MontoALLFormat" disabled>
+
+							</div>
+						</div>
+
+					</ul>
+				</div>
+
+			</div>
+
+			<div class="alert alert-success" id="alertcheck"
+				style="position:absolute;z-index:1;margin-left:95%;margin-top:0%;" role="alert">
+				<strong>Listo</strong>
+			</div>
+			<div class="card">
+				<ul class="list-group">
+
+					<div class="btn-group" style="font-weight:bold;font-size:12pt;background-color:rgb(50,50, 50);">
+
+						<button class="form-control" data-toggle="modal" data-target="#UpdateCliData"
+							style="background-color: transparent;cursor:pointer;font-weight:bold;color: white;border-style:none;">N°Compra:</button>
+						<input class="form-control"
+							style="background-color:transparent;border-style:none; font-weight:bold;color:white;font-size: 12pt;"
+							th:value="*{nfaccli}" id="nfaccli" disabled>
+					</div>
+					<div class="">
+
+						<div class="btn-group">
+							<input class="form-control" value="RIF/C.I:"
+								style="background-color:transparent;border-style: none; font-weight:bold;color:black;font-size: 9pt;"
+								disabled>
+							<input type="text" class="form-control"
+								style="background-color: transparent;font-weight:bold;color:rgb(26, 95, 180);border-style:none;font-size: 11pt;"
+								name="ced" th:value="*{ced}" id="cedcli" disabled>
+						</div>
+
+
+						<div class="btn-group" style="background-color: rgb(240,240,240);">
+							<input class="form-control" value="RAZON SOCIAL:"
+								style="background-color:transparent;border-style: none; font-weight:bold;color:black;font-size: 9pt;"
+								disabled>
+							<input type="text" class="form-control"
+								style="background-color: transparent;font-weight:bold;color:rgb(26, 95, 180);border-style:none;font-size: 11pt;"
+								name="desc" id="OnDOC" th:value="*{desc}" disabled></input>
+						</div>
+
+
+						<div class="btn-group">
+							<input class="form-control" value="DIRECCION:"
+								style="background-color:transparent;border-style: none; font-weight:bold;color:black;font-size: 9pt;"
+								disabled>
+							<input th:field="*{direc}" th:value="*{direc}" type="text" class="form-control"
+								style="background-color: transparent;font-weight:bold;color:rgb(26, 95, 180);border-style:none;font-size: 11pt;"
+								name="direc" id="OnDirec" disabled></input>
+						</div>
+
+
+
+						<div class="btn-group" style="background-color: rgb(240,240,240);">
+							<input class="form-control" value="TELEFONO:"
+								style="background-color:transparent;border-style: none; font-weight:bold;color:black;font-size: 9pt;"
+								disabled>
+							<input th:field="*{telef}" th:value="*{telef}" type="text" class="form-control"
+								style="background-color: transparent;font-weight:bold;color:rgb(26, 95, 180);border-style:none;font-size: 11pt;"
+								name="tlf" id="OnTel" disabled></input>
+						</div>
+
+					</div>
+				</ul>
+			</div>
+		</div>
+
+		<div class="card-group w-30 ">
+			<div class="card" style="background-color: rgb(240,240,240);">
+				<div class="col-10 mb-4">
+
+					<div class="input-group input-group-lg">
+						<input type="text" id="selectEvidencia" class="selectEvidencia form-control"
+							name="selectEvidencia" placeholder="INGRESE ARTICULOS"
+							style="background-color:rgb(250,250,250); font-weight:bold;color:black;font-size: 12pt;"
+							autocomplete="off" oninput="searchProducRapFACT();"></input>
+
+
+						<button type="button" class="btn btn-info" id="inicioScanner" title="" aria-hidden="true"
+							data-toggle="modal" data-target="#Scanner">
+							<img src="/images/agregarProducto.png" height="20px" width="25px" />Scanner
+						</button>
+
+						<button id="btnScannerSub" name="btnScannerSub"
+							style="background-color:transparent;border-style:none;"></button>
+
+						<button type="button" class="btn btn-info" id="ButtonQRBalanza" name="ButtonQRBalanza" title="">
+							<img src="/images/agregarProducto.png" height="20px" width="25px" />Lect QR
+						</button>
+
+
+
+						<button type="button" class="btn  btn-lg" id="updatePagIDpri" name="updatePagIDpri"><img
+								src="/images/UpdateInfor.png" height="25px" width="25px" />
+						</button>
+
+						<button type="button" id="conSQLRapArt" name="conSQLRapArt"
+							style="background-color: transparent;border-style:none;"></button>
+
+						<!-- <form action="/LectorQRCodeFact" method="POST">
+							<input type="hidden" id="fact_numQR" name="fact_num">
+							<button class="btn btn-info " type="submit" id="btnLectQR" >
+								<img src="/images/agregarProducto.png" height="25px" width="25px" />Ma</button>
+						</form>-->
+
+					</div>
+					<div class="table-responsive-xl"
+						style="max-height:55vh;overflow-y:auto;position:absolute;width:115%;">
+
+						<table class="table table-hover" id="">
+							<thead style="background-color:rgb(200,200,200);">
+								<tr>
+									<th scope="col" style="width:2%" data-field=""></th>
+									<th scope="col" style="width:20%" data-field=""></th>
+									<th scope="col" style="width:50%" data-field=""></th>
+									<th scope="col" style="width:20%" data-field=""></th>
+									<th scope="col" style="width:20%" data-field=""></th>
+
+								</tr>
+							</thead>
+							<tbody role="tr" id="resultSearchRapArt" style="background-color: rgb(90,90,90);">
+
+							</tbody>
+						</table>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="card" style="background-color: rgb(210,210,210);">
+				<nav class="navbar navbar-expand-lg navbar-light bg-light">
+					<button class="navbar-toggler" type="button" data-toggle="collapse"
+						data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+						aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav mr-auto">
+
+							<button type="button" class="btn btn-primary " data-toggle="modal"
+								data-target="#CobranzaRegDB" id="cobAP" name="cobAP">
+								<img src="/images/dinerofac.png" width="30px" />
+								<p style="font-weight:bold;">Cobranza </p>
+								<input type="hidden" id="cod_ctaME">
+								<input type="hidden" id="co_bancME">
+								<input type="hidden" id="num_ctaME">
+								<input type="hidden" id="cod_ctaBN">
+								<input type="hidden" id="co_bancBN">
+								<input type="hidden" id="num_ctaBN">
+							</button><label>&nbsp;</label>
+
+
+							<button type="button" class="btn btn-info" data-toggle="modal" data-target="#ProductosRegDB"
+								id="LisProduc" name="LisProduc">
+								<img src="/images/productolis.png" width="30px" />
+								<p style="font-weight:bold;">Productos </p>
+							</button><label>&nbsp;</label>
+
+							<!--<button type="button" class="btn btn-info  " data-toggle="modal" data-target="">
+								<img src="/images/devolucion.png" width="30px" />
+								<p>Devolución </p>
+							</button><label>&nbsp;</label>-->
+
+							<button type="button" class="btn btn-warning" id="facesperadata" name="facesperadata"
+								data-toggle="modal" data-target="#Factsperadata">
+								<img src="/images/factespera.png" width="30px" />
+								<p style="font-weight:bold;">Fac Espera</p>
+							</button><label>&nbsp;</label>
+
+
+							<button type="button" class="btn btn-danger" id="anularFacR" name="anularFacR"
+								data-toggle="modal" data-target="#AnufacMo">
+								<img src="/images/anular.png" width="30px" />
+								<p style="font-weight:bold;">Anular Fac</p>
+
+							</button><label>&nbsp;</label>
+							
+							<button type="button" class="btn " id="AbrirGaveta" name="AbrirGaveta" style="background-color:rgb(150,50,129);"
+								data-toggle="modal" data-target="#AnufacMo">
+								<img src="/images/donacion.png" width="30px" />
+								<p style="font-weight:bold;color:white;">Abrir Gavet</p>
+								
+
+							</button><label>&nbsp;</label>
+							<input type="hidden" id="dataconsultagaveta" name="dataconsultagaveta" value="0">
+
+						</ul>
+					</div>
+				</nav>
+			</div>
+
+		</div>
+
+
+		<div class="modal fade bd-example-modal-xl" id="Scanner" tabindex="-1" role="dialog"
+			aria-labelledby="ScannerTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="ScannerTitle">Scanner</h5>
+						<button type="button" name="closeKey" id="closeKey" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<div class="container">
+
+							<div class="">
+								<div class="col-12 mt-5">
+
+									<p id="resultado">Aquí aparecerá el código</p>
+									<input type="hidden" id="codigoProd">
+									<input type="hidden" id="cantidadPeso">
+
+									<div class="card" style="width:50%; margin-left: 5px;">
+									</div>
+									<div>
+										<p id="resul2"></p>
+									</div>
+									<div id="contenedorScanner"></div>
+
+									<script th:src="@{js/quaggaS.min.js}"></script>
+
+									<script>
+
+									</script>
+									<script>
+
+										var sound = new Audio("js/sounds.wav");
+										document.addEventListener("DOMContentLoaded", () => {
+
+											const $resultados = document.querySelector("#resultado");
+
+											Quagga.init({
+												inputStream: {
+													constraints: {
+														width: 1920,
+														height: 1080,
+														mirror: false
+
+													},
+													name: "Live",
+													type: "LiveStream",
+													mirror: false,
+													target: document.querySelector('#contenedorScanner'), // Pasar el elemento del DOM  
+												},
+												decoder: {
+													readers: [{
+														format: "ean_reader" + "code_128_reader",
+														config: {
+															numOfWorkers: 1,
+															locate: false,
+															frequency: 1,
+															debug: false,
+
+														}
+													}]
+													/*
+													readers: ["code_128_reader"],
+													readers: ["code_39_reader"],
+													readers: ["code_39_vin_reader"],
+													readers: ["ean_extended_reader"],
+													readers: ["ean_8_reader"],
+													readers: ["upc_reader"],
+													readers: ["upc_e_reader"],
+													readers: ["codabar_reader"],
+													readers: ["i2of5_reader"],
+													readers: ["2of5_reader"],
+													readers: ["code_93_reader"],
+													readers: ["ean_reader"]*/
+
+												}
+
+
+											}, function (err) {
+
+												if (err) {
+													console.log(err);
+													return
+												}
+												console.log("Iniciado correctamente");
+												Quagga.start();
+
+											});
+
+
+
+											Quagga.onDetected((data) => {
+
+												sound.play();
+												$resultados.textContent = data.codeResult.code;
+												var nest = data.codeResult.code;
+
+												var ScannerVal = data.codeResult.code;
+												var codPro = ScannerVal.substring(7, -1);
+												var rest = 7;
+												var srtced = ScannerVal.substring(rest);
+												var enCan = srtced.substring(2, -1);
+												var desCan = srtced.substring(2);
+												var peso = enCan + "." + desCan;
+
+												$("#codigoProd").val(codPro);
+												$("#cantidadPeso").val(peso);
+
+
+												$("#selectEvidencia").val(data.codeResult.code);
+												$("#selectEvidencia").focus();
+
+												document.querySelector('button[name=btnScannerSub]').addEventListener('click', function (e) {
+													e.preventDefault(e);
+												})
+												document.querySelector('button[name=btnScannerSub]').click();
+
+
+												document.querySelector('button[name=closeKey]').addEventListener('click', function (e) {
+													e.preventDefault(e);
+												})
+												document.querySelector('button[name=closeKey]').click();
+
+												Quagga.stop(1000);
+
+												// Imprimimos todo el data para que puedas depurar
+												console.log(data);
+
+											});
+
+											Quagga.onProcessed(function (result) {
+												var drawingCtx = Quagga.canvas.ctx.overlay,
+													drawingCanvas = Quagga.canvas.dom.overlay;
+
+												if (result) {
+													if (result.boxes) {
+														drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute("width")), parseInt(drawingCanvas.getAttribute("height")));
+														result.boxes.filter(function (box) {
+															return box !== result.box;
+														}).forEach(function (box) {
+															Quagga.ImageDebug.drawPath(box, {x: 0, y: 1}, drawingCtx, {color: "green", lineWidth: 2});
+														});
+													}
+
+													if (result.box) {
+														Quagga.ImageDebug.drawPath(result.box, {x: 0, y: 1}, drawingCtx, {color: "#00F", lineWidth: 2});
+													}
+
+													if (result.codeResult && result.codeResult.code) {
+														Quagga.ImageDebug.drawPath(result.line, {x: 'x', y: 'y'}, drawingCtx, {color: 'red', lineWidth: 3});
+													}
+												}
+											});
+										});
+									</script>
+									<br>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="">
+			<div class="">
+				<div class="">
+
+				</div>
+				<div class="">
+
+					<div class="button-group">
+						<strong>!tem ° : </strong><input style="border-style:none;font-weight:bold;color:blue;width:100px;" type="text"
+							id="RengFactcount" name="RengFactcount" disabled>
+							
+						<strong>Cantidad : </strong><input
+							style="color:rgb(25,20,230);font-weight:bold;font-size:12pt ;cursor:pointer;border-style:none;width:100px;"
+							type="text" id="ArtTotalcount" name="ArtTotalcount" disabled>
+							
+							<strong>Peso : </strong><input
+							style="color:rgb(25,180,20);font-weight:bold;font-size:20pt ;cursor:pointer;border-style:none;width:120px;"
+							type="text" id="PesoTotalcount" name="PesoTotalcount" disabled>
+							
+							<button id="btnGetPeso" name="btnGetPeso" style="background-color: rgb(100,200,100);color:rgb(55,50,53);width:55px;font-weight:bold;">GET</button>
+							
+							<input
+							style="color:rgb(25,20,230);font-weight:bold;font-size:12pt ;cursor:pointer;border-style:none;width:100px;"
+							type="text" id="cargaPesadasID" name="cargaPesadasID" disabled>
+							
+							<button id="btnincrementReng" name="btnincrementReng" style="background-color: rgb(100,100,100);color:rgb(255,250,23);width:50px;">&plus;</button>
+							<input type="hidden" id="IDReng_increment" name="IDReng_increment">
+							<input type="hidden" id="IDuni_vent" name="IDuni_vent">
+							
+							<label>&nbsp;</label><strong>. </strong><input
+							style="color:rgb(20,20,20);font-weight:bold;font-size:12pt ;cursor:pointer;border-style:none;width:35%;"
+							type="text" id="ArtListRengx" name="ArtListRengx" disabled>
+							
+					</div>
+				</div>
+
+				<div class="table-responsive-xl" style="height:50vh;overflow-y:auto;" id="scrollBUS">
+					
+					<table class="table table-hover " id="studentsInfo">
+						<thead class="" style="font-weight:bold;font-size:10pt;background-color: rgb(230,230,230);">
+							<tr>
+								<th scope="col" style="width:5%">N°</th>
+								<th scope="col" style="width:10%">CO</th>
+								<th scope="col" style="width:25%">Descripción</th>
+								<th scope="col" style="width:5%">Cantidad</th>
+								<th scope="col" style="width:7%">Unid</th>
+								<th scope="col" style="width:10%">Precio</th>
+								<th scope="col" style="width:10%">IVA</th>
+								<th scope="col" style="width:10%">Total</th>
+								<th scope="col" style="width:10%">$</th>
+
+								<th scope="col">Opciones</th>
+
+							</tr>
+						</thead>
+						<div class="" style="background-color: rgb(255,255,255);">
+							<tbody role="tr" id="NewEvidencia">
+
+
+							</tbody>
+						</div>
+					</table>
+
+				</div>
+				<div class=" text-center text-white ">
+					<img src="/images/PACOwlogo.png" height="40px" width="80px" style="margin-left: 5pt;" />
+					<label style="font-size: 12pt;color:rgb(0,0,0);">®</label>
+				</div>
+			</div>
+
+		</div>
+
+
+		<div class="modal fade bd-example-modal-xl" id="UpdateCliData" tabindex="-1" role="dialog"
+			aria-labelledby="UpdateCliDataTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="UpdateCliDataTitle">Editar Datos</h5>
+						<button type="button" name="closeEdclib" id="closeEdCli" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="container" method="POST" th:object="${post}">
+							<div class="">
+
+								<div class="col-12 ">
+									<strong>CAJA : <label id="co_venData" style="color:rgb(0,200,0);">.</label></strong>
+									<h1>Grebca ©</h1>
+									<br>
+								</div>
+
+								<div class="needs-validation" validate>
+									<div class="form-row">
+										<div class="col-md-8 mb-4">
+											<label for="validationTooltip01">RIF/C.I</label>
+											<div class="input-group input-group-lg">
+												<input th:value="*{ced}" minlength="7" maxlength="10" name="ced"
+													type="text" class="form-control" placeholder="RIF/C.I "
+													onkeyup="javascript:this.value=this.value.toUpperCase();" disabled
+													id="ced"
+													style="font-weight:bold;color:black;font-size: 17pt;"></input>
+												<input th:value="*{ced}" minlength="7" maxlength="15" name="ced"
+													type="hidden" class="form-control" placeholder="RIF/C.I "
+													onkeyup="javascript:this.value=this.value.toUpperCase();"></input>
+											</div>
+											<div class="valid-tooltip">
+												<p></p>
+											</div>
+										</div>
+										<div class="col-md-8 mb-4">
+											<label for="validationTooltip02">Razon Social</label>
+											<div class="input-group input-group-lg">
+
+												<input th:value="*{desc}" name="desc" type="text" class="form-control"
+													placeholder="Descripción"
+													onkeyup="javascript:this.value=this.value.toUpperCase();" required
+													id="desc" style="font-weight:bold;color:black;font-size: 17pt;">
+											</div>
+											<div class="valid-tooltip">
+
+											</div>
+										</div>
+										<div class="col-md-4 mb-3">
+											<label for="validationTooltipUsername">Telefono</label>
+											<div class="input-group input-group-lg">
+												<div class="input-group-prepend ">
+													<span class="input-group-text"
+														id="validationTooltipUsernamePrepend">#</span>
+												</div>
+												<input th:value="*{telef}" name="telef" type="text" class="form-control"
+													id="telef" placeholder="Telefono"
+													aria-describedby="validationTooltipUsernamePrepend" required
+													style="font-weight:bold;color:black;font-size: 17pt;"
+													onkeypress="return NumCheck(event, this);" maxlength="11">
+													
+												<div class="invalid-tooltip">
+
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="col-md-8 mb-4">
+											<label for="validationTooltip03">Dirección</label>
+											<div class="input-group input-group-lg">
+												<input th:value="*{direc}" name="direc" type="text" class="form-control"
+													id="direc" placeholder="Dirección"
+													style="font-weight:bold;color:black;font-size: 17pt;"
+													onkeyup="javascript:this.value=this.value.toUpperCase();" required>
+											</div>
+											<div class="invalid-tooltip">
+											</div>
+										</div>
+									</div>
+									<input class="btn btn-primary btn-lg btn-block" type="button"
+										value="Guardar Registros" id="guardarCli" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade bd-example-modal-xl" id="CobranzaRegDB" tabindex="-1" role="dialog"
+			aria-labelledby="CobranzaRegDBTitle" aria-hidden="true" >
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header " style="font-weight:bold;font-size:9pt;color:midnightblue;">
+						<h5 class="modal-title " id="CobranzaRegDBTitle" style="font-weight:bold;font-size:9pt;">
+							<label class="" style="font-weight:bold;font-size:8pt;">
+
+								<button type="button" class="btn  btn-lg" id="updatePagID" name="updatePagID"><img
+										src="/images/UpdateInfor.png" height="25px" width="25px" />
+								</button></label> Cobranza #<input
+								style="background-color:transparent;border-style:none; font-weight:bold;color:black;font-size: 12pt;"
+								id="NfacturaCob" disabled></input>
+						</h5>
+						<div class="col-md-0 ml-auto">
+
+							<strong id="montoDesc" style="font-size: 10pt;">.</strong><label>&nbsp;</label>
+							<strong id="porcenDesc" style="font-size: 10pt;">.</strong>
+
+							<strong>CAJA : <label id="co_venData2" style="color:rgb(0,200,0);">.</label></strong>
+
+							<button type="button" class="btn btn-outline-info btn-lg" id="printerFact"
+								name="printerFact">
+								<img src="/images/print.png" height="25px" width="30px" />
+							</button><label>&nbsp;</label>
+
+
+
+						</div>
+						<button type="button" class="close" id="closecobAPUp" name="closecobAPUp" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<div class="card-group">
+							<div class="card">
+
+
+								<div class="input-group input-group-lg"
+									style="box-shadow:0px 0px 2px grey;background-color: rgb(240,240,240);">
+
+									<p style="font-weight:bold;font-size:10pt;width:25%;">
+										<img src="/images/bs.png" height="35px" width="35px" /> MONTO:
+									</p>
+
+									<input type="hidden" class="form-control" value="0.00"
+										style="color:blue;font-weight:bold;font-size:22pt;background-color: transparent;border-style:none;"
+										name="CobPaALLbs" id="CobPaALLbs" disabled>
+
+									<input type="text" class="form-control" value="0.00"
+										style="color:blue;font-weight:bold;font-size:22pt;background-color: transparent;border-style:none;"
+										name="CobPaALLbsFormat" id="CobPaALLbsFormat" disabled>
+
+								</div>
+
+								<div class="input-group input-group-lg"
+									style="box-shadow:0px 0px 2px grey;background-color: rgb(240,240,240);">
+									<p style="font-weight:bold;font-size:10pt;width:25%;">
+										<img src="/images/dolar.png" height="35px" width="35px" /> MONTO:
+									</p>
+
+									<input type="hidden" class="form-control" value="0.00"
+										style="color:green;font-weight:bold;font-size:22pt;background-color: transparent;border-style:none;"
+										name="CobPaALLusd" id="CobPaALLusd" disabled>
+
+									<input type="text" class="form-control" value="0.00"
+										style="color:green;font-weight:bold;font-size:22pt;background-color: transparent;border-style:none;"
+										name="CobPaALLusdFormat" id="CobPaALLusdFormat" disabled>
+
+								</div>
+
+							</div>
+							<div class="card">
+
+
+								<div class="input-group input-group-lg"
+									style="box-shadow:0px 0px 2px grey;background-color: rgb(240,240,240);">
+									<p style="font-weight:bold;font-size:10pt;width:25%;">
+										<img src="/images/bs.png" height="35px" width="35px" /> SALDO:
+									</p>
+
+									<input type="hidden" class="form-control" value="0.00"
+										style="color:blue;font-weight:bold;font-size:22pt;background-color: transparent;border-style:none;"
+										name="saldoBS" id="saldoBS" disabled>
+
+									<input type="text" class="form-control" value="0.00"
+										style="color:blue;font-weight:bold;font-size:22pt;background-color: transparent;border-style:none;"
+										name="saldoBSFormat" id="saldoBSFormat" disabled>
+
+								</div>
+								<div class="input-group input-group-lg"
+									style="box-shadow:0px 0px 2px grey;background-color: rgb(240,240,240);">
+									<p style="font-weight:bold;font-size:10pt;width:25%;">
+										<img src="/images/dolar.png" height="35px" width="35px" /> SALDO:
+									</p>
+
+									<input type="hidden" class="form-control" value="0.00"
+										style="color:green;font-weight:bold;font-size:22pt;background-color: transparent;border-style:none;"
+										name="saldoUSD" id="saldoUSD" disabled>
+
+									<input type="text" class="form-control" value="0.00"
+										style="color:green;font-weight:bold;font-size:22pt;background-color: transparent;border-style:none;"
+										name="saldoUSDFormat" id="saldoUSDFormat" disabled>
+
+								</div>
+
+							</div>
+						</div>
+
+
+						<div class="">
+							<div class="card">
+
+								<div class="">
+									<ul class="list-group">
+
+
+										<div class="table-responsive-xl" style="height:40vh;overflow-y:scroll;">
+											<table class="table table-bordered table-hover " id="notaCredit">
+												<thead
+													style="font-weight:bold;font-size:8pt;background-color: rgb(180,180,180);">
+													<tr>
+													</tr>
+												</thead>
+												<tbody role="tr" id="tbNotaCredit">
+													<tr>
+
+													</tr>
+
+												</tbody>
+											</table>
+											<table class="table table-bordered table-hover " id="notaCreditAnex">
+												<thead
+													style="font-weight:bold;font-size:8pt;background-color: rgb(180,180,180);">
+													<tr>
+													</tr>
+												</thead>
+												<tbody role="tr" id="tbNotaCreditAnex">
+													<tr>
+
+													</tr>
+												</tbody>
+											</table>
+											<table class="table table-hover " id="studentsInfo">
+												<thead
+													style="font-weight:bold;font-size:8pt;background-color: rgb(180,180,180);">
+													<tr>
+														<th scope="col" style="width:5%;">N°</th>
+														<th scope="col" style="width:15%">Cobro</th>
+														<th scope="col" style="width:15%">Movi</th>
+														<th scope="col" style="width:15%;">BSD</th>
+														<th scope="col" style="width:15%">US$</th>
+														<th scope="col" style="width:15%">Cobrado</th>
+
+														<th scope="col" style="width:15%">Opción</th>
+
+													</tr>
+												</thead>
+												<tbody role="tr" id="tbPagosRengTip">
+													<tr>
+
+													</tr>
+
+												</tbody>
+											</table>
+											<div id="bgventanatwo">
+												<div di="ventanatwo">
+													<div class="">
+														<div class="">
+															<div class="">
+
+																<div class="">
+
+																	<div class=""
+																		style="position:relative;margin-top:20%;">
+																		<div class="text-center">
+																			<p id="ForceExit">.</p>
+																			<div class="spinner-border text-success"
+																				style="width: 7rem; height: 7rem;"
+																				role="status">
+																				<span class="sr-only">Loading...</span>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</div>
+
+									</ul>
+
+								</div>
+								<div class="">
+									<div class="">
+										<div class="">
+											<ul class="list-group">
+												<li class="list-group-item">
+
+
+													<div class="input-group input-group-lg">
+														<input type="hidden" id="idCob_numRengTip">
+
+														<button type="button" id="" name=""
+															style="background-color: transparent;border-style:none;font-weight:bold;font-size:8pt;color:black;"
+															disabled><img src="/images/bs.png" height="20px"
+																width="20px" /> BS</button>
+														<input type="text" class="form-control" value="0.00"
+															style="color:blue;font-weight:bold;font-size:9pt;"
+															name="pagadoBSD" id="pagadoBSD" disabled>
+
+														<button type="button" id="" name="" disabled
+															style="background-color: transparent;border-style:none;font-weight:bold;font-size:8pt;color:black;"><img
+																src="/images/dolar.png" height="20px" width="20px" />
+															US$</button>
+														<input type="text" class="form-control" value="0.00"
+															style="color:green;font-weight:bold;font-size:9pt;"
+															name="pagodoUSD" id="pagadoUSD" disabled>
+
+														<button type="button" id="" name="" disabled
+															style="background-color: transparent;border-style:none;font-weight:bold;font-size:8pt;color:black;"><img
+																src="/images/euro.png" height="20px" width="20px" />
+															EUR</button>
+														<input type="text" class="form-control" value="0.00"
+															style="color:red;font-weight:bold;font-size:9pt;"
+															name="pagadoEUR" id="pagadoEUR" disabled>
+													</div>
+												</li>
+
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<div class="">
+
+							<div class="">
+								<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+									<button class="navbar-toggler" type="button" data-toggle="collapse"
+										data-target="#navbarSupportedContent2" aria-controls="navbarSupportedContent"
+										aria-expanded="false" aria-label="Toggle navigation">
+										<span class="navbar-toggler-icon"></span>
+									</button>
+
+									<div class="collapse navbar-collapse" id="navbarSupportedContent2">
+										<ul class="navbar-nav mr-auto">
+
+
+
+											<button type="button" class="btn btn-primary " data-toggle="modal"
+												data-target="#CobranzaEfecBS" id="cobAPBS"
+												style="font-weight:bold;font-size:10pt;">
+												<img src="/images/efepago.png" class="Iconclass" />
+												<p>EFECTIVO BS</p>
+											</button><label>&nbsp;</label>
+
+
+
+											<button type="button" class="btn btn-success " data-toggle="modal"
+												data-target="#CobranzaEfecUSD" id="cobAPUSD"
+												style="font-weight:bold;font-size:10pt;">
+												<img src="/images/efepago.png" class="Iconclass" />
+												<p>EFECTIVO US</p>
+											</button><label>&nbsp;</label>
+
+
+
+
+											<button type="button" class="btn btn-secondary " data-toggle=""
+												data-target="#CobranzaEfecEUR" id="cobAPEUR">
+												<img src="/images/efepago.png" class="Iconclass" disabled />
+												<p>EFECTIV EUR</p>
+											</button><label>&nbsp;</label>
+
+
+
+											<button type="button" class="btn btn-danger " data-toggle="modal"
+												data-target="#CobranzaPAMO" id="cobAPPAMO"
+												style="font-weight:bold;font-size:10pt;">
+												<img src="/images/pagomovil.png" class="Iconclass" disabled />
+												<p>PAGO MOVIL</p>
+											</button><label>&nbsp;</label>
+
+
+
+											<button type="button" class="btn btn-warning " data-toggle="modal"
+												data-target="#CobranzaPuntoVenta" id="cobAPPuntoVenta"
+												style="font-weight:bold;font-size:10pt;">
+												<img src="/images/puntoventa.png" class="Iconclass" />
+												<p>PUNTO VENT</p>
+											</button><label>&nbsp;</label>
+
+
+
+
+											<button type="button" class="btn btn-secondary " data-toggle="modal"
+												data-target="#cobPagoElectronico" id="cobPagElectronico"
+												style="background-color:rgb(255,112,0);">
+												<img src="/images/electro.png" class="Iconclass" />
+												<p>ELEC TRONIC</p>
+											</button><label>&nbsp;</label>
+
+
+											<button type="button" class="btn " data-toggle="modal"
+												data-target="#CobranzaZELLE" id="cobZELLEID"
+												style="color:rgb(255,255,255);background-color:rgb(100,40,140);">
+												<img src="/images/dolar.png" class="Iconclass" disabled />
+												<p>USD ZELLE &nbsp;</p>
+											</button><label>&nbsp;</label>
+
+											<button type="button" class="btn btn-secondary " data-toggle=""
+												data-target="#CobranzaBio" id="cobBIO">
+												<img src="/images/biopago.png" class="Iconclass" disabled />
+												<p>BIO PAGO &nbsp;</p>
+											</button><label>&nbsp;</label>
+
+											<button type="button" class="btn " data-toggle="" data-target=""
+												id="printerfacTicket" name="printerfacTicket"
+												style="background-color:rgb(120,120,120);color:rgb(255,255,255);">
+												<img src="/images/efepago.png" class="Iconclass" />
+												<p>EFECTIV DS &nbsp;</p>
+											</button><label>&nbsp;</label>
+
+										</ul>
+									</div>
+								</nav>
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+
+			<form action="/GrebcaCCS" method="POST" th:object="${post}"><input type="hidden" name="co_venCO"
+					th:value="*{co_venCO}" id="co_venIDs"><button type="submit" class="btn btn-danger " id="closePrin"
+					name="closePrin" style="background-color:transparent;border-style:none;"></button></form>
+		</div>
+
+		<div style="position:absolute;margin-top:-2000px;">
+			<button type="button" data-toggle="modal" data-target="#procesAvan" id="procesAvanID" name="procesAvanID"
+				style="background-color: transparent;border-style: none;"></button>
+		</div>
+
+		<div style="position:absolute;margin-top:-1000px;">
+			<button type="button" data-toggle="modal" data-target="#FprinterFact" id="condifacAcredit"
+				name="condifacAcredit" style="background-color: transparent;border-style: none;"></button>
+		</div>
+
+		<div class="modal fade bd-example-modal-xl" id="FprinterFact" tabindex="-1" role="dialog"
+			aria-labelledby="FprinterFactTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered " role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="FprinterFactTitle">
+							<img src="/images/bloqueardo.png" height="25px" width="25px" /> Llave Asignada
+						</h5>
+						<button type="button" class="close" id="closeFprinterFact" name="closeFprinterFact"
+							data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="container">
+							<div class="">
+								<div class="col-12 mt-5">
+									<h5>Grebca ©</h5>
+									<br>
+									<p>!Clave de Directivo : </p>
+								</div>
+								<div><input type="password" class="form-control" name="idsuperxx" id="idsuperxx">
+									<input class="btn btn-danger btn-block" type="button" value="Confirmar"
+										id="btnanufacxx" name="btnanufacxx">
+
+								</div>
+							</div>
+						</div></br>
+						<div class="modal-footer"><button type="button" class="btn btn-secondary btn-block"
+								data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div style="position:absolute;margin-top:-1000px;">
+			<button type="button" data-toggle="modal" data-target="#btndirec" id="btncrediAll" name="btncrediAll"
+				style="background-color:transparent;border-style:none;"></button>
+				
+		</div>
+
+		<div class="modal fade bd-example-modal-xl" id="btndirec" tabindex="-1" role="dialog"
+			aria-labelledby="btndirecTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered " role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="btndirecTitle">
+						</h5><button type="button" class="close" id="closebtndirec" name="closebtndirec"
+							data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="container">
+							<div class="">
+								<div class="col-12 mt-0">
+									<h5>Grebca ©</h5>
+									<br>
+									<p>!Factura a Credito</p>
+								</div>
+								<div>
+									<select class="custom-select" id="agregrarSelectCred" size="10">
+
+									</select>
+									<input class="btn btn-danger btn-block" type="button" value="Confirmar"
+										id="dataEnvio" name="dataEnvio">
+								</div>
+							</div>
+						</div></br>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary btn-block" id="closedialogAcredit"
+								name="closedialogAcredit" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<form action="/GrebcaCCS" method="POST">
+				<input type="hidden" name="co_venCO" id="co_venIDs">
+				<button type="submit" class="btn btn-danger " id="closePrin" name="closePrin"
+					style="background-color:transparent;border-style:none;">
+
+				</button>
+			</form>
+		</div>
+
+
+		<div class="modal fade bd-example-modal-xl" id="Factspera" tabindex="-1" role="dialog"
+			aria-labelledby="FactsperaTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="FactsperaTitle">Factura en espera #<input
+								style="background-color:transparent;border-style:none; font-weight:bold;color:black;font-size: 12pt;"
+								id="NfacturaCobespera" disabled></input></h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"
+							id="btnCloseFactspera" name="btnCloseFactspera">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<div class="container">
+
+							<div class="">
+								<div class="col-12 mt-0">
+									<h5>Grebca ©</h5>
+									<br>
+								</div>
+								<form action="/GrebcaCCS" method="POST" th:object="${post}">
+									<input type="hidden" name="co_venCO" th:value="*{co_venCO}" id="co_venIDs">
+									<button type="submit" class="btn btn-danger btn-block " id=""
+										name="">Confirmar</button>
+								</form>
+
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="modal fade bd-example-modal-xl" id="ProductosRegDB" style="max-width: 100%;" tabindex="-1"
+			role="dialog" aria-labelledby="ProductosRegDBTitle" aria-hidden="true">
+
+			<div class="modal-dialog modal-dialog-centered modal-xl" role="document" style="width:100%;">
+				<div class="modal-content">
+					<div class="modal-header" style="background-color:rgb(170,170,170);">
+						<h5 class="modal-title" id="ProductosRegDBTitle">Lista de productos</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnCloseListPro"
+							name="btnCloseListPro">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<div class="">
+
+							<div class="">
+								<div class="col-18">
+									<h5>Grebca ©</h5>
+
+								</div>
+								<input class="form-control" type="text" id="searchFilter" placeholder="Buscar"
+									autocomplete="off" style='color:black;font-weight:bold;'>
+
+								<div class="table-responsive-xl" style="height:50vh;overflow-y:scroll;">
+
+									<table class="table table-hover" id="">
+										<thead style="background-color:rgb(220,220,220);">
+											<tr>
+												<th scope=" col" style="width:5%" data-field="contNarc">N°</th>
+												<th scope=" col" style="width:10%" data-field="contNarc">CO</th>
+												<th scope="col" style="width:25%" data-field="art_des">Descripción
+												</th>
+												<th scope="col" style="width:5%" data-field="uni_venta">Unid</th>
+												<th scope="col" style="width:15%" data-field="prec_vta1">Precio</th>
+												<th scope="col" style="width:10%" data-field="">Cantidad</th>
+												<th scope="col" style="width:15%" data-field="">Iva</th>
+												<th scope="col" style="width:15%" data-field="">Total</th>
+												<th scope="col" style="width:15%" data-field="">$</th>
+												<th scope="col" style="width:10%" data-field="">cantM</th>
+												<th scope="col" style="width:15%" data-field="">$M</th>
+
+
+												<th scope="col" data-field="action" data-formatter="actionFormatter"
+													data-events="actionEvents">Opciones</th>
+
+											</tr>
+										</thead>
+										<tbody role="tr" id="ListArtProfit">
+
+										</tbody>
+									</table>
+								</div>
+
+							</div>
+						</div>
+						<div class="modal-footer">
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade bd-example-modal-xl" id="CobranzaEfecBS" tabindex="-1" role="dialog"
+			aria-labelledby="CobranzaEfecBSTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-mg" role="document">
+				<div class="modal-content">
+					<div class="modal-header list-group-item list-group-item-action active">
+						<h5 class="modal-title" id="CobranzaEfecBSTitle"
+							style="color:white;font-weight:bold;font-size:10pt;"><img src="/images/bs.png" height="20px"
+								width="25px" /> Efectivo BS</h5>
+						<button type="button" id="btnCloseCobNameEfecBS" name="btnCloseCobNameEfecBS" class="close"
+							data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<form>
+
+							<div class="col-12 mt-0">
+								<div class="d-grid d-md-flex justify-content-md-end">
+									<button class="btn btn-primary btn-lg" type="button" name="buttonBSef"
+										id="buttonBSef"><span
+											style="color:white;font-weight:bold;font-size:11pt;">&plus;</span></button>
+								</div>
+
+								<p style="font-weight:bold;font-size:10pt;margin:auto;">SALDO</p>
+								<p style="font-weight:bold;font-size:9pt;margin:auto;">BS / US$</p>
+
+								<input type="hidden" id="CajaEfecBSD">
+								<input type="hidden" id="DescripBSD">
+								<input type="hidden" id="MonedaBSD">
+								<input type="hidden" id="tbMonedaid">
+								<input type="hidden" id="tbMonedacambio">
+
+								<div class="input-group input-group-lg">
+
+									<input class="form-control" type="text" id="valMAXbs" value="0.00"
+										style="color:blue;font-weight:bold;font-size:14pt;" disabled />
+
+									<input class="form-control" type="text" id="valMAXusd" value="0.00"
+										style="color:green;font-weight:bold;font-size:14pt;" disabled />
+								</div>
+								<p style="font-weight:bold;font-size:10pt;margin:auto;">MONTO A COBRAR
+									&nbsp; | &nbsp; ENTREGADO POR CLIENTE</p>
+								<div class="input-group input-group-lg">
+
+									<!-- id="text" name="text" onkeypress="return isNumberKey(this);"-->
+									<input class="form-control" oninput="cobEfecBS()" id="MontoCobbs" type="number"
+										maxlength="18"
+										style="color:blue;font-weight:bold;font-size:17pt;background-color: rgb(190,190,190);"
+										onkeypress="return NumCheck(event, this);" autocomplete="off">
+
+									<input class="form-control" oninput="cobEfecBS()" id="MontClibs" type="number"
+										maxlength="18"
+										style="color:blue;font-weight:bold;font-size:17pt;background-color: rgb(190,190,190);"
+										onkeypress="return NumCheck(event, this);" autocomplete="off">
+
+									<button type="button" id="btn-client-bs" name="btn-client-bs">@</button>
+								</div>
+
+								<p style="font-weight:bold;font-size:10pt;margin:auto;">NUEVO SALDO EN BS
+									<label>&nbsp;</label> | <label>&nbsp;</label> NUEVO SALDO EN US$
+								</p>
+								<div class="input-group input-group-lg">
+									<input class="form-control" type="text" oninput="cobEfecBS()" id="resulcobBS"
+										value="0.00" style="color:blue;font-weight:bold;font-size:14pt;" disabled>
+									<input class="form-control" type="text" oninput="cobEfecBS()" id="resulcobBSus"
+										value="0.00" style="color:green;font-weight:bold;font-size:14pt;" disabled>
+								</div>
+								<p style="font-weight:bold;font-size:10pt;margin:auto;"> OTRO VUELTO EN BS
+									<label>&nbsp;</label> | <label>&nbsp;</label> OTRO VUELTO EN P2C
+								</p>
+								<div class="input-group input-group-lg">
+									<button type="button" id="btn-vuel-bs" name="btn-vuel-bs">@</button>
+									<input class="form-control" type="text" oninput="cobEfecBS()" id="resuBS"
+										value="0.00" style="color:blue;font-weight:bold;font-size:14pt;" disabled>
+
+									<input class="form-control" type="text" oninput="cobEfecBS()" id="resuUSD"
+										value="0.00" style="color:blue;font-weight:bold;font-size:14pt;" disabled>
+								</div>
+
+								<div class="input-group input-group-lg">
+
+									<input class="form-control" type="number" autocomplete="off"
+										style="color:blue;font-weight:bold;font-size:14pt;"
+										onkeypress="return NumCheck(event, this);" id="cobEntcliBS"
+										oninput="cobEfecBS()">
+
+
+									<input class="form-control" type="number" oninput="cobEfecBS()" id="cobEntcliUSD"
+										onkeypress="return NumCheck(event, this);" autocomplete="off"
+										style="color:blue;font-weight:bold;font-size:14pt;">
+
+
+								</div>
+
+								<label style="font-weight:bold;font-size:9pt;margin:auto;">ESTABLECER EN
+									DIVISAS</label>
+								<div class="input-group input-group-lg">
+									<button type="button" id="btnstabbss" name="btnstabbss">@</button>
+									<input class="form-control" type="number" oninput="cobEfecBS()" id="stabbsbs"
+										value="0.00" style="color:blue;font-weight:bold;font-size:14pt;" disabled>
+									<input class="form-control" type="number" oninput="cobEfecBS()" id="stabusdbs"
+										value="" style="color:green;font-weight:bold;font-size:14pt;">
+								</div>
+								</br>
+								<div class="input-group input-group-lg">
+									<button type="button" class="btn btn-block"
+										style="color:white;font-weight:bold;font-size:15pt;background-color: rgb(50,50,230);"
+										name="btncobBS" id="btncobBS">
+										<img name="regisPaEfeBS" src="/images/guardarpag.png" height="20px"
+											width="25px" /> Registrar
+										Pago BS</button>
+
+
+								</div>
+							</div>
+						</form>
+						<div class="modal-footer">
+							<button class="btn btn-secondary" data-dismiss="modal">cerrar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade bd-example-modal-xl" id="CobranzaEfecUSD" tabindex="-1" role="dialog"
+			aria-labelledby="CobranzaEfecUSDTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered  " role="document">
+				<div class="modal-content">
+					<div class="modal-header list-group-item list-group-item-action"
+						style="background-color:rgb(50,175,50);">
+						<h5 class="modal-title" id="CobranzaEfecUSDTitle"
+							style="color:white;font-weight:bold;font-size:11pt;"><img src="/images/dolar.png"
+								height="20px" width="25px" /> Efectivo USD</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"
+							id="btnCloseCobEfecUSD" name="btnCloseCobEfecUSD">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="">
+							<div class="col-12 mt-0">
+								<div class="d-grid d-md-flex justify-content-md-end">
+									<button class="btn  btn-lg" type="button" name="btnUSD" id="btnUSD"
+										style="color:white;font-weight:bold;background-color:rgb(50,175,50);"><span
+											style="color:white;font-weight:bold;font-size:9pt;">&plus;</span></button>
+								</div>
+
+								<p style="font-weight:bold;font-size:10pt;margin:auto;">SALDO</p>
+								<p style="font-weight:bold;font-size:9pt;margin:auto;">BS / US$</p>
+
+								<input type="hidden" id="CajaEfecUSD">
+								<input type="hidden" id="DescripUSD">
+								<input type="hidden" id="MonedaUSD">
+
+								<div class="input-group input-group-lg">
+									<input class="form-control " type="text" id="valMAXUSbs" value="0.00"
+										style="color:blue;font-weight:bold;font-size:14pt;" disabled>
+
+									<input class="form-control" type="text" id="valMAXUSusd" value="0.00"
+										style="color:green;font-weight:bold;font-size:14pt;" disabled>
+								</div>
+								<p style="font-weight:bold;font-size:10pt;margin:auto;">MONTO A COBRAR
+									&nbsp; | &nbsp; ENTREGADO POR CLIENTE</p>
+								<div class="input-group input-group-lg">
+
+									<!-- id="text" name="text" onkeypress="return isNumberKey(this);"-->
+									<input class="form-control" id="MontoCobUSusd" oninput="cobEfecUSD()" type="number"
+										maxlength="18" autocomplete="off"
+										style="color:green;font-weight:bold;font-size:19pt;background-color: rgb(190,190,190);"
+										onkeypress="return isNumberKey(event, this);">
+
+									<input class="form-control" id="MontoCliUSusd"
+										oninput="cobEfecUSD(),this.value = Math.round(this.value);" type="number"
+										maxlength="18" autocomplete="off"
+										style="color:green;font-weight:bold;font-size:19pt;background-color: rgb(190,190,190);"
+										onkeypress="return isNumberKey(event, this);">
+									<button type="button" id="btn-client-usd" name="btn-client-usd">@</button>
+								</div>
+
+								<p style="font-weight:bold;font-size:10pt;margin:auto;">NUEVO SALDO EN BS
+									<label>&nbsp;</label> | <label>&nbsp;</label> NUEVO SALDO EN US$
+								</p>
+								<div class="input-group input-group-lg">
+									<input class="form-control" type="text" id="resulcobUSbs" oninput="cobEfecUSD()"
+										value="0.00" style="color:blue;font-weight:bold;font-size:14pt;" disabled>
+									<input class="form-control" type="text" id="resulcobUSusd" oninput="cobEfecUSD()"
+										value="0.00" style="color:green;font-weight:bold;font-size:14pt;" disabled>
+								</div>
+
+								<div
+									style="position:relative;width:100%;box-shadow: 0px 1px 0px 0px grey;height:9px;text-align: center;">
+
+								</div>
+
+
+								<p style="font-weight:bold;font-size:10pt;margin:auto;">OTRO VUELTO EN BS
+									<label>&nbsp;</label> | <label>&nbsp;</label> OTRO VUELTO EN USD
+									<label>&nbsp;</label> | <label>&nbsp;</label> OTRO VUELTO EN P2C
+								</p>
+								<div class="input-group input-group-lg">
+									<button type="button" id="btn-vuel-usd" name="btn-vuel-usd">@</button>
+									<input class="form-control" type="text"
+										style="color:blue;font-weight:bold;font-size:14pt;" value="0.000"
+										onkeypress="return NumCheck(event, this);" id="cobresvubs"
+										oninput="cobEfecUSD()" disabled>
+
+									<input class="form-control" type="text"
+										style="color:green;font-weight:bold;font-size:14pt;" value="0.0000"
+										onkeypress="return isNumberKey(this);" id="cobresvuusd" oninput="cobEfecUSD()"
+										disabled>
+									<input class="form-control" type="text"
+										style="color:blue;font-weight:bold;font-size:14pt;" value="0.00"
+										oonkeypress="return NumCheck(event, this);" id="cobresvueur"
+										oninput="cobEfecUSD()" disabled>
+								</div>
+								<div class="input-group input-group-lg">
+									<input class="form-control" type="number" autocomplete="off"
+										style="color:blue;font-weight:bold;font-size:14pt;"
+										onkeypress="return NumCheck(event, this);" id="cobEntvubs"
+										oninput="cobEfecUSD()">
+
+									<input class="form-control" type="number" autocomplete="off"
+										style="color:green;font-weight:bold;font-size:14pt;"
+										onkeypress="return isNumberKey(event, this);" id="cobEntvuusd"
+										oninput="cobEfecUSD(),this.value = Math.round(this.value);">
+
+									<input class="form-control" type="number" autocomplete="off"
+										style="color:blue;font-weight:bold;font-size:14pt;"
+										onkeypress="return NumCheck(event, this);" id="cobEntvueur"
+										oninput="cobEfecUSD()">
+								</div> </br>
+								<div class="input-group input-group-lg">
+									<button type="button" class="btn btn-block"
+										style="color:white;font-weight:bold;font-size:16pt;background-color:rgb(50,175,50);"
+										id="btncobUSD" name="btncobUSD"><img src="/images/guardarpag.png" height="20px"
+											width="25px" />
+										Registrar
+										Pago US$</button>
+
+
+								</div>
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-secondary" data-dismiss="modal">Close</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="modal fade bd-example-modal-xl" id="CobranzaEfecEUR" tabindex="-1" role="dialog"
+			aria-labelledby="CobranzaEfecEURTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable " role="document">
+				<div class="modal-content">
+					<div class="modal-header list-group-item list-group-item-action active">
+						<h5 class="modal-title" id="CobranzaEfecEURTitle"
+							style="color:white;font-weight:bold;font-size:11pt;"> <img src="/images/euro.png"
+								height="20px" width="25px" /> Efectivo EUR</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="container">
+
+								<div class="">
+									<div class="col-12 mt-5">
+										<p style="font-weight:bold;font-size:10pt;margin:auto;">SALDO</p>
+										<p style="font-weight:bold;font-size:9pt;margin:auto;">BS / EUR</p>
+
+										<input type="hidden" id="CajaEfecEUR">
+										<input type="hidden" id="DescripEUR">
+										<input type="hidden" id="MonedaEUR">
+										<input type="hidden" id="idMoneEUR">
+
+										<div class="input-group input-group-lg">
+											<input class="form-control " type="text" id="valMAXUSbse" value="0.00"
+												style="color:blue;font-weight:bold;font-size:11pt;" disabled>
+											<input class="form-control" type="text" id="valMAXUSusde" value="0.00"
+												style="color:red;font-weight:bold;font-size:11pt;" disabled>
+										</div>
+
+										<p style="font-weight:bold;font-size:10pt;margin:auto;">MONTO A COBRAR
+											&nbsp; | &nbsp; ENTREGADO POR CLIENTE</p>
+
+										<div class="input-group input-group-lg">
+
+											<!-- id="text" name="text" onkeypress="return isNumberKey(this);"-->
+											<input class="form-control" id="MontoCobUSusdeur" oninput="cobEfecEUR()"
+												type="text" maxlength="18" autocomplete="off"
+												style="color:red;font-weight:bold;font-size:11pt;"
+												onkeypress="return isNumberKey(this);">
+
+											<input class="form-control" id="MontoCliUSusdeur" oninput="cobEfecEUR()"
+												type="text" maxlength="18" autocomplete="off"
+												style="color:red;font-weight:bold;font-size:11pt;"
+												onkeypress="return isNumberKey(this);" />
+										</div>
+
+										<p style="font-weight:bold;font-size:10pt;margin:auto;">NUEVO SALDO EN BS
+											<label>&nbsp;</label> | <label>&nbsp;</label> NUEVO SALDO EN EUR
+										</p>
+										<div class="input-group input-group-lg">
+											<input class="form-control" type="text" id="resulcobUSbseur"
+												oninput="cobEfecEUR()" value="0.00"
+												style="color:blue;font-weight:bold;font-size:11pt;" disabled>
+											<input class="form-control" type="text" id="resulcobUSusdeur"
+												oninput="cobEfecEUR()" value="0.00"
+												style="color:red;font-weight:bold;font-size:11pt;" disabled>
+										</div>
+										</br>
+										<div
+											style="position:relative;width:100%;box-shadow: 0px 1px 0px 0px grey;height:9px;text-align: center;">
+
+										</div>
+										</br>
+
+										<p style="font-weight:bold;font-size:10pt;margin:auto;">OTRO VUELTO EN BS
+											<label>&nbsp;</label> | <label>&nbsp;</label> OTRO VUELTO EN USD
+											<label>&nbsp;</label> | <label>&nbsp;</label> OTRO VUELTO EN EUR
+										</p>
+										<div class="input-group input-group-lg">
+											<input class="form-control" type="text"
+												style="color:blue;font-weight:bold;font-size:11pt;" value="0.00"
+												onkeypress="return isNumberKey(this);" id="cobresvubseur"
+												oninput="cobEfecEUR()" disabled>
+
+											<input class="form-control" type="text"
+												style="color:green;font-weight:bold;font-size:11pt;" value="0.00"
+												onkeypress="return isNumberKey(this);" id="cobresvuusdeur"
+												oninput="cobEfecEUR()" disabled>
+											<input class="form-control" type="text"
+												style="color:red;font-weight:bold;font-size:11pt;" value="0.00"
+												onkeypress="return isNumberKey(this);" id="cobresvueureur"
+												oninput="cobEfecEUR()" disabled>
+										</div>
+										<div class="input-group input-group-lg">
+											<input class="form-control" type="text" autocomplete="off"
+												style="color:blue;font-weight:bold;font-size:11pt;"
+												onkeypress="return NumCheck(event, this);" id="cobEntvubseur"
+												oninput="cobEfecEUR()">
+
+											<input class="form-control" type="text" autocomplete="off"
+												style="color:green;font-weight:bold;font-size:11pt;"
+												onkeypress="return isNumberKey(this);" id="cobEntvuusdeur"
+												oninput="cobEfecEUR()">
+											<input class="form-control" type="text" autocomplete="off"
+												style="color:red;font-weight:bold;font-size:11pt;"
+												onkeypress="return isNumberKey(this);" id="cobEntvueureur"
+												oninput="cobEfecEUR()">
+										</div> </br></br>
+
+										<div class="input-group input-group-lg">
+											<button type="button" class="btn btn-info btn-block"
+												style="color:white;font-weight:bold;font-size:11pt;"
+												id="btncobUSDeur"><img src="/images/guardarpag.png" height="20px"
+													width="25px" /> Registrar
+												Pago EUR</button>
+										</div>
+
+
+									</div>
+
+
+
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button class="btn btn-secondary" data-dismiss="modal">Close</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade bd-example-modal-xl" id="CobranzaPAMO" tabindex="-1" role="dialog"
+			aria-labelledby="CobranzaPAMOTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered " role="document">
+				<div class="modal-content">
+					<div class="modal-header list-group-item list-group-item-action"
+						style="background-color: rgb(220,50,50);">
+						<h5 class="modal-title" id="CobranzaPAMOTitle"
+							style="color:white;font-weight:bold;font-size:11pt;">
+							<img src="/images/pagomovil.png" height="20px" width="25px" /> Pago Movil
+						</h5>
+						<button type="button" class="close" id="closepagoMovil" name="closepagoMovil"
+							data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="container">
+
+								<div class="">
+									<div class="">
+										<div class="col-12 mt-0">
+											<div class="d-grid d-md-flex justify-content-md-end">
+
+												&nbsp;
+												<button class="btn btn-lg" type="button" id="buttonPAMO"
+													style="color:white;font-weight:bold;;background-color: rgb(220,50,50);"><span
+														style="color:white;font-weight:bold;font-size:11pt;">&plus;</span></button>
+											</div>
+										</div>
+
+										<input type="text" value="CUENTAS DE BANCOS:"
+											style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:40% ;"
+											disabled>
+										<select class="form-control" name="cod_ctaPAMO" id="cod_ctaPAMO"
+											style="font-weight:bold;font-size:14pt;">
+
+										</select>
+
+										<div class="d-grid d-md-flex justify-content-md-end">
+
+											<input class="form-control" type="text" value="Nro° Documento :"
+												style="color:black;font-weight:bold;font-size:14pt;" disabled />
+											<input class="form-control" type="number" id="nroDocumPaMo"
+												style="color:black;font-weight:bold;font-size:14pt;"
+												onkeypress="return NumCheck(event, this);" />
+										</div>
+
+										<p style="font-weight:bold;font-size:11pt;margin:auto;">SALDO</p>
+										<p style="font-weight:bold;font-size:10pt;margin:auto;">BS / US$</p>
+
+										<div class="input-group input-group-lg">
+											<input class="form-control" type="text" id="valMAXbsPM" value="0.00"
+												style="color:blue;font-weight:bold;font-size:15pt;" disabled />
+
+											<input class="form-control" type="text" id="valMAXusdPM" value="0.00"
+												style="color:green;font-weight:bold;font-size:15pt;" disabled />
+										</div>
+										<p style="font-weight:bold;font-size:10pt;margin:auto;">MONTO A COBRAR
+										</p>
+										<div class="input-group input-group-lg">
+
+											<!-- id="text" name="text" onkeypress="return isNumberKey(this);"-->
+											<input class="form-control" oninput="cobPagoMoBS()" id="MontoCobbsPM"
+												type="number" maxlength="18" autocomplete="off"
+												style="color:blue;font-weight:bold;font-size:20pt;background-color: rgb(190,190,190);"
+												onkeypress="return NumCheck(event, this);">
+
+											<input class="form-control" oninput="cobPagoMoBS()" id="MontClibsPM"
+												type="hidden" maxlength="18" autocomplete="off"
+												style="color:blue;font-weight:bold;font-size:20pt;"
+												onkeypress="return NumCheck(event, this);">
+											<!--<button type="button" id="btn-pagMo" name="btn-pagMo">@</button>-->
+										</div>
+
+										<p style="font-weight:bold;font-size:10pt;margin:auto;">NUEVO SALDO EN BS
+											<label>&nbsp;</label> | <label>&nbsp;</label> NUEVO SALDO EN US$
+										</p>
+										<div class="input-group input-group-lg">
+											<input class="form-control" type="text" oninput="cobPagoMoBS()"
+												id="resulcobBSPM" value="0.00"
+												style="color:blue;font-weight:bold;font-size:15pt;" disabled>
+											<input class="form-control" type="text" oninput="cobPagoMoBS()"
+												id="resulcobBSusPM" value="0.00"
+												style="color:green;font-weight:bold;font-size:15pt;" disabled>
+										</div>
+										<p style="font-weight:bold;font-size:10pt;margin:auto;"> VUELTO AL CLIENTE
+											EN BS
+											<label>&nbsp;</label> | <label>&nbsp;</label> VUELTO AL CLIENTE EN US$
+										</p>
+										<div class="input-group input-group-lg">
+											<input class="form-control" type="text" oninput="cobPagoMoBS()"
+												id="resuBSPM" value="0.00"
+												style="color:blue;font-weight:bold;font-size:15pt;" disabled>
+											<input class="form-control" type="text" oninput="cobPagoMoBS()"
+												id="resuUSDPM" value="0.00"
+												style="color:green;font-weight:bold;font-size:15pt;" disabled>
+										</div>
+
+										</br></br>
+										<div class="input-group input-group-lg">
+											<button type="button" class="btn btn-block"
+												style="color:white;font-weight:bold;font-size:15pt;background-color: rgb(220,50,50);"
+												id="btncobBSPM" name="btncobBSPM">
+												<img src="/images/guardarpag.png" height="20px" width="25px" />
+												Registrar
+												Pago Movil </button>
+
+
+										</div>
+
+
+									</div>
+								</div>
+
+							</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" data-dismiss="modal">Close</button>
+					</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+
+		<div class="modal fade bd-example-modal-xl" id="CobranzaPuntoVenta" tabindex="-1" role="dialog"
+			aria-labelledby="CobranzaPuntoVentaTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered " role="document">
+				<div class="modal-content">
+					<div class="modal-header list-group-item list-group-item-action"
+						style="background-color:rgb(250,220,0) ;">
+						<h5 class="modal-title" id="CobranzaPuntoVentaTitle"
+							style="color:black ;font-weight:bold;font-size:11pt;">
+							<img src="/images/puntoventa.png" height="20px" width="25px" /> Punto de Venta
+						</h5>
+						<button type="button" class="close" name="btnCloseCobNamePV" id="btnCloseCobNamePV"
+							data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<div class="container">
+
+							<div class="">
+								<div class="">
+									<div class="d-grid d-md-flex justify-content-md-end">
+										<button class="btn  btn-lg" type="button" name="buttonPV" id="buttonPV"
+											style="background-color:rgb(250,220,0);"><span
+												style="color:black;font-weight:bold;font-size:11pt;">&plus;</span></button>
+									</div>
+									<div class="d-grid d-md-flex justify-content-md-end">
+										<input class="form-control" type="text" value="RIF/C.I :"
+											style="color:black;font-weight:bold;font-size:14pt;" disabled />
+
+										<input class="form-control" type="text" name="cedPunto" id="cedPunto"
+											style="color:black;font-weight:bold;font-size:14pt;" disabled />
+									</div>
+									<div class="d-grid d-md-flex justify-content-md-end">
+										<input class="form-control" type="text" value="Nro° Documento :"
+											style="color:black;font-weight:bold;font-size:14pt;" disabled />
+
+										<input class="form-control" type="number" id="nroDocumPV"
+											style="color:black;font-weight:bold;font-size:14pt;" maxlength="6"
+											minlength="6" autocomplete="off"
+											onkeypress="return NumCheck(event, this);" />
+									</div>
+
+									<p style="font-weight:bold;font-size:11pt;margin:auto;">SALDO</p>
+									<p style="font-weight:bold;font-size:10pt;margin:auto;">BS / US$</p>
+
+									<input type="hidden" id="CajaPuntoPV">
+									<input type="hidden" id="DescripPuntoPV">
+									<input type="hidden" id="MonedaPuntoPV">
+
+									<input type="hidden" id="co_tar">
+									<input type="hidden" id="des_tar">
+
+
+
+									<div class="input-group input-group-lg">
+										<input class="form-control" type="text" id="valMAXbsPV" value="0.00"
+											style="color:blue;font-weight:bold;font-size:15pt;" disabled />
+
+										<input class="form-control" type="text" id="valMAXusdPV" value="0.00"
+											style="color:green;font-weight:bold;font-size:15pt;" disabled />
+									</div>
+									<p style="font-weight:bold;font-size:10pt;margin:auto;">MONTO A COBRAR</p>
+									<div class="input-group input-group-lg">
+
+										<!-- id="text" name="text" onkeypress="return isNumberKey(this);"-->
+										<input class="form-control" oninput="cobPuntoVentaBS()" id="MontoCobbsPV"
+											type="number" maxlength="18" autocomplete="off"
+											style="color:blue;font-weight:bold;font-size:20pt;background-color: rgb(190,190,190);"
+											onkeypress="return NumCheck(event, this);" name="MontoCobbsPV">
+
+
+										<input class="form-control" oninput="cobPuntoVentaBS()" id="MontClibsPV"
+											type="hidden" maxlength="18" autocomplete="off"
+											style="color:blue;font-weight:bold;font-size:11pt;">
+
+									</div>
+
+									<p style="font-weight:bold;font-size:10pt;margin:auto;">NUEVO SALDO EN BS
+										<label>&nbsp;</label> | <label>&nbsp;</label> NUEVO SALDO EN US$
+									</p>
+									<div class="input-group input-group-lg">
+										<input class="form-control" type="number" oninput="cobPuntoVentaBS()"
+											id="resulcobBSPV" value="0.00"
+											style="color:blue;font-weight:bold;font-size:15pt;" disabled>
+										<input class="form-control" type="number" oninput="cobPuntoVentaBS()"
+											id="resulcobBSusPV" value="0.00"
+											style="color:green;font-weight:bold;font-size:15pt;" disabled>
+									</div>
+									<p style="font-weight:bold;font-size:10pt;margin:auto;"> VUELTO AL CLIENTE EN BS
+										<label>&nbsp;</label> | <label>&nbsp;</label> VUELTO AL CLIENTE EN US$
+									</p>
+									<div class="input-group input-group-lg">
+										<input class="form-control" type="text" oninput="cobPuntoVentaBS()"
+											id="resuBSPV" value="0.00"
+											style="color:blue;font-weight:bold;font-size:15pt;" disabled>
+										<input class="form-control" type="text" oninput="cobPuntoVentaBS()"
+											id="resuUSDPV" value="0.00"
+											style="color:green;font-weight:bold;font-size:15pt;" disabled>
+									</div>
+									<label style="font-weight:bold;font-size:9pt;margin:auto;">ESTABLECER EN
+										DIVISAS</label>
+									<div class="input-group input-group-lg">
+										<button type="button" id="btnstabpv" name="btnstabpv">@</button>
+										<input class="form-control" type="number" oninput="cobPuntoVentaBS()"
+											id="stabbspv" value="0.00"
+											style="color:blue;font-weight:bold;font-size:15pt;" disabled>
+										<input class="form-control" type="number" oninput="cobPuntoVentaBS()"
+											id="stabusdpv" value=""
+											style="color:green;font-weight:bold;font-size:15pt;">
+									</div>
+
+									</br>
+									<div class="input-group input-group-lg">
+										<button type="button" class="btn  btn-block"
+											style="color:black;font-weight:bold;font-size:15pt;background-color:rgb(250,220,0) ;"
+											id="btncobBSPV" name="btncobBSPV">
+											<img src="/images/guardarpag.png" height="20px" width="25px" />
+											Registrar
+											Punto Venta </button>
+									</div>
+
+
+								</div>
+							</div>
+
+
+
+						</div>
+					</div>
+					<div class="modal-footer">
+
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+
+
+		<div class="modal fade bd-example-modal-xl" id="cobPagoElectronico" tabindex="-1" role="dialog"
+			aria-labelledby="cobPagoElectronicoTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-mg " role="document">
+				<div class="modal-content">
+					<div class="modal-header list-group-item list-group-item-action"
+						style="background-color:rgb(255,112,0) ;">
+						<h5 class="modal-title" id="cobPagoElectronicoTitle"
+							style="color:rgb(255,255,255);font-weight:bold;font-size:11pt;">
+							<img src="/images/electro.png" height="20px" width="25px" />Cobros Electronicos
+						</h5>
+						<button type="button" class="close" name="btnClosecobPagoElectronico"
+							id="btnClosecobPagoElectronico" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<div class="">
+							<div class="col-16 mt-0">
+								<div class="d-grid d-md-flex justify-content-md-end">
+									<button class="btn  btn-lg" type="button" name="buttonPELEC" id="buttonPELEC"
+										style="background-color:rgb(255,112,0);color:black;font-weight:bold;"><span
+											style="color:rgb(0, 0, 0);font-weight:bold;font-size:12pt;font-weight:bold;">&plus;</span></button>
+								</div>
+								<div class="d-grid d-md-flex justify-content-md-end">
+									<input class="form-control" type="text" value="RIF/C.I :"
+										style="color:black;font-weight:bold;font-size:14pt;" disabled />
+
+									<input class="form-control" type="text" name="cedPELEC" id="cedPELEC"
+										style="color:black;font-weight:bold;font-size:14pt;" disabled />
+								</div>
+								<div class="d-grid d-md-flex justify-content-md-end">
+									<input class="form-control" type="text" value="Nro° Documento :"
+										style="color:black;font-weight:bold;font-size:14pt;" disabled />
+
+									<input class="form-control" type="number" id="nroDocumPELEC"
+										style="color:black;font-weight:bold;font-size:14pt;" maxlength="6" minlength="6"
+										autocomplete="off" onkeypress="return NumCheck(event, this);" disabled />
+								</div> </br>
+
+								<p style="font-weight:bold;font-size:11pt;margin:auto;">SALDO</p>
+								<p style="font-weight:bold;font-size:10pt;margin:auto;">BS / US$</p>
+
+								<input type="hidden" id="CajaPuntoPELEC">
+								<input type="hidden" id="DescripPuntoPELEC">
+								<input type="hidden" id="MonedaPuntoPELEC">
+
+								<input type="hidden" id="co_tarPELEC">
+								<input type="hidden" id="des_tarPELEC">
+
+
+
+								<div class="input-group input-group-lg">
+									<input class="form-control" type="text" id="valMAXbsPELEC" value="0.00"
+										style="color:blue;font-weight:bold;font-size:15pt;" disabled />
+
+									<input class="form-control" type="text" id="valMAXusdPELEC" value="0.00"
+										style="color:green;font-weight:bold;font-size:15pt;" disabled />
+								</div>
+								<p style="font-weight:bold;font-size:10pt;margin:auto;">MONTO A COBRAR</p>
+								<div class="input-group input-group-lg">
+
+									<!-- id="text" name="text" onkeypress="return isNumberKey(this);"-->
+									<input class="form-control" oninput="cobPELEC()" id="MontoCobbsPELEC" type="number"
+										maxlength="18" autocomplete="off"
+										style="color:blue;font-weight:bold;font-size:20pt;background-color: rgb(190,190,190);"
+										onkeypress="return NumCheck(event, this);" name="monto">
+
+									<input class="form-control" oninput="cobPELEC()" id="MontClibsPELEC" type="hidden"
+										maxlength="18" autocomplete="off"
+										style="color:blue;font-weight:bold;font-size:11pt;">
+
+								</div>
+
+								<p style="font-weight:bold;font-size:10pt;margin:auto;">NUEVO SALDO EN BS
+									<label>&nbsp;</label> | <label>&nbsp;</label> NUEVO SALDO EN US$
+								</p>
+								<div class="input-group input-group-lg">
+									<input class="form-control" type="number" oninput="cobPELEC()" id="resulcobBSPELEC"
+										value="0.00" style="color:blue;font-weight:bold;font-size:15pt;" disabled>
+									<input class="form-control" type="number" oninput="cobPELEC()"
+										id="resulcobBSusPELEC" value="0.00"
+										style="color:green;font-weight:bold;font-size:15pt;" disabled>
+								</div>
+								<p style="font-weight:bold;font-size:10pt;margin:auto;"> VUELTO AL CLIENTE EN BS
+									<label>&nbsp;</label> | <label>&nbsp;</label> VUELTO AL CLIENTE EN US$
+								</p>
+								<div class="input-group input-group-lg">
+									<input class="form-control" type="text" oninput="cobPELEC()" id="resuBSPELEC"
+										value="0.00" style="color:blue;font-weight:bold;font-size:15pt;" disabled>
+									<input class="form-control" type="text" oninput="cobPELEC()" id="resuUSDPELEC"
+										value="0.00" style="color:green;font-weight:bold;font-size:15pt;" disabled>
+								</div>
+								<label style="font-weight:bold;font-size:9pt;margin:auto;">ESTABLECER EN
+									DIVISAS</label>
+								<div class="input-group input-group-lg">
+									<button type="button" id="btnstabPELEC" name="btnstabPELEC">@</button>
+									<input class="form-control" type="number" oninput="cobPELEC()" id="stabbsPELEC"
+										value="0.00" style="color:blue;font-weight:bold;font-size:15pt;" disabled>
+									<input class="form-control" type="number" oninput="cobPELEC()" id="stabusdPELEC"
+										value="" style="color:green;font-weight:bold;font-size:15pt;">
+								</div>
+
+								</br>
+								<div class="input-group input-group-lg">
+									<button type="button" class="btn  btn-block"
+										style="color:rgb(255,255,255);font-weight:bold;font-size:15pt;background-color:rgb(255,112,0) ;"
+										id="btncobBSPVActivar" name="btncobBSPVActivar">
+										<img src="/images/guardarpag.png" height="20px" width="25px" />
+										Registrar
+										Pago Electronico </button>
+								</div>
+
+
+							</div>
+
+
+
+
+						</div>
+					</div>
+					<div class="modal-footer">
+
+					</div>
+
+				</div>
+
+				<button type="button" id="btncobPagoElectronico" name="btncobPagoElectronico"
+					style="background-color:transparent;border-style:none;"></button>
+
+				<button type="button" id="btncambioPagoElectronico" name="btncambioPagoElectronico"
+					style="background-color:transparent;border-style:none;"></button>
+
+				<form id="pagos">
+					<input type="hidden" name="monto" id="montoMegaSoft" oninput="cobPELEC()" disabled>
+					<input type="hidden" name="cedula" id="cedulaPagoMegaSoft" disabled>
+					<input type="hidden" name="montoDonativo" placeholder="monto donativo" disabled>
+					<input type="hidden" id="tipoMneda" value="VES" disabled>
+					<input type="hidden" id="codRespuestaMegaSoft" disabled>
+					<input type="hidden" id="mensajeRespuestaMegaSoft" disabled>
+					<input type="hidden" id="nombreVaucherMegaSoft" disabled>
+					<input type="hidden" id="numDocRefMegaSoft" disabled>
+					<input type="hidden" id="numRefDocP2CMegaSoft" disabled>
+					<input type="hidden" id="tipoProductoMegaSoft" disabled>
+					<input type="hidden" id="numTarjeOpeMegaSoft" disabled>
+					<input type="hidden" id="numsecuenciaMegaSoft" disabled>
+					<input type="hidden" id="TerminalVirtualMegaSoft" disabled>
+					<input type="hidden" id="accionPagos" disabled>
+					<div class="input-group input-group-lg" disabled>
+						<input type="hidden" id="cambioEfec" name="cambioEfec">
+						<button type="button" id="btncobTarjeMegaSoft" name="btncobTarjeMegaSoft"
+							style="background-color:transparent;border-style:none;" value="Tarjetas"
+							onclick="conParametros('tarjeta');"></button>
+
+						<button class="btn btn-primary" type="button" id="btncobCambioMegaSoft"
+							name="btncobCambioMegaSoft" value="C@mbio" onclick="conParametros('cambio');"
+							style="background-color:transparent;border-style:none;"></button>
+					</div>
+				</form>
+			</div>
+		</div>
+
+
+
+		<div class="modal fade bd-example-modal-xl" id="CobranzaZELLE" tabindex="-1" role="dialog"
+			aria-labelledby="CobranzaZELLETitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered " role="document">
+				<div class="modal-content">
+					<div class="modal-header list-group-item list-group-item-action"
+						style="background-color:rgb(120,40,140) ;">
+						<h5 class="modal-title" id="CobranzaZELLETitle"
+							style="color:white ;font-weight:bold;font-size:11pt;">
+							<img src="/images/dolar.png" height="20px" width="25px" /> PAGO ZELLE
+						</h5>
+						<button type="button" class="close" name="btnCloseCobranzaZELLE" id="btnCloseCobranzaZELLE"
+							data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<div class="container">
+
+							<div class="">
+								<div class="">
+									<div class="d-grid d-md-flex justify-content-md-end">
+										<button class="btn  btn-lg" type="button" name="buttonZELLE" id="buttonZELLE"
+											style="background-color: rgb(120,40,140);"><span
+												style="color:white;font-weight:bold;font-size:11pt;">&plus;</span></button>
+									</div>
+
+									</br>
+									<div class="d-grid d-md-flex justify-content-md-end">
+										<input class="form-control" type="text" value="Nro° Documento :"
+											style="color:black;font-weight:bold;font-size:15pt;" disabled />
+										<input class="form-control" type="text" id="nroDocumZELLE"
+											style="color:black;font-weight:bold;font-size:15pt;" />
+									</div>
+
+									<input type="hidden" id="MonedaUSDZELLE" value="US$ ZELLE">
+
+									<p style="font-weight:bold;font-size:11pt;margin:auto;">SALDO</p>
+									<p style="font-weight:bold;font-size:10pt;margin:auto;">BS / US$</p>
+
+
+									<div class="input-group input-group-lg">
+										<input class="form-control" type="text" id="valMAXbsZELLE" value="0.00"
+											style="color:blue;font-weight:bold;font-size:15pt;" disabled />
+
+										<input class="form-control" type="text" id="valMAXusdZELLE" value="0.00"
+											style="color:green;font-weight:bold;font-size:15pt;" disabled />
+									</div>
+									<p style="font-weight:bold;font-size:10pt;margin:auto;">MONTO A COBRAR</p>
+									<div class="input-group input-group-lg">
+
+										<!-- id="text" name="text" onkeypress="return isNumberKey(this);"-->
+										<input class="form-control" oninput="cobPagZelle()" id="MontoCobbsZELLE"
+											type="number" maxlength="18" autocomplete="off"
+											style="color:green;font-weight:bold;font-size:20pt;background-color: rgb(190,190,190);"
+											onkeypress="return NumCheck(event, this);" name="monto">
+
+										<input class="form-control" oninput="cobPagZelle()" id="MontClibsZELLE"
+											type="hidden" maxlength="18" autocomplete="off"
+											style="color:green;font-weight:bold;font-size:11pt;">
+
+									</div>
+
+									<p style="font-weight:bold;font-size:10pt;margin:auto;">NUEVO SALDO EN BS
+										<label>&nbsp;</label> | <label>&nbsp;</label> NUEVO SALDO EN US$
+									</p>
+									<div class="input-group input-group-lg">
+										<input class="form-control" type="number" oninput="cobPagZelle()"
+											id="resulcobBSZELLE" value="0.00"
+											style="color:blue;font-weight:bold;font-size:15pt;" disabled>
+										<input class="form-control" type="number" oninput="cobPagZelle()"
+											id="resulcobBSusZELLE" value="0.00"
+											style="color:green;font-weight:bold;font-size:15pt;" disabled>
+									</div>
+									<p style="font-weight:bold;font-size:10pt;margin:auto;"> VUELTO AL CLIENTE EN BS
+										<label>&nbsp;</label> | <label>&nbsp;</label> VUELTO AL CLIENTE EN US$
+									</p>
+									<div class="input-group input-group-lg">
+										<input class="form-control" type="text" oninput="cobPagZelle()" id="resuBSZELLE"
+											value="0.00" style="color:blue;font-weight:bold;font-size:15pt;" disabled>
+										<input class="form-control" type="text" oninput="cobPagZelle()"
+											id="resuUSDZELLE" value="0.00"
+											style="color:green;font-weight:bold;font-size:15pt;" disabled>
+									</div>
+
+
+									</br>
+									<div class="input-group input-group-lg">
+										<button type="button" class="btn  btn-block"
+											style="color:white;font-weight:bold;font-size:15pt;background-color:rgb(120,40,140) ;"
+											id="btncobBSZELLE" name="btncobBSZELLE">
+											<img src="/images/guardarpag.png" height="20px" width="25px" />
+											Registrar
+											Pago Zelle </button>
+									</div>
+
+
+								</div>
+							</div>
+
+
+
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" data-dismiss="modal">Close</button>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+
+
+		<div class="modal fade bd-example-modal-xl" id="CobranzaTransferBS" tabindex="-1" role="dialog"
+			aria-labelledby="CobranzaTransferBSTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered " role="document">
+				<div class="modal-content">
+					<div class="modal-header list-group-item list-group-item-action active">
+						<h5 class="modal-title" id="CobranzaTransferBSTitle"
+							style="color:white;font-weight:bold;font-size:11pt;">
+							<img src="/images/transferencia.png" height="20px" width="25px" /> Transferencia Banco
+						</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="container">
+
+								<div class="">
+									<div class="">
+										<div class=" justify-content-md-end">
+											<button class="btn btn-primary " type="button"
+												id="buttonMERC01">MERCANTIL</button>
+
+											&nbsp;
+											<button class="btn btn-primary " type="button"
+												id="buttonBANE01">BANESCO</button>
+
+											&nbsp;
+											<button class="btn btn-primary" type="button" id="buttonTF"><span
+													style="color:white;font-weight:bold;font-size:11pt;">&plus;</span></button>
+										</div></br>
+										<div class="input-group input-group-lg">
+											<input class="form-control" type="text" id="datoCod"
+												style="color:black;font-weight:bold;font-size:11pt;" disabled />
+
+											<input class="form-control" type="text" id="datoBanc"
+												style="color:black;font-weight:bold;font-size:11pt;" disabled />
+
+											<input class="form-control" type="hidden" id="datoNum"
+												style="color:black;font-weight:bold;font-size:11pt;" disabled />
+										</div>
+										<div class="d-grid d-md-flex justify-content-md-end">
+											<input class="form-control" type="text" value="Nro° Documento :"
+												style="color:black;font-weight:bold;font-size:11pt;" disabled />
+											<input class="form-control" type="text" id="nroDocumTrans"
+												style="color:black;font-weight:bold;font-size:11pt;"
+												onkeypress="return NumCheck(event, this);" />
+										</div> </br>
+
+										<p style="font-weight:bold;font-size:11pt;margin:auto;">SALDO</p>
+										<p style="font-weight:bold;font-size:10pt;margin:auto;">BS / US$</p>
+
+										<input type="hidden" id="CajaTRANSF">
+										<input type="hidden" id="DescripTRANSF">
+										<input type="hidden" id="MonedaTRANSF">
+
+										<div class="input-group input-group-lg">
+											<input class="form-control" type="text" id="valMAXbsTF" value="0.00"
+												style="color:blue;font-weight:bold;font-size:11pt;" disabled />
+
+											<input class="form-control" type="text" id="valMAXusdTF" value="0.00"
+												style="color:green;font-weight:bold;font-size:11pt;" disabled />
+										</div>
+										<p style="font-weight:bold;font-size:10pt;margin:auto;">MONTO A COBRAR
+											&nbsp; | &nbsp; ENTREGADO POR CLIENTE</p>
+										<div class="input-group input-group-lg">
+
+											<!-- id="text" name="text" onkeypress="return isNumberKey(this);"-->
+											<input class="form-control" oninput="cobTransferBS()" id="MontoCobbsTF"
+												type="text" maxlength="18"
+												style="color:blue;font-weight:bold;font-size:11pt;"
+												onkeypress="return NumCheck(event, this);">
+
+											<input class="form-control" oninput="cobTransferBS()" id="MontClibsTF"
+												type="text" maxlength="18"
+												style="color:blue;font-weight:bold;font-size:11pt;"
+												onkeypress="return NumCheck(event, this);">
+										</div>
+
+										<p style="font-weight:bold;font-size:10pt;margin:auto;">NUEVO SALDO EN BS
+											<label>&nbsp;</label> | <label>&nbsp;</label> NUEVO SALDO EN US$
+										</p>
+										<div class="input-group input-group-lg">
+											<input class="form-control" type="text" oninput="cobTransferBS()"
+												id="resulcobBSTF" value="0.00"
+												style="color:blue;font-weight:bold;font-size:11pt;" disabled>
+											<input class="form-control" type="text" oninput="cobTransferBS()"
+												id="resulcobBSusTF" value="0.00"
+												style="color:green;font-weight:bold;font-size:11pt;" disabled>
+										</div>
+										<p style="font-weight:bold;font-size:10pt;margin:auto;"> VUELTO AL CLIENTE EN BS
+											<label>&nbsp;</label> | <label>&nbsp;</label> VUELTO AL CLIENTE EN US$
+										</p>
+										<div class="input-group input-group-lg">
+											<input class="form-control" type="text" oninput="cobTransferBS()"
+												id="resuBSTF" value="0.00"
+												style="color:blue;font-weight:bold;font-size:11pt;" disabled>
+											<input class="form-control" type="text" oninput="cobTransferBS()"
+												id="resuUSDTF" value="0.00"
+												style="color:green;font-weight:bold;font-size:11pt;" disabled>
+										</div>
+
+										</br></br>
+										<div class="input-group input-group-lg">
+											<button type="button" class="btn btn-info btn-block"
+												style="color:white;font-weight:bold;font-size:11pt;" id="btncobBSTF">
+												<img src="/images/guardarpag.png" height="20px" width="25px" />
+												Registrar
+												Transferencia </button>
+										</div>
+									</div>
+								</div>
+
+
+
+							</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" data-dismiss="modal">Close</button>
+					</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="modal fade bd-example-modal-xl" id="CobranzaBio" tabindex="-1" role="dialog"
+			aria-labelledby="CobranzaBioTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered " role="document">
+				<div class="modal-content">
+					<div class="modal-header list-group-item list-group-item-action active">
+						<h5 class="modal-title" id="CobranzaBioTitle"
+							style="color:white;font-weight:bold;font-size:11pt;">
+							<img src="/images/biopago.png" height="20px" width="25px" /> Bio Pago
+						</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="container">
+
+								<div class="">
+									<div class="">
+										<div class="justify-content-md-end">
+											<button class="btn btn-primary " type="button" id="buttonBP"><span
+													style="color:white;font-weight:bold;font-size:11pt;">&plus;</span></button>
+										</div>
+
+										<p style="font-weight:bold;font-size:11pt;margin:auto;">SALDO</p>
+										<p style="font-weight:bold;font-size:10pt;margin:auto;">BS / US$</p>
+
+										<input type="hidden" id="CajaBioPago">
+										<input type="hidden" id="DescripBioPago">
+										<input type="hidden" id="MonedaBioPago">
+
+										<div class="input-group input-group-lg">
+											<input class="form-control" type="text" id="valMAXbsBP" value="0.00"
+												style="color:blue;font-weight:bold;font-size:11pt;" disabled />
+
+											<input class="form-control" type="text" id="valMAXusdBP" value="0.00"
+												style="color:green;font-weight:bold;font-size:11pt;" disabled />
+										</div>
+										<p style="font-weight:bold;font-size:10pt;margin:auto;">MONTO A COBRAR
+											&nbsp; | &nbsp; ENTREGADO POR CLIENTE</p>
+										<div class="input-group input-group-lg">
+
+											<!-- id="text" name="text" onkeypress="return isNumberKey(this);"-->
+											<input class="form-control" oninput="cobBiopagoBS()" id="MontoCobbsBP"
+												type="text" maxlength="11"
+												style="color:blue;font-weight:bold;font-size:11pt;"
+												onkeypress="return NumCheck(event, this);">
+
+											<input class="form-control" oninput="cobBiopagoBS()" id="MontClibsBP"
+												type="text" maxlength="11"
+												style="color:blue;font-weight:bold;font-size:11pt;"
+												onkeypress="return NumCheck(event, this);">
+										</div>
+
+										<p style="font-weight:bold;font-size:10pt;margin:auto;">NUEVO SALDO EN BS
+											<label>&nbsp;</label> | <label>&nbsp;</label> NUEVO SALDO EN US$
+										</p>
+										<div class="input-group input-group-lg">
+											<input class="form-control" type="text" oninput="cobBiopagoBS()"
+												id="resulcobBSBP" value="0.00"
+												style="color:blue;font-weight:bold;font-size:11pt;" disabled>
+											<input class="form-control" type="text" oninput="cobBiopagoBS()"
+												id="resulcobBSusBP" value="0.00"
+												style="color:green;font-weight:bold;font-size:11pt;" disabled>
+										</div>
+										<p style="font-weight:bold;font-size:10pt;margin:auto;"> VUELTO AL CLIENTE EN BS
+											<label>&nbsp;</label> | <label>&nbsp;</label> VUELTO AL CLIENTE EN US$
+										</p>
+										<div class="input-group input-group-lg">
+											<input class="form-control" type="text" oninput="cobBiopagoBS()"
+												id="resuBSBP" value="0.00"
+												style="color:blue;font-weight:bold;font-size:11pt;" disabled>
+											<input class="form-control" type="text" oninput="cobBiopagoBS()"
+												id="resuUSDBP" value="0.00"
+												style="color:green;font-weight:bold;font-size:11pt;" disabled>
+										</div>
+
+										</br></br>
+										<div class="input-group input-group-lg">
+											<button type="button" class="btn btn-info btn-block"
+												style="color:white;font-weight:bold;font-size:12pt;" id="btncobBSBP">
+												<img src="/images/guardarpag.png" height="20px" width="25px" />
+												Registrar Bio
+												Pago </button>
+										</div>
+									</div>
+								</div>
+
+
+
+							</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" data-dismiss="modal">Close</button>
+					</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div style="position:absolute;margin-top:-1000px;">
+			<button id="DevCliDineID" name="DevCliDineID" data-toggle='modal' data-target='#DevDineClie'
+				style="background-color:transparent;border-style:none;"></button>
+		</div>
+
+		<div class="modal fade bd-example-modal-xl" id="DevDineClie" tabindex="-1" role="dialog"
+			aria-labelledby="DevDineClieTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header "
+						style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: rgb(210,210,210);">
+						<h5 class="modal-title " id="DevDineClieTitle" style="font-weight:bold;font-size:9pt;"><img
+								src="/images/tasa.png" height="20px" width="30px" /> Generar Devolución de Dinero</h5>
+						<div class="col-md-0 ml-auto">
+
+						</div>
+						<button type="button" class="close" id="closeDevDineClien" name="closeDevDineClien"
+							data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<div class="">
+							<div class="">
+								<div class="container">
+									<strong></strong>
+									<div class="card-group">
+
+										<div class="card">
+											<div class="btn-group">
+												<input type="text" value="Cliente:"
+													style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:30% ;"
+													disabled>
+												<input class="form-control" type="text" name="co_cliInfodata"
+													id="co_cliInfodata" style="font-weight:bold;" disabled>
+
+												<input class="form-control" type="text" name="cli_desInfofata"
+													id="cli_desInfofata" style="font-weight:bold;" disabled>
+											</div>
+
+										</div>
+
+										<div class="card">
+											<div class="btn-group">
+												<input type="text" value="Saldo Actual:"
+													style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:30% ;"
+													disabled>
+												<input class="form-control" type="text" name="saldoActualCli"
+													id="saldoActualCli" style="font-weight:bold;" disabled>
+											</div>
+											<div class="btn-group">
+												<input type="text" value="Mov. de Caja:"
+													style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:30% ;"
+													disabled>
+												<input class="form-control" type="text" name="movdecajaDev"
+													id="movdecajaDev" style="font-weight:bold;" disabled>
+											</div>
+										</div>
+									</div>
+									</br>
+									<input type="text" value="N° Devolucion de Cliente:"
+										style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:50% ;"
+										disabled>
+
+									<input class="form-control" type="text" name="NumDevCli" id="NumDevCli"
+										style="font-weight:bold;" disabled>
+									<strong>Nota de Credito</strong>
+									<div class="card-group">
+
+										<div class="card">
+											<p style="font-weight:bold;font-size:9pt;color:midnightblue;">NUMERO</p>
+											<input class="form-control" type="text" name="numCredit" id="numCredit"
+												style="font-weight:bold;" disabled>
+										</div>
+										<div class="card">
+											<p style="font-weight:bold;font-size:9pt;color:midnightblue;">MONTO</p>
+											<input class="form-control" type="text" name="montoCredit" id="montoCredit"
+												style="font-weight:bold;" disabled>
+										</div>
+										<div class="card">
+											<p style="font-weight:bold;font-size:9pt;color:midnightblue;">SALDO</p>
+											<input class="form-control" type="text" name="saldoNotCredit"
+												id="saldoNotCredit" style="font-weight:bold;" disabled>
+										</div>
+										<div class="card">
+											<div class="btn-group">
+												<input type="text" value="Moneda:"
+													style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:25%;"
+													disabled>
+												<input class="form-control" type="text" name="monedaDev" id="monedaDev"
+													style="font-weight:bold;" disabled>
+											</div>
+											<div class="btn-group">
+												<input type="text" value="Tasa:"
+													style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:25%;"
+													disabled>
+												<input class="form-control" type="text" name="tasaDev" id="tasaDev"
+													style="font-weight:bold;" disabled>
+											</div>
+
+											<input type="hidden" name="monedaDevhideBS" id="monedaDevhideBS">
+											<input type="hidden" name="tasaDevhideBS" id="tasaDevhideBS">
+
+											<input type="hidden" name="monedaDevhideUSD" id="monedaDevhideUSD">
+											<input type="hidden" name="tasaDevhideUSD" id="tasaDevhideUSD">
+											<input type="hidden" name="montoCredithide" id="montoCredithide">
+										</div>
+
+
+									</div>
+									<div class="card-group">
+
+										<input type="text" value="Monto Factura:"
+											style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:50% ;"
+											disabled>
+
+										<input class="form-control" type="text" name="montoFactDato" id="montoFactDato"
+											style="font-weight:bold;" disabled>
+
+										<div class="card">
+
+											<input type="text" value="Generar devolución de dinero por:"
+												style="font-weight:bold;font-size:9pt;color:rgb(200,10,10);background-color: transparent;border-style:none;width:50% ;"
+												disabled>
+											<input class="form-control" type="number" name="montoDevCLiPag"
+												id="montoDevCLiPag"
+												style="font-weight:bold;color:rgb(250,200,100);background-color: rgb(50,50,50);font-size: 17pt;"
+												onkeypress="return isNumberKey(event, this);">
+
+										</div>
+										<div class="card">
+
+											<input type="text" value="Forma de pago:"
+												style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:50% ;"
+												disabled>
+											<input class="form-control" type="text" name="formaPagSelec"
+												id="formaPagSelec" style="font-weight:bold;" disabled>
+											<input type="hidden" name="codCajSelecPag" id="codCajSelecPag">
+
+										</div>
+									</div>
+									<strong>Forma De Devolución </strong>
+									<div class="card-group">
+
+										<div class="card">
+
+											<input type="text" value="Fecha de pago:"
+												style="font-weight:bold;font-size:9pt;color:midnightblue;background-color: transparent;border-style:none;width:50% ;"
+												disabled>
+											<input class="form-control" type="text" name="fechaPagoDev"
+												id="fechaPagoDev" style="font-weight:bold;" disabled>
+
+										</div>
+										<div class="card">
+											<button type="button" name="efecCajaBS" id="efecCajaBS"
+												style="background:rgb(50,50,235);border-style:none;color:white;font-weight: bold;">EFEC
+												BS <img src="/images/efepago.png" height="52px" width="50px" /></button>
+										</div>
+										<div class="card">
+
+											<button type="button" name="efecCajaUSD" id="efecCajaUSD"
+												style="background-color:rgb(50,175,50);border-style:none;color:white;font-weight: bold;">EFEC
+												USD <img src="/images/efepago.png" height="52px"
+													width="50px" /></button>
+										</div>
+
+									</div>
+									</br>
+									<button class="btn btn-block" type="button" id="ConfirmarDevolCli"
+										name="ConfirmarDevolCli"
+										style="background-color: rgb(175,50,50);border-style:none;color:white;font-weight: bold;">Aceptar
+										<img src="/images/tasa.png" height="35px" width="40px" /></button>
+									</br>
+
+									</br>
+								</div>
+							</div>
+							<div class="card">
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+				<button type="button" data-toggle="modal" data-target="#comfirDevPagoCliModal" id="comfirDataClav"
+					name="comfirDataClav"></button>
+			</div>
+		</div>
+
+		<div style="position:absolute;margin-left: -10000px;">
+			<p id="comfirDevPagoCli">.</p>
+		</div>
+
+		<div id="bgventana">
+			<div id="ventana">
+				<div class="container ">
+					<div class="">
+						<div class="modal-content">
+
+							<div class="modal-header">
+								<h4 class="modal-title">Registrar Cliente</h4>
+
+								<form th:action="@{/GrebcaCCS}" method="POST" th:object="${post}">
+									<input type="hidden" name="co_venCO" th:field="*{co_venCO}" th:value="*{co_venCO}"
+										id="co_venIDs">
+
+									<button type="submit" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</form>
+
+
+							</div>
+							<div class="modal-body">
+
+								<div class="container">
+
+									<div class="">
+										<div class="col-12 mt-5">
+											<h1>Grebca ©</h1>
+											<br>
+										</div>
+
+										<form th:action="@{/addNewPost2}" method="POST" th:object="${post}"
+											class="needs-validation" validate>
+											<div class="form-row">
+												<div class="col-md-8 mb-4">
+													<label for="validationTooltip01">RIF/C.I</label>
+													<div class="input-group input-group-lg">
+														<input th:field="*{ced}" th:value="*{ced}" minlength="7"
+															maxlength="10" name="ced" type="text" class="form-control"
+															placeholder="RIF/C.I " id="cedDatacli"
+															onkeyup="javascript:this.value=this.value.toUpperCase();"
+															disabled
+															style="font-weight:bold;color:black;font-size: 17pt;"></input>
+														<input th:field="*{ced}" th:value="*{ced}" minlength="7"
+															maxlength="15" name="ced" type="hidden" class="form-control"
+															placeholder="RIF/C.I "
+															onkeyup="javascript:this.value=this.value.toUpperCase();"></input>
+													</div>
+													<div class="valid-tooltip">
+														<p></p>
+													</div>
+
+													<input type="hidden" name="co_venCO" th:field="*{co_venCO}"
+														th:value="*{co_venCO}">
+												</div>
+												<div class="col-md-8 mb-4">
+													<label for="validationTooltip02">Razon Social</label>
+													<div class="input-group input-group-lg">
+
+														<input th:field="*{desc}" th:value="*{desc}" name="desc"
+															type="text" class="form-control" placeholder="Descripción"
+															id="razonsodata"
+															onkeyup="javascript:this.value=this.value.toUpperCase();"
+															required
+															style=" font-weight:bold;color:black;font-size: 17pt;"
+															autocomplete="off">
+													</div>
+													<div class="valid-tooltip">
+
+													</div>
+												</div>
+												<div class="col-md-4 mb-3">
+													<label for="validationTooltipUsername">Telefono</label>
+													<div class="input-group input-group-lg">
+														<div class="input-group-prepend ">
+															<span class="input-group-text"
+																id="validationTooltipUsernamePrepend">#</span>
+														</div>
+														<input th:field="*{telef}" th:value="*{telef}" name="telef"
+															type="number" class="form-control" placeholder="Telefono"
+															required autocomplete="off"
+															aria-describedby="validationTooltipUsernamePrepend"
+															style=" font-weight:bold;color:black;font-size: 17pt;">
+														<div class="invalid-tooltip">
+
+														</div>
+													</div>
+												</div>
+
+											</div>
+											<div class="form-row">
+												<div class="col-md-8 mb-4">
+													<label for="validationTooltip03">Dirección</label>
+													<div class="input-group input-group-lg">
+														<input th:field="*{direc}" th:value="*{direc}" name="direc"
+															type="text" class="form-control" placeholder="Dirección"
+															required autocomplete="off"
+															onkeyup="javascript:this.value=this.value.toUpperCase();"
+															style="font-weight:bold;color:black;font-size: 17pt;">
+													</div>
+													<div class="invalid-tooltip">
+
+													</div>
+												</div>
+
+
+											</div>
+											<input class="btn btn-primary btn-lg btn-block" type="submit"
+												value="Registrar cliente" style=" font-weight:bold;font-size: 17pt;"
+												onclick="registrodatacli()" />
+										</form>
+
+									</div>
+
+								</div>
+							</div>
+
+
+
+							<div class="modal-footer">
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+		<script type="text/javascript" th:src="@{js/FuncReloj.js}"></script>
+
+
+		<script>
+			var elemc = document.getElementById("scriptScren");
+
+			/*function openFullscreen() {
+	
+				if (elemc.requestFullscreen == true) {
+	
+					elemc.requestFullscreen();
+				} 
+				
+				if (elemc.webkitRequestFullscreen != true) {
+	
+					elemc.webkitRequestFullscreen();
+				}
+				
+				if (elemc.msRequestFullscreen  == true) {
+	
+					elemc.msRequestFullscreen();
+				}
+			}*/
+		</script>
+
+
+		<script>
+
+
+			ActuLoadData();
+			document.onkeydown = function (e) {
+
+				tecla = (document.all) ? e.keyCode : e.which;
+
+				if (tecla == 116) {
+					return false;
+				}
+				else {
+					return true;
+				}
+
+			}
+
+			function NoBack() {
+				
+				ActuLoadData();
+
+				window.location.hash = 'no-back-button';
+				window.location.hash = 'Again-No-back-button'
+				window.onhashchange = function () {
+					window.location.hash = "";
+					history.forward();
+				}
+
+				if ($('#Nfactura').val() == 0) {
+					$('#selectEvidencia').hide();
+					history.forward();
+
+				}
+				if ($('#nfaccli').val() == 0) {
+
+					var co_ven = $("#co_venID").val();
+					$("#co_venIDs").val(co_ven);
+					history.forward();
+					document.getElementById('bgventana').style.visibility = ('visible');
+
+				}
+
+
+			}
+
+		</script>
+		<script>
+
+			$(document).ready(function () {
+				$("#searchFilter").on("keyup", function () {
+					var value = $(this).val().toLowerCase();
+					$("#ListArtProfit tr").filter(function () {
+						$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+					});
+				});
+
+				$("#searchFilterPRODUC").on("keyup", function () {
+					var value = $(this).val().toLowerCase();
+					$("#NewEvidencia tr").filter(function () {
+						$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+					});
+				});
+			});
+			ActuLoadData();
+			var iDCajaPV = $('#CajaPuntoPELEC').val();
+			var descripPuntoPV = $('#DescripPuntoPELEC').val();
+			var monedaPuntoPV = $('#MonedaPuntoPELEC').val();
+
+			var nroDocumPV = $('#nroDocumPELEC').val();
+
+			var co_tar = $('#co_tarPELEC').val();
+			var des_tar = $('#des_tarPELEC').val();
+
+			if ($('#MontoCobbsPELEC').val() == '') {
+				$('#MontoCobbsPELEC').val('0')
+			}
+			if ($('#MontClibsPELEC').val() == '') {
+				$('#MontClibsPELEC').val('0')
+			}
+			var montoCobbsPV = $('#MontoCobbsPELEC').val();
+			var montClibsPV = $('#MontClibsPELEC').val();
+
+			var resulcobBSPV = $('#resulcobBSPELEC').val();
+			var resulcobBSUSPV = $('#resulcobBSusPELEC').val();
+
+			var resuBSPV = $('#resuBSPELEC').val();
+			var resuUSDPV = $('#resuUSDPELEC').val();
+
+			var co_cli = $('#cedcli').val();
+			var cli_desc = $('#OnDOC').val();
+			cli_desc = cli_desc.substring(30, -1);
+			var fact_num = $('#Nfactura').val();
+			var mont_brutBS = $('#precioBru').val();
+			var mont_netBS = $('#MontoALLBS').val();
+			var ivaBS = $('#ivaALLBS').val();
+			var mont_brutUSD = $('#PrecioALL').val();
+			var mont_netUSD = $('#MontoALL').val();
+			var ivaUSD = $('#ivaALL').val();
+			var tasa = $('#TasaTODAY').val();
+
+			var tbMonedaid = $('#tbMonedaid').val();
+			var tbMonedacambio = $('#tbMonedacambio').val();
+
+			var idMoneUSD = $('#idMoneUSD').val();
+
+			var co_venIden = $("#co_venID").val();
+
+			var DirecVauchers = $("#nombreVaucherMegaSoft").val();
+
+			var datasp1 = "//";
+
+			var dataProDistsp1 = DirecVauchers.split("\\", "1000");
+			var datanew22 = String(dataProDistsp1);
+		</script>
+
+		</di>
+	</div>
+</body>
+
+</html>

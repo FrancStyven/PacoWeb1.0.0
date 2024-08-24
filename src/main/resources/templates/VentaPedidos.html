@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<htmt xmlns:th="http://www.Thymeleaf.org">
+
+	<head>
+		<title>PACOweb</title>
+		<meta name="viewport" content="width=device-width, initial-scale=0.9">
+		<meta charset="utf-8">
+		<link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+		<link rel="stylesheet" th:href="@{css/fullScreen.css}">
+
+		<script type="text/javascript" th:src="@{js/jquery-3.6.4.min.js}"></script>
+		<script type="text/javascript" th:src="@{js/AdminInterfazJS.js}"></script>
+
+		<script type="text/javascript" th:src="@{js/cobProEdit.js}"></script>
+		<script type="text/javascript" th:src="@{js/InputDocument.js}"></script>
+
+		<script type="text/javascript" th:src="@{js/MegaSoftJS.js}"></script>
+		<script type="text/javascript" th:src="@{js/swal2.js}"></script>
+		<script type="text/javascript" th:src="@{js/MonitorProductVISTAJS.js}"></script>
+
+
+
+	</head>
+
+	<body onload="Focus()" style="background-color: rgb(255,255,255);min-height:200px; max-height:100%; "
+		id="scriptScren" >
+		<div id="screen">
+
+			<header th:fragment="header">
+				<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+					<a class="navbar-brand" href="#"></a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse"
+						data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false"
+						aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+
+					<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+						<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+							<li class="nav-item active">
+								<a class="nav-link" href=""> <span class="sr-only">(current)</span></a>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link"><button class="btn btn-info btn-block" type="button"
+										title="Retomar factura es espera" style="font-weight:bold;font-size:9pt;"
+										data-toggle="modal" data-target="#PediEspera" id="PedidoEsperaID"> Cotiz Espera
+										<img src="/images/factespera.png" height="35px" width="50px" /> </button></a>
+							</li>
+
+
+
+							<li class="nav-item">
+								<a class="nav-link"><button class="btn btn-info btn-block" type="button"
+										title="Reportes de cotizaciones" style="font-weight:bold;font-size:9pt;"
+										data-toggle="modal" data-target="#reportesPrint" id="reportesPrintID"
+										name="reportesPrintID"> Reportes
+										<img src="/images/print.png" height="35px" width="50px" /> </button></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link"><button class="btn btn-info btn-block" type="button"
+										name="btn-GeneComandasID" id="btn-GeneComandasID" value="" data-toggle="modal"
+										 style="font-weight:bold;font-size:9pt;"
+										data-target="#btn-GeneComandas">Comandas <img src="/images/balanza.png"
+											height="35px" width="50px" /></button> </a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link"><button class="btn btn-info btn-block" type="button"
+										title="Retomar factura es espera" style="font-weight:bold;font-size:9pt;"
+										data-toggle="modal" data-target="#InBalanza" id="InBalanzaID" name="InBalanza">
+										Sys
+										PACO <img src="/images/engranaje.png" height="35px" width="50px" />
+									</button></a>
+							</li>
+
+						</ul>
+
+						<form th:action="@{/PACOweb#}" method="GET">
+							<input type="hidden" name="co_ven" value="0">
+							<button class="btn btn-danger btn-block" type="submit" id="btnExit"
+								style="font-weight:bold;font-size:9pt;">Salir <img src="/images/closesesion.png"
+									height="35px" width="40px" title="Salir">
+							</button>
+						</form>
+					</div>
+				</nav>
+				<div class="jumbotron" style="background-color: rgb(255,255,255);margin-top: -30px;">
+					<h1 class="display"
+						title="Aplicación web Desarrollada por especialistas GREBCA © J-402830414-9. Garantizando tus registros"
+						style="font-family: impact;background-color: rgb(255,255,255);">
+
+						<img src="/images/empresa.png" height="155px" width="400px" style="margin-left: 0pt;" />
+
+					</h1>
+
+
+					<label>
+						<input class="" value="" id="nameEmpresa" disabled
+							style="background-color: transparent;border-style:none;font-weight:bold;width:350px;">
+					</label>
+
+					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#ProductosRegDBListVer"
+						id="LisProducLIST" name="LisProducLIST">
+						<img src="/images/productolis.png" width="30px" />
+
+					</button>
+					
+					<button type="button" class="btn btn-info" 
+						id="clienGeneID" name="clienGeneID">
+						<img src="/images/clienteHGEN.png" width="30px" />
+
+					</button>
+					<h5 class="display"></h5>
+
+					<input type="hidden" id="Nfactura" name="Nfactura">
+					<input type="hidden" id="idCob_numRengTip" name="idCob_numRengTip">
+					<input type="hidden" id="tbMonedaid" name="tbMonedaid">
+					<input type="hidden" id="idMoneUSD" name="idMoneUSD">
+
+
+					<div method="POST" th:object="${postID}">
+						<label> Estación :
+							<input class="" th:field="*{co_venID}" th:value="*{co_venID}" id="co_venID" disabled
+								style="background-color: transparent;border-style:none;font-weight:bold;font-size: 29pt;width:170px;">
+						</label>
+
+					</div>
+					<input type="hidden" id="cajaEfectBs" name="cajaEfectBs">
+					<input type="hidden" id="cajaEfectUs" name="cajaEfectUs">
+					<input type="hidden" id="monedaBs" name="monedaBs">
+					<input type="hidden" id="monedaUs" name="monedaUs">
+					<button type="button" class="btn  btn-lg" id="updatePagID" name="updatePagID"><img
+							src="/images/UpdateInfor.png" height="25px" width="25px" /></button>
+
+					<label>&nbsp;</label>
+
+					<div class="container">
+						<div class="" style="margin:0 auto;">
+
+						</div>
+
+						<form th:action="@{/PACOCargoCotizacion}" method="POST" id="clientesformpedido"
+							th:object="${postID}">
+							<div class="form-group">
+								<label for="exampleInputEmail1"></label>
+								<p id="InfoDatosCli"></p>
+								<div class="input-group input-group-lg">
+
+									<button class="btn btn-info" type="button" style="border-style:none;width:5%;"
+										data-toggle="modal" data-target="#busClientAccess" id="busClientAccessID"
+										name="busClientAccessID"><img src="/images/cliente.png"
+											style="width:30px;height:31px;"></button>
+									
+									<input class="form-control form-control-lg use-keyboard-input" type="text"
+										style="font-weight:bold;font-size:20pt;text-transform:uppercase;"
+										onkeyup="javascript:this.value=this.value.toUpperCase();" name="ced"
+										placeholder="RIF/C.I" maxlength="10" oninput=" onlyKPedidos(value)" id="txtK"
+										autocomplete="off" required>
+								</div>
+
+								<input type="hidden" name="co_venCO" id="co_venIDss" th:field="*{co_venCO}"
+									th:value="*{co_venCO}">
+
+
+							</div>
+
+							<button class="btn btn-info btn-block " type="submit" id="subButtonPed" name="subButtonPed"
+								style="font-weight: bold;">Generar Cotización <img src="/images/nfactura.png"
+									width="35px" height="35px"></button>
+
+						</form>
+
+					</div>
+					</br></br>
+					<div class=" text-center text-white ">
+						<img src="/images/PACOwlogo.png" height="50px" width="90px" style="margin-left: 5pt;" />
+						<label style="font-size: 12pt;color:rgb(0,0,0);">®</label>
+					</div>
+				</div>
+
+
+			</header>
+
+
+			<div class="modal fade bd-example-modal-xl" id="PediEspera" tabindex="-1" role="dialog"
+				aria-labelledby="PediEsperaTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+					<div class="modal-content">
+						<div class="modal-header " style="font-weight:bold;font-size:9pt;color:midnightblue;">
+							<h5 class="modal-title " id="PediEsperaTitle" style="font-weight:bold;font-size:9pt;"><img
+									src="/images/factespera.png" height="20px" width="25px" /> Retomar Factura</h5>
+							<div class="col-md-0 ml-auto">
+
+							</div>
+							<button type="button" class="close" id="closePediEspera" name="closePediEspera"
+								data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="">
+								<div class="">
+									<input class="form-control" type="text" id="searchFilter" placeholder="Buscar"
+										autocomplete="off" style='color:black;font-weight:bold;'>
+									<div class="table-responsive-xl" style="height:50vh;overflow-y:scroll;">
+
+
+										<table class="table table-hover" id="">
+											<thead style="background-color:rgb(200,200,200);">
+												<tr>
+													<th scope="col" style="width:5%" data-field="">N°</th>
+													<th scope="col" style="width:10%" data-field="">N° Factura</th>
+													<th scope="col" style="width:15%" data-field="">C.I/RIF</th>
+													<th scope="col" style="width:20%" data-field="">Nombre</th>
+													<th scope="col" style="width:25%" data-field="">Fecha Emis</th>
+													<th scope="col" style="width:15%" data-field="">Saldo</th>
+
+													<th scope="col" data-field="action" data-formatter="actionFormatter"
+														data-events="actionEvents">Opciones</th>
+
+												</tr>
+											</thead>
+											<tbody role="tr" id="ListArtProfit">
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="card">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="button" id="conCliID" name="conCliID"
+				style="background-color: transparent;border-style:none;"></button>
+
+			<div class="modal fade bd-example-modal-xl" id="busClientAccess" tabindex="-1" role="dialog"
+				aria-labelledby="busClientAccessTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+					<div class="modal-content">
+						<div class="modal-header " style="font-weight:bold;font-size:9pt;color:midnightblue;">
+							<h5 class="modal-title " id="busClientAccessTitle" style="font-weight:bold;font-size:9pt;">
+								<img src="/images/cliente.png" height="20px" width="25px" /> Lista de Clientes
+							</h5>
+							<div class="col-md-0 ml-auto">
+
+							</div>
+							<button type="button" class="close" id="closebusClientAccess" name="closebusClientAccess"
+								data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="">
+								<div class="">
+									<input class="form-control" type="text" id="searchFiltercocli" placeholder="Buscar"
+										autocomplete="off"
+										style="font-weight:bold;font-size:20pt;text-transform:uppercase;"
+										onkeyup="javascript:this.value=this.value.toUpperCase();"
+										oninput="searInteval()">
+
+									<div class="table-responsive-xl" style="height:50vh;overflow-y:scroll;">
+										<br>
+										<table class="table table-hover" id="">
+											<thead style="background-color:rgb(200,200,200);">
+												<tr>
+													<th scope="col" style="width:5%" data-field="">N°</th>
+
+													<th scope="col" style="width:20%" data-field="">C.I/RIF</th>
+													<th scope="col" style="width:30%" data-field="">Razon_social</th>
+													<th scope="col" style="width:25%" data-field="">Dirección</th>
+													<th scope="col" style="width:20%" data-field="">Telefono</th>
+
+													<th scope="col" data-field="action" data-formatter="actionFormatter"
+														data-events="actionEvents">Opciones</th>
+
+												</tr>
+											</thead>
+											<tbody role="tr" id="listClientetr">
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="card">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade bd-example-modal-xl" id="reportesPrint" tabindex="-1" role="dialog"
+				aria-labelledby="reportesPrintTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+					<div class="modal-content">
+						<div class="modal-header " style="font-weight:bold;font-size:9pt;color:midnightblue;">
+							<h5 class="modal-title " id="reportesPrintTitle" style="font-weight:bold;font-size:9pt;">
+								<img src="/images/print.png" height="20px" width="25px" /> Reportes
+							</h5>
+							<div class="col-md-0 ml-auto">
+
+							</div>
+							<button type="button" class="close" id="closereportesPrint" name="closereportesPrint"
+								data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="">
+								<div class="">
+									<input class="form-control" type="text" id="searchFilterCotiz" placeholder="Buscar"
+										autocomplete="off" style='color:black;font-weight:bold;'>
+									<div class="table-responsive-xl" style="height:50vh;overflow-y:scroll;">
+
+										<table class="table table-hover" id="">
+											<thead style="background-color:rgb(200,200,200);">
+												<tr>
+													<th scope="col" style="width:5%" data-field="">N°</th>
+													<th scope="col" style="width:15%" data-field="">C.I/RIF</th>
+													<th scope="col" style="width:20%" data-field="">Razon</th>
+													<th scope="col" style="width:10%" data-field=""> Pedido</th>
+
+
+													<th scope="col" style="width:15%" data-field="">Status</th>
+													<th scope="col" style="width:15%" data-field="">Fecha</th>
+													<th scope="col" style="width:15%" data-field="">Monto</th>
+													<th scope="col" style="width:15%" data-field="">Hora</th>
+
+													<th scope="col" data-field="action" data-formatter="actionFormatter"
+														data-events="actionEvents">Opciones</th>
+
+												</tr>
+											</thead>
+											<tbody role="tr" id="CotizReportStatus">
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="card">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade bd-example-modal-xl" id="InBalanza" tabindex="-1" role="dialog"
+				aria-labelledby="InBalanzaTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+					<div class="modal-content">
+						<div class="modal-header " style="font-weight:bold;font-size:9pt;color:midnightblue;">
+							<h5 class="modal-title " id="InBalanzaTitle" style="font-weight:bold;font-size:9pt;"><img
+									src="/images/engranaje.png" height="20px" width="25px" /> Configuracion del Systema
+							</h5>
+							<div class="col-md-0 ml-auto">
+
+							</div>
+							<button type="button" class="close" id="closeInBalanza" name="closeInBalanza"
+								data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="">
+								<div class="jumbotron">
+									<strong>Configuracion de Balanza: </strong>
+									<br>
+									<div class="btn-group">
+										<input type="text" class="" value="PUERTO :"
+											style="background-color:transparent;border-style:none;font-weight:bold;"
+											disabled>
+										<input type="text" class="form-control" name="puertoBalanza" id="puertoBalanza"
+											style="font-weight:bold;" placeholder="Ej : COM10">
+										<!--	<input type="text" class="form-control" name="identyBalanza" id="identyBalanza" style="font-weight:bold;" placeholder="Ej : VAS01"> -->
+										<button type="button" class="btn btn-info" id="btn-conecBalanza"
+											name="btn-conecBalanza">Conectar</button>
+
+									</div>
+									<div class="btn-group">
+										<button type="button" class="btn btn-info" id="" name="">Peso Input</button>
+									</div>
+									<br>
+									<strong>Estado Balanza: </strong>
+									<br>
+
+									<div class="btn-group">
+										<strong>Balanza: </strong><input type="text" id="balanzaID"
+											style="background-color:transparent;border-style:none;font-weight: bold;"
+											disabled>
+									</div>
+									<div class="btn-group">
+										<strong>Puerto: </strong><input type="text" id="puertoID"
+											style="background-color:transparent;border-style:none;font-weight: bold;"
+											disabled>
+									</div>
+									<div class="btn-group">
+										<strong>Peso: </strong><input type="text" id="pesoID" onload="lecBalanPe()"
+											style="background-color:transparent;border-style:none;font-weight: bold;">
+									</div>
+									<div class="btn-group">
+										<strong>Status: </strong><input type="text" id="restID"
+											style="background-color:transparent;border-style:none;font-weight: bold;"
+											disabled>
+									</div>
+									<div class="btn-group">
+										<strong>Maquina: </strong><input type="text" id="machineID"
+											style="background-color:transparent;border-style:none;font-weight: bold;"
+											disabled>
+									</div>
+
+									<div class="card">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="modal fade bd-example-modal-xl" id="btn-GeneComandas" tabindex="-1" role="dialog"
+				aria-labelledby="btn-GeneComandasTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+					<div class="modal-content">
+						<div class="modal-header " style="font-weight:bold;font-size:9pt;color:midnightblue;">
+							<h5 class="modal-title " id="btn-GeneComandasTitle" style="font-weight:bold;font-size:9pt;">
+								<img src="/images/balanza.png" height="20px" width="25px" /> Generador de Comandas
+
+							</h5>
+							<div class="col-md-0 ml-auto">
+								<div class="d-grid d-md-flex justify-content-md-end">
+									<button type="button" class="btn btn-primary btn-lg" id="printerGeneComandas"
+										name="printerGeneComandas">
+										<img src="/images/print.png" height="25px" width="30px" />
+									</button><label>&nbsp;</label>
+
+								</div>
+							</div>
+							<button type="button" class="close" id="closebtn-GeneComandas" name="closebtn-GeneComandas"
+								data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="">
+								<div class="">
+									<div>
+
+
+										<div class="">
+
+											<div class="btn-group">
+
+												<input type="text" id="tasaCambioProfit" name="tasaCambioProfit"
+													style="background-color:rgb(70,70,70);border-style:none;color:rgb(50,170,240);font-weight:bold;width:35%;"
+													disabled>
+												<select class="form-control " aria-label="Large select example"
+													id="cantNroReport" style="font-weight: bold;">
+
+
+													<option value="1">1</option>
+													<option value="2">2</option>
+												</select>
+
+
+												<input class="form-control" type="text" placeholder="CO"
+													id="Coman_co_art" autocomplete="off"
+													style='color:black;font-weight:bold;' disabled>
+											</div>
+											<input class="form-control" type="text" id="Coman_art_des"
+												placeholder="descripcion" autocomplete="off"
+												style='color:black;font-weight:bold;' disabled>
+
+											<div class="card-group ">
+												<div class="card">
+													<strong>Precio$: </strong><input class="form-control" type="text"
+														id="Comand_precio_vta1"
+														style='color:rgb(50,230,20);font-weight:bold;background-color:rgb(70,70,70);'
+														disabled>
+												</div>
+												<div class="card">
+													<strong>Peso: </strong><input class="form-control" type="text"
+														id="Comand_peso_bal"
+														style='color:rgb(50,230,20);font-weight:bold;background-color:rgb(70,70,70);'
+														value="" disabled>
+												</div>
+												<div class="card">
+													<strong>Ref $: </strong><input class="form-control" type="hidden"
+														id="Comand_total_prec"
+														style='color:rgb(50,230,20);font-weight:bold;background-color:rgb(70,70,70);'
+														disabled>
+													<input class="form-control" type="text" id="Comand_total_precINFO"
+														style='color:rgb(50,230,20);font-weight:bold;background-color:rgb(70,70,70);'
+														disabled>
+												</div>
+												<div class="card">
+													<strong>Total Bs: </strong><input class="form-control" type="hidden"
+														id="Comand_total_precBS"
+														style='color:rgb(50,190,250);font-weight:bold;background-color:rgb(70,70,70);'
+														disabled>
+													<input class="form-control" type="text" id="Comand_total_precBSINFO"
+														style='color:rgb(50,190,250);font-weight:bold;background-color:rgb(70,70,70);'
+														disabled>
+												</div>
+
+											</div>
+
+											<div class="table-responsive-xl" style="height:45vh;overflow-y:scroll;">
+
+												<table class="table border-primary table-hover" id="">
+
+													<thead style="background-color:rgb(240,240,240);">
+														<tr>
+															<th scope=" col" style="width:5%;font-size:9pt;"
+																data-field="">N°</th>
+															<th scope=" col" style="width:10%;font-size:9pt;"
+																data-field="">CO</th>
+															<th scope="col" style="width:45%;font-size:9pt;"
+																data-field="">Descripción
+															</th>
+															<th scope="col" style="width:5%;font-size:9pt;"
+																data-field="">Unid</th>
+															<th scope="col" style="width:10%;font-size:9pt;"
+																data-field="">Precio</th>
+															<th scope="col" style="width:10%;font-size:9pt;"
+																data-field="">precio$</th>
+															<th scope="col" style="width:10%;font-size:9pt;"
+																data-field="">cantM2</th>
+															<th scope="col" style="width:10%;font-size:9pt;"
+																data-field="">$M2</th>
+															<th scope="col" style="width:10%;font-size:9pt;"
+																data-field="">cantM3</th>
+															<th scope="col" style="width:10%;font-size:9pt;"
+																data-field="">$M3</th>
+															<th scope="col" style="width:10%;font-size:9pt;"
+																data-field="">Modelo</th>
+
+
+														</tr>
+													</thead>
+
+													<tbody class="table-group-divider" role="tr"
+														id="ListArtProfitComandas">
+
+													</tbody>
+
+												</table>
+												<br>
+
+											</div>
+											<input class="form-control" type="text" id="searchFilterComandas"
+												placeholder="Buscar " autocomplete="off"
+												style='color:rgb(50,240,70);font-weight:bold;background-color: rgb(70,70,70);'>
+
+
+										</div>
+
+									</div>
+									<div class="btn-group btn-block">
+										<input type="text" id="" placeholder="" value="PESO :"
+											style='color:black;font-weight:bold;background-color:transparent;border-style:none;width:10%;'
+											disabled>
+
+										<input class="form-control" type="text" id="pesoFuncionBalanza"
+											placeholder="descripcion" autocomplete="off"
+											style='color:black;font-weight:bold;width:20%;' disabled>
+									</div> <br>
+									<div class="card">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="modal fade bd-example-modal-xl" id="ProductosRegDBListVer" style="max-width: 100%;"
+				tabindex="-1" role="dialog" aria-labelledby="ProductosRegDBListVerTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-xl" role="document" style="width:100%;">
+					<div class="modal-content modal-xl">
+						<div class="modal-header" style="top:0;background-color:rgb(180,180,180);">
+							<h5 class="modal-title" id="ProductosRegDBListVerTitle">Lista de productos</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"
+								id="btnCloseListPro" name="btnCloseListPro">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+							<div class="">
+								<div class="btn-group">
+									<input type="text" name="tasaDaysUserProducInf" id="tasaDaysUserProducInf"
+										value="TASA : " style="border-style:none;font-weight:bold;width:30%;" disabled>
+									<input class="form-control" type="number" name="tasaDaysUserProduc"
+										id="tasaDaysUserProduc"
+										style="background-color: black;color:rgb(0,255,255);font-weight:bold;" disabled
+										value="0.00">
+
+								</div>
+
+								<div class="">
+									<div class="col-24">
+										<h5>Grebca ©</h5>
+
+									</div>
+									<input class="form-control" type="text" id="searchFilterXY" placeholder="Buscar"
+										autocomplete="off" style='color:black;font-weight:bold;'>
+
+									<div class="table-responsive-xl" style="overflow-y:scroll;">
+										<table class="table table-hover" id="">
+											<thead style="background-color:rgb(180,180,180);">
+												<tr>
+
+
+												</tr>
+											</thead>
+
+										</table>
+									</div>
+
+
+									<div class="table-responsive-xl" style="height:50vh;overflow-y:scroll;">
+
+
+										<table class="table table-hover" id="">
+											<thead style="top:0;background-color:rgb(180,180,180);">
+												<tr>
+													<th scope=" col" style="width:5%" data-field="contNarc">N°</th>
+													<th scope=" col" style="width:10%" data-field="contNarc">CO</th>
+													<th scope="col" style="width:25%" data-field="art_des">Descripción
+													</th>
+													<th scope="col" style="width:5%" data-field="uni_venta">Unid</th>
+													<th scope="col" style="width:15%" data-field="prec_vta1">Precio</th>
+													<th scope="col" style="width:10%" data-field="">Cantidad</th>
+													<th scope="col" style="width:15%" data-field="">Iva</th>
+													<th scope="col" style="width:15%" data-field="">Total</th>
+													<th scope="col" style="width:15%" data-field="">$</th>
+													<th scope="col" style="width:10%" data-field="">cantM</th>
+													<th scope="col" style="width:15%" data-field="">$M</th>
+
+
+													<th scope="col" data-field="action" data-formatter="actionFormatter"
+														data-events="actionEvents">Opciones</th>
+
+												</tr>
+											</thead>
+											<tbody role="tr" id="ListArtProfitXY">
+
+											</tbody>
+										</table>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+
+
+
+
+		<footer th:fragment="footer" class="bg-dark  text-center text-white fixed-bottom">
+			<div class="container">
+				<p
+					title="Aplicación web Desarrollada por especialistas GREBCA © J-402830414-9. Garantizando tus registros">
+					Grebca &copy; 2024 </p>
+			</div>
+
+
+			<script type="text/javascript" th:src="@{js/popper.min.js}"></script>
+			<script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+			<script type="text/javascript" th:src="@{js/AutoLoad.js}"></script>
+			<script type="text/javascript" th:src="@{js/OnaccessPediJS.js}"></script>
+
+
+
+
+		</footer>
+
+
+
+		<script>
+
+		</script>
+		<script>
+			var elemc = document.getElementById("scriptScren");
+
+		/*	function openFullscreen() {
+				if (elemc.requestFullscreen == true) {
+					elemc.requestFullscreen();
+				}
+				if (elemc.webkitRequestFullscreen != true) {
+					elemc.webkitRequestFullscreen();
+				}
+				if (elemc.msRequestFullscreen == true) {
+					elemc.msRequestFullscreen();
+				}
+			}*/
+		</script>
+		<script>
+			function Focus() {
+				$('#txtK').focus();
+				history.forward();
+				window.location.hash = 'no-back-button';
+				window.location.hash = 'Again-No-back-button'
+
+				window.onhashchange = function () {
+					window.location.hash = "";
+					history.forward();
+
+				}
+
+
+			}
+
+
+		</script>
+		<script>
+
+			$(document).ready(function () {
+				$("#searchFilter").on("keyup", function () {
+					var value = $(this).val().toLowerCase();
+					$("#ListArtProfit tr").filter(function () {
+						$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+					});
+				});
+			});
+
+			$(document).ready(function () {
+				$("#searchFilterXY").on("keyup", function () {
+					var value = $(this).val().toLowerCase();
+					$("#ListArtProfitXY tr").filter(function () {
+						$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+					});
+				});
+			});
+
+			$(document).ready(function () {
+				$("#searchFilterCotiz").on("keyup", function () {
+					var value = $(this).val().toLowerCase();
+					$("#CotizReportStatus tr").filter(function () {
+						$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+					});
+				});
+			});
+
+			$(document).ready(function () {
+				$("#searchFiltercocli").on("keyup", function () {
+					var value = $(this).val().toLowerCase();
+					$("#listClientetr tr").filter(function () {
+						$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+					});
+				});
+			});
+
+			$(document).ready(function () {
+				$("#searchFilterComandas").on("keyup", function () {
+					var value = $(this).val().toLowerCase();
+					$("#ListArtProfitComandas tr").filter(function () {
+						$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+					});
+				});
+			});
+
+		</script>
+		</div>
+	</body>
+</htmt>

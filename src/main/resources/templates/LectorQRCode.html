@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.Thymeleaf.org">
+
+<head>
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="pragma" content="no-cache">
+	<title>CodeQR</title>
+	<link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+	<script type="text/javascript" th:src="@{js/jquery-3.6.4.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/cargoRengQR.js}"></script>
+</head>
+
+<body style="background-color: rgb(235,235,240);">
+	<header th:fragment="header">
+		<div class="jumbotron">
+			<div class="card-group">
+				<div class="card">
+
+					<div class="card-body" method="POST" th:object="${postQR}">
+						<h5 class="card-title">FACTURACION QR</h5>
+						<p class="card-text">
+							<strong>N° Factura :</strong><input th:field="*{fact_num}" th:value="*{fact_num}"
+								style="background-color:transparent;border-style:none; font-weight:bold;color:black;font-size: 12pt;width:90px;"
+								id="NfacturaQR" disabled>
+							<strong>N CAJA :</strong><input th:field="*{co_ven}" th:value="*{co_ven}"
+								style="background-color:transparent;border-style:none; font-weight:bold;color:black;font-size: 12pt;width:90px;"
+								id="co_venQR" disabled>
+							<strong>TASA :</strong><input type="text" id="tasaDay"
+								style="background-color:transparent;border-style:none; font-weight:bold;color:black;font-size: 12pt;width:90px;"
+								disabled>
+
+						</p>
+						<p class="card-text"><small class="text-muted">Lectura QR productos AEN13</small></p>
+					</div>
+				</div>
+				<div class="card">
+
+					<div class="card-body">
+						<h5 class="card-title">Opciones</h5>
+						<p class="card-text">
+						<div>
+							<form action="/FacturaCargoCliente" method="POST">
+								<input type="hidden" name="ced" id="nfacQRdata">
+								<input type="hidden" name="co_venCO" id="co_venCOs">
+								<button class="btn btn-danger btn-block" type="submit" id="btnBackFact"
+									name="btnBackFact">Atras</button>
+
+							</form><br>
+						</div>
+						</p>
+						<p class="card-text"><small class="text-muted"></small></p>
+					</div>
+				</div>
+
+			</div>
+			<div method="POST" th:object="${postQR}" style="background-color: rgb(255,255,255);">
+
+			</div>
+
+			<div>
+				<textarea type="text" name="rengQR" id="rengQR"
+					style="max-width: 100%;min-width: 100%; max-height:30%;min-height:30%;"></textarea>
+
+				<button type="button" id="btnRenglon" name="btnRenglon"
+					style="background-color: transparent;border-style: none;"></button>
+			</div>
+			<div class="container " id="scannerLectMovilQR" style="width:80%;margin-left:10%;">
+
+				<div class="card">
+					<video id="preview" onclick="scanner.start();"></video>
+				</div>
+
+			</div>
+		</div>
+		<script th:src="@{js/jquery-3.6.4.min.js}"></script>
+		<script th:src="@{js/instascant.min.js}"></script>
+		<script type="text/javascript">
+
+			var sound = new Audio("js/sounds.wav");
+			let scanner = new Instascan.Scanner({
+				video: document.getElementById("preview"), mirror: false
+			});
+			scanner.addListener("scan", function (content) {
+				sound.play();
+
+				$('#rengQR').val(content);
+				$(".site-backdrop").html(content);
+				$('#InputAccesskey').val(content);
+
+
+				if ($('#rengQR').val() != "") {
+
+
+					document.querySelector("button[name=btnRenglon]").addEventListener("click", function (e) {
+						e.preventDefault(e);
+					})
+					document.querySelector("button[name=btnRenglon]").click();
+
+
+				}
+
+
+
+			});
+			Instascan.Camera.getCameras().then(function (cameras) {
+				if (cameras.length > 0) {
+					scanner.start(cameras[1]);
+				}
+				
+			}).catch(function (e) {
+				$("#scannerLectMovilQR").hide();
+				
+			});
+		</script>
+
+	</header>
+
+
+
+
+</body>
+<script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+
+</html>

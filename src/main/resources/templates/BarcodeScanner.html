@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.Thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=divice-width,initial-scale=1.0">
+	<title>Dynamsoft JavaScript Barcode Scanner</title>
+	<script th:src="@{js/jquery-3.6.4.min.js}"></script>
+	<script th:src="@{js/dbrScanner.js}"></script>
+	<link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+
+	<style type="text/css">
+		#contenedor video {
+			max-width: 80%;
+			width: 80%;
+		}
+
+		#contenedor {
+			max-width: 80%;
+			position: relative;
+		}
+
+		canvas {
+			max-width: 80%;
+		}
+
+		canvas.drawingBuffer {
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+	</style>
+</head>
+
+<body>
+
+	<p id="resultado">Aquí aparecerá el código</p>
+	<p>A continuación, el contenedor: </p>
+	<div class="card" style="width:50%; margin-left: 5px;">
+
+		<input class="form-control" id="InputData">
+	</div>
+
+	<div style="overflow:scroll;margin-left: 75%;position: fixed;height: 500px;">
+		<p id="resul2"></p>
+	</div>
+
+	<div id="contenedor"></div>
+	<!-- Cargamos Quagga y luego nuestro script -->
+	<script th:src="@{js/quaggaS.min.js}"></script>
+
+	<!--<div id="barcodeScanner">
+		<span id="loading-status" style="font-size: x-large;">Loading Library</span>
+	</div>-->
+
+	<script>
+
+		/*	document.addEventListener("DOMContentLoaded", () => {
+				const $resultados = document.querySelector("#resultado");
+				Quagga.init({
+					inputStream: {
+						constraints: {
+							width: 1920,
+							height: 1080,
+						},
+						name: "Live",
+						type: "LiveStream",
+	
+						target: document.querySelector('#contenedor'), // Pasar el elemento del DOM
+					},
+					decoder: {
+						readers: ["ean_reader"]
+					}
+				}, function (err) {
+					if (err) {
+						console.log(err);
+						return
+					}
+					console.log("Iniciado correctamente");
+					Quagga.start();
+				});
+	
+				Quagga.onDetected((data) => {
+					$resultados.textContent = 0 //data.codeResult.code;
+					// Imprimimos todo el data para que puedas depurar
+					console.log(data);
+				});
+	
+				Quagga.onProcessed(function (result) {
+					var drawingCtx = Quagga.canvas.ctx.overlay,
+						drawingCanvas = Quagga.canvas.dom.overlay;
+	
+					if (result) {
+						if (result.boxes) {
+							drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute("width")), parseInt(drawingCanvas.getAttribute("height")));
+							result.boxes.filter(function (box) {
+								return box !== result.box;
+							}).forEach(function (box) {
+								Quagga.ImageDebug.drawPath(box, {x: 0, y: 1}, drawingCtx, {color: "green", lineWidth: 2});
+							});
+						}
+	
+						if (result.box) {
+							Quagga.ImageDebug.drawPath(result.box, {x: 0, y: 1}, drawingCtx, {color: "#00F", lineWidth: 2});
+						}
+	
+						if (result.codeResult && result.codeResult.code) {
+							Quagga.ImageDebug.drawPath(result.line, {x: 'x', y: 'y'}, drawingCtx, {color: 'red', lineWidth: 3});
+						}
+					}
+				});
+			});*/
+
+
+		/*async function initBarcodeScanner() {
+			scanner = await Dynamsoft.DBR.BarcodeScanner.createInstance();
+			scanner.onFrameRead = results => {console.log(results);};
+			scanner.onUnduplicatedRead = (txt, result) => { };
+			document.getElementById('barcodeScanner').appendChild(scanner.getUIElement());
+			document.getElementById('loading-status').hidden = true;
+			await scanner.show();
+		}*/
+	</script>
+	<script>
+
+
+		/*
+		 //Dynamsoft.DBR.BarcodeReader.license = "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ==";
+		 let scanner = null;
+		 (async()=>{
+			 scanner = await Dynamsoft.DBR.BarcodeScanner.createInstance();
+			 scanner.onFrameRead = results =>{console.log(results);};
+			 scanner.onUnduplicateRead = (txt , result) => {};
+			 await scanner.show();
+		 }) ();*/
+
+		/*window.onload = async function () {
+
+			try {
+				await Dynamsoft.DBR.BarcodeScanner.loadWasm();
+				await initBarcodeScanner();
+			} catch (ex) {
+				alert(ex.message);
+				throw ex;
+			}
+		};
+		let scanner = null;
+		async function initBarcodeScanner() {
+			scanner = await Dynamsoft.DBR.BarcodeScanner.createInstance();
+			scanner.onFrameRead = results => {console.log(results);};
+			scanner.onUnduplicatedRead = (txt, result) => { };
+			await scanner.show();
+		}*/
+	</script>
+	<script>
+
+		var sound = new Audio("js/sounds.wav");
+
+		document.addEventListener("DOMContentLoaded", () => {
+			const $resultados = document.querySelector("#resultado");
+
+			Quagga.init({
+				inputStream: {
+					constraints: {
+						width: 1920,
+						height: 1080,
+						mirror: false
+					},
+					name: "Live",
+					type: "LiveStream",
+					mirror: false,
+					target: document.querySelector('#contenedor'), // Pasar el elemento del DOM
+				},
+				decoder: {
+					readers: ["ean_reader"]
+
+				}
+			}, function (err) {
+				if (err) {
+					console.log(err);
+					return
+				}
+				console.log("Iniciado correctamente");
+				Quagga.start();
+			});
+
+			Quagga.onDetected((data) => {
+
+				$resultados.textContent = data.codeResult.code;
+				var nest = data.codeResult.code;
+
+				$('#resul2').append(data.codeResult.code + '</br>');
+
+
+				sound.play();
+				$('#InputData').val(data.codeResult.code);
+
+
+				// Imprimimos todo el data para que puedas depurar
+				console.log(data);
+
+			});
+			
+		Quagga.onProcessed(function (result) {
+			var drawingCtx = Quagga.canvas.ctx.overlay,
+				drawingCanvas = Quagga.canvas.dom.overlay;
+
+			if (result) {
+				if (result.boxes) {
+					drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute("width")), parseInt(drawingCanvas.getAttribute("height")));
+					result.boxes.filter(function (box) {
+						return box !== result.box;
+					}).forEach(function (box) {
+						Quagga.ImageDebug.drawPath(box, {x: 0, y: 1}, drawingCtx, {color: "green", lineWidth: 2});
+					});
+				}
+
+				if (result.box) {
+					Quagga.ImageDebug.drawPath(result.box, {x: 0, y: 1}, drawingCtx, {color: "#00F", lineWidth: 2});
+				}
+
+				if (result.codeResult && result.codeResult.code) {
+					Quagga.ImageDebug.drawPath(result.line, {x: 'x', y: 'y'}, drawingCtx, {color: 'red', lineWidth: 3});
+				}
+			}
+		});
+
+		});
+	</script>
+</body>
+
+</html>

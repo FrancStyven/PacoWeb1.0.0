@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.Thymeleaf.org">
+
+<head th:fragment="head">
+	<link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+
+</head>
+
+<body>
+
+	<header th:fragment="header">
+
+		<div class="jumbotron">
+			<h1 class="display-4">PACO ©</h1>
+			<h5 class="display-8"></h5>
+			<p class="lead">Applicion web Desarrollada por especialistas GREBCA © J-402830414-9. Garantizando tus
+				registros</p>
+			<hr class="my-4">
+			<p>Formluario de clientes, Base de datos Grabca.</p>
+			<a class="btn btn-primary btn-lg" th:href="@{/postNew}" role="button">Clientes</a>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div th:each="post : ${posts}" class="col-3">
+					<div class="card" style="width: 18rem;">
+						<img th:src="@{images/newer.jpg}" src="../static/images/newer.jpg" class="card-img-top"
+							alt="...">
+						<div class="card-body">
+							<h5 th:text="${post.ced}" class="card-title"></h5>
+							<p th:text="${post.desc}" class="card-text"></p>
+							<p th:text="${post.telef}" class="card-text"></p>
+							<p th:text="${post.direc}" class="card-text"></p>
+							<p th:text="${post.fecha}" class="card-text"></p>
+
+							<a th:href="@{/post?ced=} + ${post.ced}" class="btn btn-primary">Información</a>
+						</div>
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="row">
+					<div class="col-12">
+						<nav aria-label="Page navigation example">
+							<ul class="pagination">
+								<li class="page-item">
+									<a class="page-link" href="#" aria-label="Previous">
+										<span aria-hidden="true">&laquo;</span>
+									</a>
+								</li>
+								<li class="page-item"><a class="page-link" href="#">1</a></li>
+								<li class="page-item"><a class="page-link" href="#">2</a></li>
+								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<li class="page-item">
+									<a class="page-link" href="#" aria-label="Next">
+										<span aria-hidden="true">&raquo;</span>
+									</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			</br>
+		</div>
+	</header>
+
+
+	<footer th:fragment="footer" class="bg-dark  text-center text-white fixed-bottom">
+		<div class="container">
+			<p>Copyright Grebca &copy; -2023 </p>
+		</div>
+		<script type="text/javascript" th:src="@{js/jquery-3.3.1.min.js}"></script>
+
+		<script type="text/javascript" th:src="@{js/popper.min.js}"></script>
+
+		<script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+
+	</footer>
+
+</body>
+
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Obtener IP y datos de Ubicación con Javascript</title>
+
+
+    <style>
+
+    body {
+        margin: 0 auto;
+        padding: 0 auto;
+    }
+
+    .grid-3 {
+      display: grid;
+      background: rgb(255, 255, 255);
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 5pxpx;
+
+    }
+
+    .item {
+        background-color: #ccc;
+        padding: 10px 10px;
+        box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.374);
+        border-radius: 10px;
+        margin: 10px 10px;
+    }
+
+    .result {
+        padding: 5px 10px;
+        border: 1px solid rgb(9, 161, 237);
+        border-radius: 10px;
+        margin-left: 5px;
+        background: #fff;
+
+    }
+
+    </style>
+    </head>
+    <body>
+
+        <div id="connection-data" class="grid-3">
+            <div class="item" id="ip">
+                <p>Ip: <span class="result"></span></p>
+            </div>
+            <div class="item" id="city">
+                <p>City: <span class="result"></span></p>
+            </div>
+            <div class="item" id="continent">
+                <p>Continent: <span class="result"></span></p>
+            </div>
+            <div class="item" id="country">
+                <p>Country: <span class="result"></span></p>
+            </div>
+            <div class="item" id="country_capital">
+                <p>Country_capital: <span class="result"></span></p>
+            </div>
+            <div class="item" id="country_code">
+                <p>Country_code: <span class="result"></span></p>
+            </div>
+            <div class="item" id="country_phone">
+                <p>Country_phone: <span class="result"></span></p>
+            </div>
+            <div class="item" id="currency">
+                <p>Currency: <span class="result"></span></p>
+            </div>
+            <div class="item" id="currency_rates">
+                <p>Currency_rates: <span class="result"></span></p>
+            </div>
+            <div class="item" id="isp">
+                <p>ISP: <span class="result"></span></p>
+            </div>
+            <div class="item" id="latitude">
+                <p>Latitude: <span class="result"></span></p>
+            </div>
+            <div class="item" id="longitude">
+                <p>Longitude: <span class="result"></span></p>
+            </div>
+            <div class="item" id="region">
+                <p>Region: <span class="result"></span></p>
+            </div>
+            <div class="item" id="timezone">
+                <p>Timezone: <span class="result"></span></p>
+            </div>
+        </div>
+
+    </body>
+</html>
+
+<script>
+    window.onload = () => {
+
+        let userIP = null;
+
+        const getIP = async () => {
+
+            return await fetch('https://api.ipify.org?format=json')
+            .then(response => response.json());
+        }
+
+        const getInfo = async (ip) => {
+
+            /*
+                https://ipstack.com/
+                https://ipwhois.io/
+                https://ipapi.co/
+            */
+
+            return await fetch('https://ipwhois.app/json/' + ip + '?lang=es')
+            .then(response => response.json());
+        }
+
+
+        getIP().then(response => {
+            userIP = response.ip;
+            getInfo(userIP).then(location => {
+
+
+
+                if(location){
+                    document.querySelector('#ip p span').innerHTML = userIP;
+                    document.querySelector('#city p span').innerHTML = location.city ?? 'error';
+                    document.querySelector('#continent p span').innerHTML = location.continent ?? 'error';
+                    document.querySelector('#country p span').innerHTML = location.country ?? 'error';
+                    document.querySelector('#country_capital p span').innerHTML = location.country_capital ?? 'error';
+                    document.querySelector('#country_code p span').innerHTML = location.country_code ?? 'error';
+                    document.querySelector('#country_phone p span').innerHTML = location.country_phone ?? 'error';
+                    document.querySelector('#currency p span').innerHTML = location.currency ?? 'error';
+                    document.querySelector('#currency_rates p span').innerHTML = location.currency_rates ?? 'error';
+                    document.querySelector('#isp p span').innerHTML = location.isp ?? 'error';
+                    document.querySelector('#latitude p span').innerHTML = location.latitude ?? 'error';
+                    document.querySelector('#longitude p span').innerHTML = location.longitude ?? 'error';
+                    document.querySelector('#region p span').innerHTML = location.region ?? 'error';
+                    document.querySelector('#timezone p span').innerHTML = location.timezone ?? 'error';
+                }
+            })
+
+        });
+    }
+</script>
+{"ip":"179.63.108.1","success":true,"type":"IPv4","continent":"Sudamerica","continent_code":"SA","country":"Venezuela","country_code":"VE","country_flag":"https:\/\/cdn.ipwhois.io\/flags\/ve.svg","country_capital":"Caracas","country_phone":"+58","country_neighbours":"BR,CO,GY","region":"Distrito Capital","city":"Caracas","latitude":10.4805937,"longitude":-66.9036063,"asn":"AS271904","org":"CHARTER COMMUNICATIONS INTERNATIONAL DE VENEZUELA C.A.","isp":"CHARTER COMMUNICATIONS INTERNATIONAL DE VENEZUELA C.A.","timezone":"America\/Caracas","timezone_name":"-04","timezone_dstOffset":0,"timezone_gmtOffset":-14400,"timezone_gmt":"-04:00","currency":"Venezuelan Bol\u00edvar","currency_code":"VES","currency_symbol":"Bs. S.","currency_rates":35.084,"currency_plural":"Venezuelan bol\u00edvars"}

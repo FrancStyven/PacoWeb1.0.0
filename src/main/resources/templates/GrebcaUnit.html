@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.Thymeleaf.org">
+
+<head>
+	<title>Grebca</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="utf-8">
+	<link rel="stylesheet" th:href="@{/css/dcode.css}">
+	<link rel="stylesheet" th:href="@{css/KeyboarNumber.css}">
+		<script type="text/javascript" th:src="@{js/keyboarNumber.js}"></script>
+</head>
+
+<body>
+
+	<p id="demo"></p>
+	<textarea class="use-keyboard-input" style="position: absolute; top: 130px; right: 30px; width: 300px;"></textarea>
+	
+	<input type="number" name="" id="valor1" step="0.01" oninput="calcular()" >
+	<input type="number" name="" id="valor2" step="0.01" oninput="calcular()" >
+	<input type="number" name="" id="total" step="0.01" >
+
+
+
+	<p>Write something in the text field to trigger a function.</p>
+
+<input type="text" id="myInput" oninput="myFunction()">
+
+
+
+<script>
+function myFunction() {
+  let text = document.getElementById("myInput").value;
+  document.getElementById("demo").innerHTML = "You wrote: " + text;
+}
+</script>
+
+</body>
+
+</html>
